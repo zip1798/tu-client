@@ -8,7 +8,9 @@ export default {
   },
   mutations: {
     SET_AUTH_STATUS(state, payload) {
-      //     state.success_message = null;
+      console.log(payload);
+      state.token = payload.token;
+      state.user = payload.user;
     }
   },
   actions: {
@@ -19,8 +21,10 @@ export default {
           password: payload.password
         })
         .then(response => {
-          if (response.success) {
-            commit("SET_AUTH_STATUS", response.success);
+           console.log(response);
+           // response.status = 200
+          if (response.data.success) {
+            commit("SET_AUTH_STATUS", response.data.success);
           }
           if (response.error) {
             throw new Error(response.error);

@@ -1,3 +1,4 @@
 # TU Client Side
 
-todo
+npm run serve
+

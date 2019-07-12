@@ -4,7 +4,7 @@
       <v-flex xs12 sm8 md6>
         <v-card class="elevation-12">
           <v-toolbar dark color="primary">
-            <v-toolbar-title>Login</v-toolbar-title>
+            <v-toolbar-title>Login > {{ getUser.email }} </v-toolbar-title>
           </v-toolbar>
           <v-card-text>
             <v-form v-model="valid">
@@ -43,6 +43,8 @@
 
 
 <script>
+import {mapGetters} from 'vuex'
+
 export default {
   name: "Login",
   data() {
@@ -63,14 +65,12 @@ export default {
     };
   },
   computed: {
+    ...mapGetters(['getUser']),            
     error() {
       return false; // this.$store.getters.getError;
     },
     processing() {
       return false; // this.$store.getters.getProcessing;
-    },
-    isUserAuthentificated() {
-      return false; // this.$store.getters.isUserAuthentificated;
     }
   },
   watch: {
