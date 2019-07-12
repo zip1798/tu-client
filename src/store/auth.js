@@ -1,5 +1,6 @@
 import axios from "axios";
 import appConfig from "../config/app";
+import router from "../router";
 
 export default {
   state: {
@@ -25,6 +26,7 @@ export default {
            // response.status = 200
           if (response.data.success) {
             commit("SET_AUTH_STATUS", response.data.success);
+            router.push({path:"/"});
           }
           if (response.error) {
             throw new Error(response.error);
