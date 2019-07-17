@@ -27,18 +27,18 @@ export default new Vuex.Store({
         to: "/contacts",
         text: "Contacts"
       },
-      {
-        to: "/login",
-        text: "Login"
-      },
-      {
-        to: "/register",
-        text: "Register"
-      },
-      {
-        to: "/profile/info",
-        text: "Profile Info"
-      },
+      //{
+      //  to: "/login",
+      //  text: "Login"
+      //},
+      //{
+      //  to: "/register",
+      //  text: "Register"
+      //},
+      //{
+      //  to: "/profile/info",
+      //  text: "Profile Info"
+      //},
       {
         to: "/events/:page?",
         text: "Events"
@@ -75,6 +75,23 @@ export default new Vuex.Store({
         to: "/test",
         text: "Test"
       }
+    ],
+    user_items: [
+      {
+        to: "/login",
+        text: "Login",
+        is_auth: false
+      },
+      {
+        to: "/register",
+        text: "Register",
+        is_auth: false
+      },
+      {
+        to: "/profile/info",
+        text: "Profile Info",
+        is_auth: true
+      },
     ]
   },
   getters: {
@@ -100,8 +117,11 @@ export default new Vuex.Store({
     },
     links: (state, getters) => {
       return state.items.concat(getters.categories);
-    }
-  },
+    },
+    userLinks: (state, getters) => {
+      return state.user_items;
+    },
+},
   mutations: {
     setDrawer: (state, payload) => (state.drawer = payload),
     toggleDrawer: state => (state.drawer = !state.drawer)

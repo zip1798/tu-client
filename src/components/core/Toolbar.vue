@@ -21,11 +21,30 @@
           @click="onClick($event, item)"
         >{{ link.text }}</v-btn>
         <v-spacer/>
-        <v-btn
-          :to="'signup'"
-          class="ml-0 hidden-sm-and-down"
-          flat
-        >Sign Up</v-btn>
+        <v-btn v-if="!isAuth" to="/login" flat outline>
+          Log in
+        </v-btn>
+        <v-btn v-if="!isAuth" to="/register" flat >
+          Register
+        </v-btn>
+
+        <!--<v-menu offset-y  open-on-hover>-->
+          <!--<template v-slot:activator="{ on }">-->
+            <!--<v-btn v-on="on" flat outline>-->
+              <!--Sign in-->
+            <!--</v-btn>-->
+
+          <!--</template>-->
+          <!--<v-list>-->
+            <!--<v-list-tile-->
+                    <!--v-for="(user_link, j) in userLinks"-->
+                    <!--:key="j"-->
+                    <!--:to="user_link.to"-->
+            <!--&gt;-->
+              <!--<v-list-tile-title>{{ user_link.text }}</v-list-tile-title>-->
+            <!--</v-list-tile>-->
+          <!--</v-list>-->
+        <!--</v-menu>-->
       </v-layout>
     </v-container>
   </v-toolbar>
@@ -37,7 +56,7 @@ import { mapGetters, mapMutations } from "vuex";
 
 export default {
   computed: {
-    ...mapGetters(["links"])
+    ...mapGetters(["links", "userLinks", "isAuth"])
   },
 
   methods: {

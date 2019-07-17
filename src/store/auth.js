@@ -38,6 +38,7 @@ export default {
     }
   },
   getters: {
-    getUser: state => state.user
+    getUser: state => state.user,
+    isAuth: state =>  !!state.token
   }
 };
