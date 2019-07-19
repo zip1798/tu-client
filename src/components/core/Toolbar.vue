@@ -27,24 +27,8 @@
         <v-btn v-if="!isAuth" to="/register" flat >
           Register
         </v-btn>
-
-        <!--<v-menu offset-y  open-on-hover>-->
-          <!--<template v-slot:activator="{ on }">-->
-            <!--<v-btn v-on="on" flat outline>-->
-              <!--Sign in-->
-            <!--</v-btn>-->
-
-          <!--</template>-->
-          <!--<v-list>-->
-            <!--<v-list-tile-->
-                    <!--v-for="(user_link, j) in userLinks"-->
-                    <!--:key="j"-->
-                    <!--:to="user_link.to"-->
-            <!--&gt;-->
-              <!--<v-list-tile-title>{{ user_link.text }}</v-list-tile-title>-->
-            <!--</v-list-tile>-->
-          <!--</v-list>-->
-        <!--</v-menu>-->
+        
+        <auth-navigation v-if="isAuth"></auth-navigation>
       </v-layout>
     </v-container>
   </v-toolbar>
@@ -53,8 +37,12 @@
 <script>
 // Utilities
 import { mapGetters, mapMutations } from "vuex";
+import AuthNavigation from "../user/AuthNavigation";
 
 export default {
+  components: {
+    AuthNavigation
+  },
   computed: {
     ...mapGetters(["links", "userLinks", "isAuth"])
   },

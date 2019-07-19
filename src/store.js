@@ -78,16 +78,6 @@ export default new Vuex.Store({
     ],
     user_items: [
       {
-        to: "/login",
-        text: "Login",
-        is_auth: false
-      },
-      {
-        to: "/register",
-        text: "Register",
-        is_auth: false
-      },
-      {
         to: "/profile/info",
         text: "Profile Info",
         is_auth: true

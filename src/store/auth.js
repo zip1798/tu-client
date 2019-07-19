@@ -16,13 +16,15 @@ export default {
   },
   actions: {
     LOGIN({ commit, dispatch }, payload) {
+      dispatch("CLEAR_MESSAGES");
+      dispatch("SET_PROCESSING", true);
       axios
         .post(appConfig.api + "login", {
           email: payload.email,
           password: payload.password
         })
         .then(response => {
-           console.log(response);
+           dispatch("SET_PROCESSING", false);
            // response.status = 200
           if (response.data.success) {
             commit("SET_AUTH_STATUS", response.data.success);
@@ -34,7 +36,13 @@ export default {
         })
         .catch(error => {
           commit("SET_ERROR", error.message);
+          dispatch("SET_PROCESSING", false);
         });
+    },
+
+    AUTH_LOGOUT({ commit }) {
+      commit("SET_AUTH_STATUS", { token: null, user: {}});
+      router.push({path:"/"});
     }
   },
   getters: {

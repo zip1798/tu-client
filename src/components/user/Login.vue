@@ -2,9 +2,9 @@
   <v-container fluid fill-height>
     <v-layout align-center justify-center>
       <v-flex xs12 sm8 md6>
-        <v-card class="elevation-12">
+        <v-card class="elevation-12" v-if="!isAuth">
           <v-toolbar dark color="primary">
-            <v-toolbar-title>Login > {{ getUser.email }} </v-toolbar-title>
+            <v-toolbar-title>Login </v-toolbar-title>
           </v-toolbar>
           <v-card-text>
             <v-form v-model="valid">
@@ -36,6 +36,13 @@
             <v-btn color="primary" @click.prevent="signup" :disabled="processing || !valid">Login</v-btn>
           </v-card-actions>
         </v-card>
+
+        <v-card class="elevation-12" v-if="isAuth">
+          <v-card-actions>
+            <v-btn color="primary" @click.prevent="AUTH_LOGOUT">Logout</v-btn>
+          </v-card-actions>
+        </v-card>
+
       </v-flex>
     </v-layout>
   </v-container>
@@ -43,7 +50,7 @@
 
 
 <script>
-import {mapGetters} from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
 
 export default {
   name: "Login",
@@ -65,7 +72,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['getUser']),            
+    ...mapGetters(['isAuth', 'getUser']),            
     error() {
       return false; // this.$store.getters.getError;
     },
@@ -81,6 +88,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['AUTH_LOGOUT']),
     signup() {
       this.$store.dispatch("LOGIN", {
         email: this.email,
