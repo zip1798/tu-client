@@ -20,6 +20,7 @@
           flat
           @click="onClick($event, item)"
         >{{ link.text }}</v-btn>
+        <test-navigation></test-navigation>
         <v-spacer/>
         <v-btn v-if="!isAuth" to="/login" flat outline>
           Log in
@@ -38,13 +39,15 @@
 // Utilities
 import { mapGetters, mapMutations } from "vuex";
 import AuthNavigation from "../user/AuthNavigation";
+import TestNavigation from "../user/TestNavigation";
 
 export default {
   components: {
-    AuthNavigation
+    AuthNavigation,
+    TestNavigation
   },
   computed: {
-    ...mapGetters(["links", "userLinks", "isAuth"])
+    ...mapGetters(["links", "isAuth"])
   },
 
   methods: {

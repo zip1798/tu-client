@@ -26,27 +26,20 @@ export default new Vuex.Store({
       {
         to: "/contacts",
         text: "Contacts"
-      },
-      //{
-      //  to: "/login",
-      //  text: "Login"
-      //},
-      //{
-      //  to: "/register",
-      //  text: "Register"
-      //},
-      //{
-      //  to: "/profile/info",
-      //  text: "Profile Info"
-      //},
+      }
+    ],
+    user_items: [
       {
-        to: "/events/:page?",
-        text: "Events"
+        to: "/profile/info",
+        text: "Profile Info",
+        is_auth: true
       },
       {
         to: "/myevents/:page",
         text: "My Events"
       },
+    ], 
+    test_items: [
       {
         to: "/event/create",
         text: "Create Event"
@@ -75,13 +68,6 @@ export default new Vuex.Store({
         to: "/test",
         text: "Test"
       }
-    ],
-    user_items: [
-      {
-        to: "/profile/info",
-        text: "Profile Info",
-        is_auth: true
-      },
     ]
   },
   getters: {
@@ -111,6 +97,7 @@ export default new Vuex.Store({
     userLinks: (state, getters) => {
       return state.user_items;
     },
+    testLinks: state => state.test_items
 },
   mutations: {
     setDrawer: (state, payload) => (state.drawer = payload),
