@@ -60,7 +60,7 @@
           <v-card-actions>
             <v-btn small flat :to="'/login'">Login</v-btn>
             <v-spacer></v-spacer>
-            <v-btn color="primary" @click.prevent="signup" :disabled="processing || !valid">Register</v-btn>
+            <v-btn color="primary" @click.prevent="register" :disabled="processing || !valid">Register</v-btn>
           </v-card-actions>
         </v-card>
 
@@ -83,14 +83,12 @@ export default {
   name: "Register",
   data() {
     return {
+      name: null,
       email: null,
       password: null,
       valid: false,
-      name: null,
       phone: null,
       city: null,
-      is_subscribe_events: false,
-      is_subscribe_news: false,
 
       nameRules: [v => !!v || "Please enter your Name"],
       emailRules: [
@@ -106,36 +104,22 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['isAuth', 'getUser']),            
-    error() {
-      return false; // this.$store.getters.getError;
-    },
-    processing() {
-      return false; // this.$store.getters.getProcessing;
-    },
-    isUserAuthentificated() {
-      return false; // this.$store.getters.isUserAuthentificated;
-    }
+    ...mapGetters(['isAuth', 'getUser'])
   },
   watch: {
-    isUserAuthentificated(val) {
-      //   if (val === true) {
-      //     this.$router.push("/");
-      //   }
-    }
   },
   methods: {
     ...mapActions(['AUTH_LOGOUT']),
-    signup() {
-      //   this.$store.dispatch("SIGNUP", {
-      //     email: this.email,
-      //     password: this.password,
-      //     name: this.name,
-      //     phone: this.phone,
-      //     city: this.city,
-      //     is_subscribe_events: this.is_subscribe_events,
-      //     is_subscribe_news: this.is_subscribe_news
-      //   });
+    register() {
+        this.$store.dispatch("REGISTER", {
+          email: this.email,
+          password: this.password,
+          name: this.name,
+          phone: this.phone,
+          city: this.city,
+          is_subscribe_events: this.is_subscribe_events,
+          is_subscribe_news: this.is_subscribe_news
+        });
     }
   }
 };
