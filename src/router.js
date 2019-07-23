@@ -67,9 +67,10 @@ export default new Router({
       component: PasswordChange
     },
     {
-      path: "/password/reset",
+      path: "/password/reset/:token?",
       name: "password_reset",
-      component: PasswordReset
+      component: PasswordReset,
+      props: true
     },
     {
       path: "/events/:page?",

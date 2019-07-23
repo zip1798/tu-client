@@ -19,6 +19,7 @@ export default {
   },
 
   actions: {
+
 /* LOGIN action */
     LOGIN({ commit, dispatch }, payload) {
       dispatch("CLEAR_MESSAGES");
@@ -50,6 +51,7 @@ export default {
       commit("SET_AUTH_STATUS", { token: null, user: {}});
       router.push({path:"/"});
     },
+
 /* AUTH_RESTORE action */
     AUTH_RESTORE({ commit }) {
       if (Vue.$storage.has('auth')) {
@@ -70,20 +72,43 @@ export default {
                   city: payload.city
               })
               .then(response => {
-              dispatch("SET_PROCESSING", false);
-          // response.status = 200
-          if (response.data.success) {
-              commit("SET_AUTH_STATUS", response.data.success);
-              router.push({path:"/"});
-          }
-          if (response.error) {
-              throw new Error(response.error);
-          }
-      })
-      .catch(error => {
-              commit("SET_ERROR", error.message);
-          dispatch("SET_PROCESSING", false);
-      });
+                dispatch("SET_PROCESSING", false);
+                // response.status = 200
+                if (response.data.success) {
+                    commit("SET_AUTH_STATUS", response.data.success);
+                    router.push({path:"/"});
+                }
+                if (response.error) {
+                    throw new Error(response.error);
+                }
+              })
+              .catch(error => {
+                  commit("SET_ERROR", error.message);
+                  dispatch("SET_PROCESSING", false);
+              });
+      },
+
+/* RESET_PASSWORD action */
+      RESET_PASSWORD({ commit, dispatch }, payload) {
+          dispatch("CLEAR_MESSAGES");
+          dispatch("SET_PROCESSING", true);
+          axios
+              .post(appConfig.api + "password/create", { email: payload.email })
+              .then(response => {
+                dispatch("SET_PROCESSING", false);
+                // response.status = 200
+                if (response.data.success) {
+                    commit("SET_SUCCESS_MESSAGE", response.data.success);
+                    router.push({path:"/"});
+                }
+                if (response.error) {
+                    throw new Error(response.error);
+                }
+              })
+              .catch(error => {
+                  commit("SET_ERROR", error.message);
+                  dispatch("SET_PROCESSING", false);
+              });
       },
 
   },
