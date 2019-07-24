@@ -1,5 +1,6 @@
 export default {
     state: {
+        language: 'en',
         processing: false,
         error: null,
         success_message: null
@@ -38,6 +39,7 @@ export default {
     },
     getters: {
         getProcessing: state => state.processing,
+        getLanguage: state => state.language,
         getError: state => state.error,
         getSuccessMessage: state => state.success_message
     }

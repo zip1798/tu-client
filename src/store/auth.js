@@ -3,6 +3,7 @@ import appConfig from "../config/app";
 import router from "../router";
 import Vue from "vue"
 import * as generalRepo from "../repository/general";
+import server from "../repository/server";
 
 export default {
   state: {
@@ -22,7 +23,11 @@ export default {
   actions: {
 
 /* LOGIN action */
-    LOGIN({ commit, dispatch }, payload) {
+//  { commit, dispatch, getters, rootGetters, state } (state has only self data, getters are global)
+    LOGIN({ commit, dispatch, getters}, payload) {
+      
+      server.post("login", payload, {}, () => {});
+
       dispatch("CLEAR_MESSAGES");
       dispatch("SET_PROCESSING", true);
       axios
@@ -128,7 +133,7 @@ export default {
                 if (response.data.success) {
                     commit("SET_SUCCESS_MESSAGE", response.data.success);
                     // todo processing auth respond
-                    router.push({path:"/"});
+                    router.push({path:"/login"});
                 }
                 if (response.error) {
                     throw new Error(response.error);
