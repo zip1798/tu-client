@@ -109,16 +109,14 @@ export default {
   watch: {
   },
   methods: {
-    ...mapActions(['AUTH_LOGOUT']),
+    ...mapActions(['AUTH_LOGOUT', 'REGISTER']),
     register() {
-        this.$store.dispatch("REGISTER", {
+        this.REGISTER({
           email: this.email,
           password: this.password,
           name: this.name,
           phone: this.phone,
           city: this.city,
-          is_subscribe_events: this.is_subscribe_events,
-          is_subscribe_news: this.is_subscribe_news
         });
     }
   }

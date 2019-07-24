@@ -35,7 +35,7 @@
           <v-card-actions>
             <v-btn small flat :to="'/profile/info'">Profile Info</v-btn>
             <v-spacer></v-spacer>
-            <v-btn color="primary" @click.prevent="signup" :disabled="processing || !valid">Change Password</v-btn>
+            <v-btn color="primary" @click.prevent="passwordChange" :disabled="getProcessing || !valid">Change Password</v-btn>
           </v-card-actions>
         </v-card>
       </v-flex>
@@ -44,6 +44,8 @@
 </template>
 
 <script>
+import {mapGetters, mapActions} from 'vuex'
+
 export default {
   name: "PasswodrChange",
   data() {
@@ -58,34 +60,15 @@ export default {
     };
   },
   computed: {
-    error() {
-      return false; // this.$store.getters.getError;
-    },
-    processing() {
-      return false; // this.$store.getters.getProcessing;
-    },
-    isUserAuthentificated() {
-      return false; // this.$store.getters.isUserAuthentificated;
-    }
-  },
-  watch: {
-    isUserAuthentificated(val) {
-      //   if (val === true) {
-      //     this.$router.push("/");
-      //   }
-    }
+    ...mapGetters(['isAuth', 'getUser', 'getProcessing', 'getError']),            
   },
   methods: {
-    signup() {
-      //   this.$store.dispatch("SIGNUP", {
-      //     email: this.email,
-      //     password: this.password,
-      //     name: this.name,
-      //     phone: this.phone,
-      //     city: this.city,
-      //     is_subscribe_events: this.is_subscribe_events,
-      //     is_subscribe_news: this.is_subscribe_news
-      //   });
+    ...mapActions(['CHANGE_PASSWORD']),
+    passwordChange() {
+      this.CHANGE_PASSWORD({
+        old_password: this.old_password,
+        new_password: this.new_password,
+      });
     }
   }
 };

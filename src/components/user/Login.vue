@@ -33,7 +33,7 @@
             <v-btn small flat :to="'/register'">Register</v-btn>
             <v-btn small flat :to="'/password/reset'">Reset password</v-btn>
             <v-spacer></v-spacer>
-            <v-btn color="primary" @click.prevent="signup" :disabled="processing || !valid">Login</v-btn>
+            <v-btn color="primary" @click.prevent="signup" :disabled="getProcessing || !valid">Login</v-btn>
           </v-card-actions>
         </v-card>
 
@@ -72,25 +72,12 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['isAuth', 'getUser']),            
-    error() {
-      return false; // this.$store.getters.getError;
-    },
-    processing() {
-      return false; // this.$store.getters.getProcessing;
-    }
-  },
-  watch: {
-    isUserAuthentificated(val) {
-      //   if (val === true) {
-      //     this.$router.push("/");
-      //   }
-    }
+    ...mapGetters(['isAuth', 'getUser', 'getProcessing', 'getError']),            
   },
   methods: {
-    ...mapActions(['AUTH_LOGOUT']),
+    ...mapActions(['AUTH_LOGOUT', 'LOGIN']),
     signup() {
-      this.$store.dispatch("LOGIN", {
+      this.LOGIN({
         email: this.email,
         password: this.password
       });
