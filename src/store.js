@@ -2,13 +2,15 @@ import Vue from "vue";
 import Vuex from "vuex";
 import generalModule from "./store/general";
 import authModule from "./store/auth";
+import profileModule from "./store/profile";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   modules: {
     generalModule,
-    authModule
+    authModule,
+    profileModule
   },
   state: {
     articles: [], // require('@/data/articles.json'),

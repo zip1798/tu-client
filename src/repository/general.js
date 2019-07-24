@@ -1,5 +1,5 @@
 export function prepareErrorRespond(error) {
-	if (error.response.data.error) {
+	if (error.response && error.response.data && error.response.data.error) {
 		let e = error.response.data.error;
 		if ( Object.prototype.toString.call( e ) === '[object Object]' ) {
 			let result = [];

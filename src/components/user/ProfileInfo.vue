@@ -14,7 +14,7 @@
               </v-list-tile-action>
               <v-list-tile-content>
                 <v-list-tile-sub-title>Name</v-list-tile-sub-title>
-                <v-list-tile-title>{{ name }}</v-list-tile-title>
+                <v-list-tile-title>{{ getProfile.name }} </v-list-tile-title>
               </v-list-tile-content>
             </v-list-tile>
             <v-divider inset></v-divider>
@@ -25,7 +25,7 @@
               </v-list-tile-action>
               <v-list-tile-content>
                 <v-list-tile-sub-title>Email</v-list-tile-sub-title>
-                <v-list-tile-title>{{ email }}</v-list-tile-title>
+                <v-list-tile-title>{{ getProfile.email }} </v-list-tile-title>
               </v-list-tile-content>
             </v-list-tile>
             <v-divider inset></v-divider>
@@ -36,7 +36,7 @@
               </v-list-tile-action>
               <v-list-tile-content>
                 <v-list-tile-sub-title>Phone</v-list-tile-sub-title>
-                <v-list-tile-title>{{ phone}}</v-list-tile-title>
+                <v-list-tile-title>{{ getProfile.phone}} </v-list-tile-title>
               </v-list-tile-content>
             </v-list-tile>
             <v-divider inset></v-divider>
@@ -48,7 +48,7 @@
 
               <v-list-tile-content>
                 <v-list-tile-sub-title>City</v-list-tile-sub-title>
-                <v-list-tile-title>{{ city }}</v-list-tile-title>
+                <v-list-tile-title>{{ getProfile.city }} </v-list-tile-title>
               </v-list-tile-content>
             </v-list-tile>
           </v-list>
@@ -58,12 +58,15 @@
             <v-spacer></v-spacer>
           </v-card-actions>
         </v-card>
+        
       </v-flex>
     </v-layout>
   </v-container>
 </template>
 
 <script>
+import {mapGetters, mapActions} from 'vuex'
+
 export default {
   name: "ProfileInfo",
   data() {
@@ -75,24 +78,14 @@ export default {
     };
   },
   computed: {
-    error() {
-      return false; // this.$store.getters.getError;
-    },
-    processing() {
-      return false; // this.$store.getters.getProcessing;
-    },
-    isUserAuthentificated() {
-      return false; // this.$store.getters.isUserAuthentificated;
-    }
+    ...mapGetters(['isAuth', 'getProfile', 'getProcessing', 'getError', 'getToken']),            
   },
-  watch: {
-    isUserAuthentificated(val) {
-      //   if (val === true) {
-      //     this.$router.push("/");
-      //   }
-    }
+  methods: {
+    ...mapActions(['LOAD_PROFILE'])
   },
-  methods: {}
+  created() {
+    this.LOAD_PROFILE();
+  }
 };
 </script>
 

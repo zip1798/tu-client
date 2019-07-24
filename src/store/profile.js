@@ -1,15 +1,23 @@
-import axios from "axios";
-import appConfig from "../config/app";
 import router from "../router";
 import Vue from "vue"
-import * as generalRepo from "../repository/general";
+import server from "../repository/server";
 
 export default {
   state: {
-    profile: {}
+    profile: {
+      name: '',
+      email: '',
+      city: '',
+      phone: '',
+    }
   },
   mutations: {
     SET_PROFILE(state, payload) {
+      state.profile.name = payload.name
+      state.profile.email = payload.email
+      state.profile.city = payload.city
+      state.profile.phone = payload.phone
+
     }
   },
 
@@ -17,36 +25,17 @@ export default {
 
 /* LOAD_PROFILE action */
     LOAD_PROFILE({ commit, dispatch }, payload) {
-/*      
-      dispatch("CLEAR_MESSAGES");
-      dispatch("SET_PROCESSING", true);
-      axios
-        .post(appConfig.api + "login", {
-          email: payload.email,
-          password: payload.password
-        })
-        .then(response => {
-           dispatch("SET_PROCESSING", false);
-           // response.status = 200
+        server.post("profile", {}, {}, (response) => {
           if (response.data.success) {
-            commit("SET_AUTH_STATUS", response.data.success);
-            router.push({path:"/"});
+            commit("SET_PROFILE", response.data.success);
           }
-          if (response.error) {
-            throw new Error(response.error);
-          }
-        })
-        .catch(error => {
-          commit("SET_ERROR", generalRepo.prepareErrorRespond(error));
-          dispatch("SET_PROCESSING", false);
         });
-*/    
+    },
 
 /* CLEAR_PROFILE action */
 
 /* UPDATE_PROFILE action */
 
-},
 
 
   },
