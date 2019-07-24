@@ -111,22 +111,14 @@ export default {
   methods: {
     ...mapActions(['AUTH_LOGOUT', 'REGISTER']),
     register() {
-        REGISTER({
+        this.REGISTER({
           email: this.email,
           password: this.password,
           name: this.name,
           phone: this.phone,
           city: this.city,
         });
-
-/*        this.$store.dispatch("REGISTER", {
-          email: this.email,
-          password: this.password,
-          name: this.name,
-          phone: this.phone,
-          city: this.city,
-        });
-*/    }
+    }
   }
 };
 </script>

@@ -77,7 +77,7 @@ export default {
   methods: {
     ...mapActions(['AUTH_LOGOUT', 'LOGIN']),
     signup() {
-      this.$store.dispatch("LOGIN", {
+      this.LOGIN({
         email: this.email,
         password: this.password
       });

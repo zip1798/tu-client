@@ -65,7 +65,7 @@ export default {
   methods: {
     ...mapActions(['CHANGE_PASSWORD']),
     passwordChange() {
-      CHANGE_PASSWORD({
+      this.CHANGE_PASSWORD({
         old_password: this.old_password,
         new_password: this.new_password,
       });

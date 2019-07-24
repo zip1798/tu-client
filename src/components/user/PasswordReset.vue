@@ -34,12 +34,33 @@
         </v-card>
 
         <!-- Set new password -->
-        <v-card class="elevation-12" v-if="!token">
+        <v-card class="elevation-12" v-if="token">
           <v-toolbar dark color="primary">
             <v-toolbar-title>Set New Password Form</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
             <v-form v-model="valid_password">
+              <v-text-field
+                prepend-icon="lock"
+                name="password"
+                label="Password"
+                id="password"
+                type="password"
+                v-model="password"
+                :rules="passwordRules"
+                required
+              ></v-text-field>
+              
+              <v-text-field
+                prepend-icon="lock"
+                name="password_confirm"
+                label="Confirm Password"
+                id="password_confirm"
+                type="password"
+                v-model="password_confirm"
+                :rules="passwordConfirmRules"
+                required
+              ></v-text-field>
 
             </v-form>
           </v-card-text>
@@ -70,6 +91,8 @@ export default {
   data() {
     return {
       email: null,
+      password: null,
+      password_confirm: null,
       valid: false,
       valid_password: false,
       emailRules: [
@@ -77,19 +100,28 @@ export default {
         v =>
           /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
           "Wrong email"
+      ],
+      passwordRules: [
+        v => !!v || "Please enter password",
+        v => (v && v.length >= 6) || "Password is too short - min 6 simbols"
+      ],
+      passwordConfirmRules: [
+        v => !!v || "Please enter password confirmation",
+        v => (v && v == this.password) || "Wrong confirmation of password"
       ]
+
     };
   },
   computed: {
     ...mapGetters(['isAuth', 'getUser', 'getProcessing', 'getError']),            
   },
   methods: {
-    ...mapActions(['AUTH_LOGOUT', 'RESET_PASSWORD']),
+    ...mapActions(['AUTH_LOGOUT', 'RESET_PASSWORD', 'SET_NEW_PASSWORD']),
     resetPassword() {
-      RESET_PASSWORD({email: this.email});
+      this.RESET_PASSWORD({email: this.email});
     },
     setNewPassword() {
-      // todo
+      this.SET_NEW_PASSWORD({token: this.token, password: this.password, password_confirm: this.password_confirm});
     }
   }
 };
