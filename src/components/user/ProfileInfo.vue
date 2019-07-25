@@ -71,10 +71,10 @@ export default {
   name: "ProfileInfo",
   data() {
     return {
-      email: 'test@google.com',
-      name: "John Smith",
-      phone: "+380 (67) 111122",
-      city: "Bucha"
+      email: '',
+      name: "",
+      phone: "",
+      city: ""
     };
   },
   computed: {

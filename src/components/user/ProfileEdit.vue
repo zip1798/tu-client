@@ -1,13 +1,12 @@
 <template>
   <v-container fluid fill-height>
     <v-layout align-center justify-center>
-      <v-flex xs12 sm8 md6>
+      <v-flex xs12 sm8>
         <v-card class="elevation-12">
           <v-toolbar dark color="primary">
             <v-toolbar-title>Profile Edit Form</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
-            <v-alert :value="error" type="warning">{{ error }}</v-alert>
             <v-form v-model="valid">
               <v-text-field
                 prepend-icon="person"
@@ -50,7 +49,7 @@
             <v-btn small flat :to="'/profile/info'">Profile Info</v-btn>
             <v-btn small flat :to="'/password/change'">Chang password</v-btn>
             <v-spacer></v-spacer>
-            <v-btn color="primary" @click.prevent="signup" :disabled="processing || !valid">Submit</v-btn>
+            <v-btn color="primary" @click.prevent="signup" :disabled="getProcessing || !valid">Submit</v-btn>
           </v-card-actions>
         </v-card>
       </v-flex>
@@ -59,18 +58,19 @@
 </template>
 
 <script>
+import {mapGetters, mapActions} from 'vuex'
+
 export default {
   name: "ProfileEdit",
   data() {
     return {
       email: null,
-      password: null,
       valid: false,
       name: null,
       phone: null,
       city: null,
-      is_subscribe_events: false,
-      is_subscribe_news: false,
+      // is_subscribe_events: false,
+      // is_subscribe_news: false,
 
       nameRules: [v => !!v || "Please enter your Name"],
       emailRules: [
@@ -86,36 +86,27 @@ export default {
     };
   },
   computed: {
-    error() {
-      return false; // this.$store.getters.getError;
-    },
-    processing() {
-      return false; // this.$store.getters.getProcessing;
-    },
-    isUserAuthentificated() {
-      return false; // this.$store.getters.isUserAuthentificated;
-    }
-  },
-  watch: {
-    isUserAuthentificated(val) {
-      //   if (val === true) {
-      //     this.$router.push("/");
-      //   }
-    }
+    ...mapGetters(['isAuth', 'getProfile', 'getProcessing', 'getError', 'getToken']),            
   },
   methods: {
-    signup() {
-      //   this.$store.dispatch("SIGNUP", {
-      //     email: this.email,
-      //     password: this.password,
-      //     name: this.name,
-      //     phone: this.phone,
-      //     city: this.city,
-      //     is_subscribe_events: this.is_subscribe_events,
-      //     is_subscribe_news: this.is_subscribe_news
-      //   });
+    ...mapActions(['LOAD_PROFILE']),
+    initProfile(data) {
+      this.email = data.email;
+      this.name = data.name;
+      this.phone = data.phone;
+      this.city = data.city;
     }
-  }
+  },
+  created() {
+    this.LOAD_PROFILE();
+    this.$bus.$on('loaded_profile', data => this.initProfile(data));
+  },
+  mounted() {
+    this.initProfile(this.getProfile);
+  },
+  beforeDestroy() {
+    this.$bus.$off('loaded_profile');
+  },
 };
 </script>
 

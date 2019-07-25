@@ -2,6 +2,8 @@ import axios from "axios";
 import appConfig from "../config/app";
 import store from "../store";
 import * as generalRepo from "../repository/general";
+import router from "../router";
+
 
 export default {
 	post(url, data, options, callback) {
@@ -25,6 +27,9 @@ export default {
         .catch(error => {
           store.dispatch("SET_ERROR", generalRepo.prepareErrorRespond(error));
           store.dispatch("SET_PROCESSING", false);
+          if (generalRepo.getErrorRespondStatus(error) == 401) {
+            router.push({path:"/login"});
+          }
         });
 
 	}

@@ -16,9 +16,20 @@ export function prepareErrorRespond(error) {
 		} 
 		return e;
 	}
+	if (error.response && error.response.data && error.response.data.message) {
+		return error.response.data.message
+	}
 	if (error.message) {
 		return error.message;
 	}
 
 	return error;
+}
+
+export function getErrorRespondStatus(error) {
+	if (error.response && error.response.status) {
+		return error.response.status
+	}
+
+	return false;
 }
