@@ -27,7 +27,7 @@ export default {
 
   actions: {
 
-/* LOAD_PROFILE action */
+/*  LOAD_PROFILE action */
     LOAD_PROFILE({ commit, dispatch, state }, payload) {
       if (!!payload || state.profile.id == 0) {
         server.post("profile", {}, {}, (response) => {
@@ -38,11 +38,30 @@ export default {
       }
     },
 
-/* CLEAR_PROFILE action */
+/*  CLEAR_PROFILE action */
+    CLEAR_PROFILE({ state }) {
+      EventBus.notify("loaded_profile", state.profile);
+    },
 
-/* UPDATE_PROFILE action */
+/*  UPDATE_PROFILE action */
+    UPDATE_PROFILE({ commit, dispatch }, payload) {
+      server.post("profile/update", payload, {}, (response) => {
+        if (response.data.success) {
+          commit("SET_PROFILE", response.data.success);
+          dispatch("SET_SUCCESS_MESSAGE", 'Profile has been updated');
+        }
+      });
+    },
 
-
+/*  CHANGE_PASSWORD action */
+    CHANGE_PASSWORD({ dispatch }, payload) {
+      server.post("password/update", payload, {}, (response) => {
+        if (response.data.success) {
+          dispatch("SET_SUCCESS_MESSAGE", 'Password has been updated');
+          router.push({path:"/profile/info"});
+        }
+      });
+    },
 
   },
   getters: {

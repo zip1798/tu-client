@@ -30,6 +30,17 @@
                 :rules="passwordRules"
                 required
               ></v-text-field>
+              
+              <v-text-field
+                prepend-icon="lock"
+                name="new_password_confirmation"
+                label="New Password Confirmation"
+                id="new_password_confirmation"
+                type="password"
+                v-model="new_password_confirmation"
+                :rules="passwordConfirmRules"
+                required
+              ></v-text-field>
             </v-form>
           </v-card-text>
           <v-card-actions>
@@ -52,10 +63,15 @@ export default {
     return {
       old_password: null,
       new_password: null,
+      new_password_confirmation: null,
       valid: false,
       passwordRules: [
         v => !!v || "Please enter password",
         v => (v && v.length >= 6) || "Password is too short - min 6 simbols"
+      ],
+      passwordConfirmRules: [
+        v => !!v || "Please enter password confirmation",
+        v => (v && v == this.password) || "Wrong confirmation of password"
       ]
     };
   },
@@ -68,6 +84,7 @@ export default {
       this.CHANGE_PASSWORD({
         old_password: this.old_password,
         new_password: this.new_password,
+        new_password_confirmation: this.new_password_confirmation
       });
     }
   }

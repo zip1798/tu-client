@@ -49,7 +49,7 @@
             <v-btn small flat :to="'/profile/info'">Profile Info</v-btn>
             <v-btn small flat :to="'/password/change'">Chang password</v-btn>
             <v-spacer></v-spacer>
-            <v-btn color="primary" @click.prevent="signup" :disabled="getProcessing || !valid">Submit</v-btn>
+            <v-btn color="primary" @click.prevent="editProfile" :disabled="getProcessing || !valid">Submit</v-btn>
           </v-card-actions>
         </v-card>
       </v-flex>
@@ -89,12 +89,20 @@ export default {
     ...mapGetters(['isAuth', 'getProfile', 'getProcessing', 'getError', 'getToken']),            
   },
   methods: {
-    ...mapActions(['LOAD_PROFILE']),
+    ...mapActions(['LOAD_PROFILE', 'UPDATE_PROFILE']),
     initProfile(data) {
       this.email = data.email;
       this.name = data.name;
       this.phone = data.phone;
       this.city = data.city;
+    },
+    editProfile() {
+      this.UPDATE_PROFILE({
+        email: this.email,
+        name: this.name,
+        phone: this.phone,
+        city: this.city
+      })
     }
   },
   created() {

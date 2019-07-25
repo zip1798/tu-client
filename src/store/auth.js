@@ -80,7 +80,7 @@ export default {
                 password_confirmation: payload.password_confirm 
         }, {}, (response) => {
           if (response.data.success) {
-            commit("SET_SUCCESS_MESSAGE", response.data.success);
+            dispatch("SET_SUCCESS_MESSAGE", response.data.success);
             router.push({path:"/"});
           }
         });
