@@ -7,7 +7,6 @@
             <v-toolbar-title>Password Change Form</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
-            <v-alert :value="error" type="warning">{{ error }}</v-alert>
             <v-form v-model="valid">
               <v-text-field
                 prepend-icon="lock"
@@ -71,7 +70,7 @@ export default {
       ],
       passwordConfirmRules: [
         v => !!v || "Please enter password confirmation",
-        v => (v && v == this.password) || "Wrong confirmation of password"
+        v => (v && v == this.new_password) || "Wrong confirmation of password"
       ]
     };
   },
