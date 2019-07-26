@@ -8,6 +8,16 @@
           </v-toolbar>
           <v-card-text>
             <v-form v-model="valid">
+              <v-flex xs12 align-center justify-center layout text-xs-center>
+                <v-avatar size="180" color="grey lighten-4" class="my-3">
+                  <v-icon size="150">account_circle</v-icon>
+                </v-avatar>
+              </v-flex>
+
+              <v-flex xs12 align-center justify-center layout text-xs-center>
+                  <upload-btn  @file-update="updateAvatar" title="Upload Avatar" accept="image/*"></upload-btn>
+              </v-flex>
+
               <v-text-field
                 prepend-icon="person"
                 name="name"
@@ -59,6 +69,7 @@
 
 <script>
 import {mapGetters, mapActions} from 'vuex'
+import UploadButton from 'vuetify-upload-button' // https://www.npmjs.com/package/vuetify-upload-button
 
 export default {
   name: "ProfileEdit",
@@ -85,11 +96,14 @@ export default {
       ]
     };
   },
+  components: {
+    'upload-btn': UploadButton
+  },
   computed: {
     ...mapGetters(['isAuth', 'getProfile', 'getProcessing', 'getError', 'getToken']),            
   },
   methods: {
-    ...mapActions(['LOAD_PROFILE', 'UPDATE_PROFILE']),
+    ...mapActions(['LOAD_PROFILE', 'UPDATE_PROFILE', 'UPDATE_AVATAR']),
     initProfile(data) {
       this.email = data.email;
       this.name = data.name;
@@ -103,7 +117,22 @@ export default {
         phone: this.phone,
         city: this.city
       })
-    }
+    },
+    updateAvatar(file) {
+      this.UPDATE_AVATAR(file)
+/*      let formData = new FormData();
+      formData.append('file', file);
+      console.log(arguments)
+      console.log(file)
+      console.log(formData)
+
+      axios.post( '/single-file', formData, {
+          headers: {
+              'Content-Type': 'multipart/form-data'
+          }
+        }
+      ) 
+*/    }
   },
   created() {
     this.LOAD_PROFILE();

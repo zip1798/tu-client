@@ -10,6 +10,9 @@ export default {
       let config = {
           headers: {'Authorization': "Bearer " + store.getters.getToken}
       }  
+      if (options.is_upload) {
+        config.headers['Content-Type'] = 'multipart/form-data';
+      }
       data.language = store.getters.getLanguage;
 
       store.dispatch("CLEAR_MESSAGES");

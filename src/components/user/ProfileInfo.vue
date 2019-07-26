@@ -7,7 +7,12 @@
         </v-toolbar>
 
         <v-card>
-          <v-list three-line>
+            <v-flex xs12 align-center justify-center layout text-xs-center>
+              <v-avatar size="150" color="grey lighten-4" class="my-3">
+                <img src="https://vuetifyjs.com/apple-touch-icon-180x180.png" alt="avatar">
+              </v-avatar>
+            </v-flex>
+
             <v-list-tile @click>
               <v-list-tile-action>
                 <v-icon>person</v-icon>

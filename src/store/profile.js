@@ -63,6 +63,18 @@ export default {
       });
     },
 
+
+    UPDATE_AVATAR({dispatch}, payload) {
+      let formData = new FormData();
+      formData.append('file', payload);
+      server.post("profile/update_avatar", formData, {is_upload: true}, (response) => {
+        if (response.data.success) {
+          commit("SET_PROFILE", response.data.success);
+          dispatch("SET_SUCCESS_MESSAGE", 'Avatar has been updated');
+        }
+      });
+    }
+
   },
   getters: {
     getProfile: state => state.profile,
