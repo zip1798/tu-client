@@ -10,7 +10,8 @@
             <v-form v-model="valid">
               <v-flex xs12 align-center justify-center layout text-xs-center>
                 <v-avatar size="180" color="grey lighten-4" class="my-3">
-                  <v-icon size="150">account_circle</v-icon>
+                  <img v-if="getProfile.icon" :src="getProfile.icon" alt="avatar">
+                  <v-icon v-if="!getProfile.icon" size="150">account_circle</v-icon>
                 </v-avatar>
               </v-flex>
 

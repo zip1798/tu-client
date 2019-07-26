@@ -1,3 +1,3 @@
 export default {
-  api: "http://localhost:8000/api/"
+  api: "http://tu-api.local/api/"
 };

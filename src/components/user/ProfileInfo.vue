@@ -9,7 +9,8 @@
         <v-card>
             <v-flex xs12 align-center justify-center layout text-xs-center>
               <v-avatar size="150" color="grey lighten-4" class="my-3">
-                <img src="https://vuetifyjs.com/apple-touch-icon-180x180.png" alt="avatar">
+                  <img v-if="getProfile.icon" :src="getProfile.icon" alt="avatar">
+                  <v-icon v-if="!getProfile.icon" size="150">account_circle</v-icon>
               </v-avatar>
             </v-flex>
 

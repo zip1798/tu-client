@@ -11,6 +11,7 @@ export default {
       email: '',
       city: '',
       phone: '',
+      icon: '',
     }
   },
   mutations: {
@@ -20,6 +21,7 @@ export default {
       state.profile.email = payload.email
       state.profile.city = payload.city
       state.profile.phone = payload.phone
+      state.profile.icon = payload.icon_url
       
       EventBus.notify("loaded_profile", state.profile);
     }
@@ -64,7 +66,7 @@ export default {
     },
 
 
-    UPDATE_AVATAR({dispatch}, payload) {
+    UPDATE_AVATAR({commit, dispatch}, payload) {
       let formData = new FormData();
       formData.append('file', payload);
       server.post("profile/update_avatar", formData, {is_upload: true}, (response) => {
