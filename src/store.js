@@ -3,6 +3,7 @@ import Vuex from "vuex";
 import generalModule from "./store/general";
 import authModule from "./store/auth";
 import profileModule from "./store/profile";
+import eventModule from "./store/event";
 
 Vue.use(Vuex);
 
@@ -10,7 +11,8 @@ export default new Vuex.Store({
   modules: {
     generalModule,
     authModule,
-    profileModule
+    profileModule,
+    eventModule
   },
   state: {
     articles: [], // require('@/data/articles.json'),

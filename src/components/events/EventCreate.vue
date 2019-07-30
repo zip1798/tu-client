@@ -204,7 +204,7 @@ export default {
   methods: {
     ...mapActions(['CREATE_EVENT']),
     createEvent() {
-      CREATE_EVENT(this.model)
+      this.CREATE_EVENT(this.model)
     },
   }, // methods
 };

@@ -86,7 +86,7 @@
 import {mapGetters, mapActions} from 'vuex'
 
 export default {
-  name: "Reset Password",
+  name: "ResetPassword",
   props:['token'],
   data() {
     return {

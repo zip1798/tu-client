@@ -41,6 +41,7 @@ export default {
         server.post("events", payload, {}, (response) => {
           if (response.data.success) {
             commit("SET_EVENT", response.data.success);
+            dispatch("SET_SUCCESS_MESSAGE", 'Event has been created');
           }
         });
       }
