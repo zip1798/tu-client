@@ -91,12 +91,12 @@
                     <strong>Category</strong>
                   </div>
                 </template>
-                <v-radio value="Google">
+                <v-radio value="regular">
                   <template v-slot:label>
                     <div>Regular practice</div>
                   </template>
                 </v-radio>
-                <v-radio value="Duckduckgo">
+                <v-radio value="unregular">
                   <template v-slot:label>
                     <div>Unregular practice</div>
                   </template>
@@ -104,6 +104,11 @@
                 <v-radio value="seminar">
                   <template v-slot:label>
                     <div>Seminar</div>
+                  </template>
+                </v-radio>
+                <v-radio value="other">
+                  <template v-slot:label>
+                    <div>Other</div>
                   </template>
                 </v-radio>
               </v-radio-group>
@@ -114,17 +119,22 @@
                     <strong>Status</strong>
                   </div>
                 </template>
-                <v-radio value="Active">
+                <v-radio value="pending">
                   <template v-slot:label>
-                    <div>Active</div>
+                    <div>Pending</div>
                   </template>
                 </v-radio>
-                <v-radio value="Hiden">
+                <v-radio value="public">
                   <template v-slot:label>
-                    <div>Hiden</div>
+                    <div>Public</div>
                   </template>
                 </v-radio>
-                <v-radio value="Deleted">
+                <v-radio value="hidden">
+                  <template v-slot:label>
+                    <div>Hidden</div>
+                  </template>
+                </v-radio>
+                <v-radio value="deleted">
                   <template v-slot:label>
                     <div>Deleted</div>
                   </template>
