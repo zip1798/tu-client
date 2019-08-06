@@ -16,7 +16,7 @@
                 label="Title"
                 type="text"
                 v-model="model.title"
-                :rules="requireRules"
+                :rules="titleRules"
                 required
               ></v-text-field>
 
@@ -26,7 +26,7 @@
                 label="Place"
                 type="text"
                 v-model="model.place"
-                :rules="requireRules"
+                :rules="placeRules"
                 required
               ></v-text-field>
 
@@ -85,7 +85,7 @@
               ></v-textarea>
 
               <!-- wysiwyg v-model="description" / -->
-              <v-radio-group v-model="model.category" row>
+              <v-radio-group v-model="model.category" row :rules="categoryRules">
                 <template v-slot:label>
                   <div>
                     <strong>Category</strong>
@@ -113,7 +113,7 @@
                 </v-radio>
               </v-radio-group>
 
-              <v-radio-group v-model="model.status" row>
+              <v-radio-group v-model="model.status" row :rules="statusRules">
                 <template v-slot:label>
                   <div>
                     <strong>Status</strong>
@@ -198,7 +198,21 @@ export default {
       event_date_modal: false,
       valid: false,
 
-      requireRules: [v => !!v || "Please enter value"]
+      titleRules: [
+        v => !!v || "Please enter value"
+      ],
+      placeRules: [
+        v => !!v || "Please enter value"
+      ],
+      categoryRules: [
+        v => !!v || "Please enter value",
+        v => ['regular', 'unregular', 'seminar', 'other'].indexOf(v) != -1 || "Unknown category",
+      ],
+      statusRules: [
+        v => !!v || "Please enter value",
+        v => ['pending', 'public', 'hidden', 'deleted'].indexOf(v) != -1 || "Unknown status",
+      ]
+
     };
   },
   // mounted(){},
