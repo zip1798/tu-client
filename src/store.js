@@ -4,6 +4,7 @@ import generalModule from "./store/general";
 import authModule from "./store/auth";
 import profileModule from "./store/profile";
 import eventModule from "./store/event";
+import mediaModule from "./store/media";
 
 Vue.use(Vuex);
 
@@ -12,7 +13,8 @@ export default new Vuex.Store({
     generalModule,
     authModule,
     profileModule,
-    eventModule
+    eventModule,
+    mediaModule
   },
   state: {
     articles: [], // require('@/data/articles.json'),

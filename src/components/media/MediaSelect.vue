@@ -88,7 +88,7 @@ export default {
     }
   },
 
-  props: ['media_id'],
+  props: ['media_id', 'category'],
   methods: {
   	imageChanged() {
 
