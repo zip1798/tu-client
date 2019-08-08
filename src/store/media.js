@@ -45,7 +45,9 @@ export default {
 
 
     LOAD_MEDIA_LIST({ commit, dispatch, state }, payload) {
+      server.get("media", (response) => {
 
+      });
     },
 
     SELECT_MEDIA({ commit, dispatch, state }, payload) {

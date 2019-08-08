@@ -8,7 +8,7 @@
 		    title="Add Image "
 		    accept="image/*"
 		    large
-		    :fileChangedCallback="imageChanged"
+		    :fileChangedCallback="imageUploaded"
 		  >
 		    <template slot="icon">
 		      <v-icon>add</v-icon>
@@ -73,6 +73,7 @@
 </template>
 
 <script>
+import {mapGetters, mapActions} from 'vuex'
 import UploadButton from 'vuetify-upload-button' // https://www.npmjs.com/package/vuetify-upload-button
 
 export default {
@@ -90,13 +91,24 @@ export default {
 
   props: ['media_id', 'category'],
   methods: {
-  	imageChanged() {
-
+    ...mapActions(['CREATE_IMAGE_MEDIA', 'LOAD_MEDIA_LIST', 'SELECT_MEDIA', 'SET_PAGE']),
+  	imageUploaded(file) {
+      this.CREATE_IMAGE_MEDIA({
+        file: file,
+        category: this.category
+      })
   	}
   },
   components: {
   	'upload-btn': UploadButton
-  }
+  },
+  computed: {
+    ...mapGetters(['getSelectedMedia', 'getMediaList']),            
+  },
+  mounted() {
+    this.LOAD_MEDIA_LIST();
+  },
+
 }
 </script>
 
