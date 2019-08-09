@@ -8,12 +8,14 @@
 		    title="Add Image "
 		    accept="image/*"
 		    large
-		    :fileChangedCallback="imageUploaded"
+        @file-update="imageUploaded"
 		  >
 		    <template slot="icon">
 		      <v-icon>add</v-icon>
 		    </template>
 		  </upload-btn>
+
+
 
 		  <v-card v-if="image">
 		    <v-img :src="image" max-height="200" class="grey darken-4" contain></v-img>

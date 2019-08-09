@@ -154,7 +154,7 @@
               </v-layout>
 
 
-              <media-select :media_id="model.media_id"></media-select>
+              <media-select :media_id="model.media_id" :category="`event`"></media-select>
 
             </v-form>
 
