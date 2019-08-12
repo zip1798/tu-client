@@ -41,11 +41,12 @@ export default {
         headers: {'Authorization': "Bearer " + store.getters.getToken}
     }  
     // data.language = store.getters.getLanguage;
+    console.log(appConfig.api + url)
 
     store.dispatch("CLEAR_MESSAGES");
     store.dispatch("SET_PROCESSING", true);
     axios
-      .get(appConfig.api + url, data, config)
+      .get(appConfig.api + url, [], config)
       .then(response => {
          store.dispatch("SET_PROCESSING", false);
          // response.status = 200

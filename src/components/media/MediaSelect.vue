@@ -4,43 +4,33 @@
 
 		<v-layout row wrap mt-4>
 		<v-flex xs12>
-		  <upload-btn
-		    title="Add Image "
-		    accept="image/*"
-		    large
-        @file-update="imageUploaded"
-		  >
-		    <template slot="icon">
-		      <v-icon>add</v-icon>
-		    </template>
-		  </upload-btn>
+      <v-card class="my-5" v-if="getSelectedMedia">
+         <v-img :src="getSelectedMedia.full_url"></v-img>
+      </v-card>
+      
+      <p class="text-xs-center title font-weight-light my-5" v-if="getSelectedMedia == null">No image</p>
 
-
-
-		  <v-card v-if="image">
-		    <v-img :src="image" max-height="200" class="grey darken-4" contain></v-img>
-		    <v-card-title class="title">{{ image_name }}</v-card-title>
-		  </v-card>
 		</v-flex>
 		</v-layout>
 
     <v-container grid-list-sm fluid>
+      <div class="title font-weight-light mb-3">Choose image for event from library</div>
       <v-layout row wrap>
-        <v-flex v-for="n in 9" :key="n" xs4 d-flex>
+        <v-flex v-for="(media, mediaIdx) in getMediaList" :key="`media-${media.id}`" xs4 d-flex>
           <v-hover>
-            <v-card
-              flat
-              tile
-              class="d-flex"
+            <v-card flat tile 
               slot-scope="{ hover }"
               :class="`elevation-${hover ? 12 : 2}`"
             >
+            <v-card-text>
+              
               <v-img
-                :src="`https://picsum.photos/500/300?image=${n * 5 + 10}`"
-                :lazy-src="`https://picsum.photos/10/6?image=${n * 5 + 10}`"
+                :src="media.full_thumbnail_url"
+                :lazy-src="media.full_thumbnail_url"
                 aspect-ratio="1"
                 class="grey lighten-2"
               >
+<!-- 
                 <template v-slot:placeholder>
                   <v-layout fill-height align-center justify-center ma-0>
                     <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
@@ -54,11 +44,22 @@
                     style="height: 30%;"
                   >
                     <v-radio-group v-model="media_id" row dark>
-                      <v-radio label="Select Image" :value="`radio-${n}`"></v-radio>
+                      <v-radio label="Select Image" :value="media.id"></v-radio>
                     </v-radio-group>
                   </div>
                 </v-expand-transition>
+ -->              
               </v-img>
+            </v-card-text>
+            <v-card-actions>
+              <v-btn 
+                flat 
+                :color="getSelectedMediaID == media.id ? 'red' : 'blue'"
+                @click.prevent="SELECT_MEDIA(media.id)"
+                >Select</v-btn>
+              <v-spacer></v-spacer>
+              <v-btn icon><v-icon>delete</v-icon></v-btn>
+            </v-card-actions>
             </v-card>
 
           </v-hover>
@@ -66,9 +67,21 @@
       </v-layout>
     </v-container>
 
-    <div class="text-xs-center">
-      <v-pagination v-model="page" :length="6"></v-pagination>
+    <div class="text-xs-center" v-if="getPageCount > 1">
+      <v-pagination v-model="page" :length="getPageCount"></v-pagination>
     </div>
+    
+    <v-divider></v-divider>
+    <upload-btn
+      title="Upload new Image to library "
+      accept="image/*"
+      large
+      @file-update="imageUploaded"
+    >
+      <template slot="icon">
+        <v-icon>add</v-icon>
+      </template>
+    </upload-btn>
     
   </v-card>
 
@@ -84,7 +97,6 @@ export default {
 
   data () {
     return {
-    	// media_id: null,
     	image: null,
     	image_name: null,
     	page: 1
@@ -105,11 +117,19 @@ export default {
   	'upload-btn': UploadButton
   },
   computed: {
-    ...mapGetters(['getSelectedMedia', 'getMediaList']),            
+    ...mapGetters(['getSelectedMedia', 'getSelectedMediaID', 'getMediaList', 'getPageCount']),            
   },
   mounted() {
     this.LOAD_MEDIA_LIST();
   },
+  watch: {
+    page(newValue, oldValue) {
+      this.SET_PAGE(newValue)
+    },
+    media_id(newValue, oldValue) {
+      this.SELECT_MEDIA(newValue)
+    }
+  }
 
 }
 </script>

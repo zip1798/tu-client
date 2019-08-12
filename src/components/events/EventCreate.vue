@@ -220,7 +220,7 @@ export default {
     MediaSelect
   },
   computed: {
-    ...mapGetters(["getProcessing"]),
+    ...mapGetters(["getProcessing", "getSelectedMediaID"]),
     event_date() {
       return this.model.event_date;
     }
@@ -228,6 +228,7 @@ export default {
   methods: {
     ...mapActions(['CREATE_EVENT']),
     createEvent() {
+      this.model.media_id = this.getSelectedMediaID
       this.CREATE_EVENT(this.model)
     },
   }, // methods

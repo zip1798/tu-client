@@ -23,17 +23,44 @@ export default {
 
     APPEND_MEDIA(state, payload) {
       state.media_list.push(payload)
+    },
+
+    CLEAR_MEDIA_LIST(state) {
+      state.media_list = []
+      state.media_filter = {
+        category: 'all',
+        type: 'all',
+      }
+      state.pagination = {
+        current_page: 1,
+        elements_on_page: 9
+      }
+      // state.media_id = 0
+    },
+
+    SET_CURRENT_PAGE(state, payload) {
+      state.pagination.current_page = payload
+    },
+
+    SET_FILTER(stae, payload) {
+      if (payload.category) {
+        state.media_filter.category = payload.category
+      }
+      if (payload.type) {
+        state.media_filter.type = payload.type
+      }
     }
+
   },
 
   actions: {
 
 /*  CREATE_IMAGE_MEDIA action */
     CREATE_IMAGE_MEDIA({ commit, dispatch, state }, payload) {
-      let formData = new FormData();
-      formData.append('file', payload.file);
-      formData.append('category', payload.category);
-      formData.append('type', 'image');
+      let formData = new FormData()
+      formData.append('file', payload.file)
+      formData.append('category', payload.category)
+      formData.append('type', 'image')
       server.post("media", formData, {is_upload: true}, (response) => {
         if (response.data.success) {
           commit("APPEND_MEDIA", response.data.success)
@@ -44,27 +71,59 @@ export default {
     },
 
 
-    LOAD_MEDIA_LIST({ commit, dispatch, state }, payload) {
+    LOAD_MEDIA_LIST({ commit, dispatch, state }) {
       server.get("media", (response) => {
-
+          commit('CLEAR_MEDIA_LIST')
+          if (Array.isArray(response.data.success)) {
+            response.data.success.forEach(element => commit('APPEND_MEDIA', element))
+          }
       });
     },
 
-    SELECT_MEDIA({ commit, dispatch, state }, payload) {
-
+    SELECT_MEDIA({ commit }, payload) {
+      commit('SET_MEDIA_ID', payload)
     },
 
-    SET_PAGE({ commit, state }, payload) {
-
+    SET_PAGE({ commit }, payload) {
+      commit('SET_CURRENT_PAGE', payload)
     },
 
-    SET_FILTER({ commit, state }, payload) {
-
+    SET_FILTER({ commit }, payload) {
+      commit('SET_FILTER', payload)
     }
 
   },
   getters: {
-    getSelectedMedia: state => state.media_id,
-    getMediaList: state => state.media_list
+    getSelectedMedia: (state) => {
+      let result = state.media_list.filter(media => media.id == state.media_id)
+      return result.length ? result[0] : null
+    },
+
+    getSelectedMediaID: state => state.media_id,
+
+    getMediaList: (state) => {
+      let result = state.media_list.filter((media) => {
+        if (state.media_filter.category != 'all' && state.media_filter.category != media.category) {
+          return false
+        }
+        if (state.media_filter.type != 'all' && state.media_filter.type != media.type) {
+          return false
+        }
+        return true
+      })
+      
+      let begin_media_element = (state.pagination.current_page - 1) * state.pagination.elements_on_page
+        , end_media_element = begin_media_element + state.pagination.elements_on_page  
+      return result.slice(begin_media_element, end_media_element)
+    },
+
+    getPageCount: (state) => {
+      let result = Math.ceil(state.media_list.length / state.pagination.elements_on_page)
+      if (result == 0) {
+        result = 1
+      }
+
+      return result
+    }
   }
 };
