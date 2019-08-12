@@ -4,6 +4,7 @@
     <v-divider></v-divider>
     <v-btn color="blue" flat @click.prevent="showMessage">Rise Message</v-btn>
     <v-btn color="red" flat @click.prevent="showError">Rise Error</v-btn>
+    <v-btn color="green" flat @click.prevent="showConfirm">Rise Confirm Window</v-btn>
 
     <v-checkbox v-model="processing" label="Processing"></v-checkbox>
 
@@ -36,6 +37,13 @@ export default {
     },
     showError() {
       this.$store.dispatch("SET_ERROR", "-- error --");
+    },
+
+    showConfirm() {
+      this.$dialog.confirm({
+        text: 'Do you really want to exit?',
+        title: 'Warning'
+      }).then((v) => alert('This is Sparta ' + v))
     }
   }
 };

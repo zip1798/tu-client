@@ -6,6 +6,9 @@ import router from "./router";
 import store from "./store";
 import {Vue2Storage} from 'vue2-storage'
 import { setupBus }  from "./repository/eventBus"
+import VuetifyDialog from 'vuetify-dialog' // https://vaadin.com/directory/component/yariksavvuetify-dialog / https://codesandbox.io/s/ppx57r3nnj?from-embed
+import "vuetify-dialog/dist/vuetify-dialog.min.css"
+
 
 setupBus();
 
@@ -16,6 +19,8 @@ Vue.use(Vue2Storage, {
   driver: 'local',
   ttl: 60 * 60 * 24 * 7 * 1000
 })
+
+Vue.use(VuetifyDialog)
 
 new Vue({
   router,

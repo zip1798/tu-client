@@ -58,7 +58,7 @@
                 @click.prevent="SELECT_MEDIA(media.id)"
                 >Select</v-btn>
               <v-spacer></v-spacer>
-              <v-btn icon><v-icon>delete</v-icon></v-btn>
+              <v-btn icon @click.prevent="deleteMedia(media.id)"><v-icon>delete</v-icon></v-btn>
             </v-card-actions>
             </v-card>
 
@@ -105,13 +105,24 @@ export default {
 
   props: ['media_id', 'category'],
   methods: {
-    ...mapActions(['CREATE_IMAGE_MEDIA', 'LOAD_MEDIA_LIST', 'SELECT_MEDIA', 'SET_PAGE']),
+    ...mapActions(['CREATE_IMAGE_MEDIA', 'LOAD_MEDIA_LIST', 'SELECT_MEDIA', 'SET_PAGE', 'SET_SUCCESS_MESSAGE']),
   	imageUploaded(file) {
       this.CREATE_IMAGE_MEDIA({
         file: file,
         category: this.category
       })
-  	}
+  	},
+
+    deleteMedia(media_id) {
+      this.$dialog.confirm({
+        text: 'Do you really want to delete this butify image?',
+        title: 'Please confirm'
+      }).then((v) => {
+        if (v) {
+          this.SET_SUCCESS_MESSAGE('This is Sparta! Media will be deleted, anywhere !')
+        }
+      })
+    }
   },
   components: {
   	'upload-btn': UploadButton
