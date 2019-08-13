@@ -25,6 +25,10 @@ export default {
       state.media_list.push(payload)
     },
 
+    DELETE_MEDIA_FROM_LIST(state, payload) {
+      state.media_list = state.media_list.filter(media => media.id != payload)
+    },
+
     CLEAR_MEDIA_LIST(state) {
       state.media_list = []
       state.media_filter = {
@@ -90,6 +94,13 @@ export default {
 
     SET_FILTER({ commit }, payload) {
       commit('SET_FILTER', payload)
+    },
+
+    DELETE_MEDIA({ commit, dispatch }, payload) {
+      server.delete("media/"+payload, (response) => {
+          commit("DELETE_MEDIA_FROM_LIST", payload)
+          dispatch("SET_SUCCESS_MESSAGE", 'Image has been deleted')
+      })
     }
 
   },

@@ -40,13 +40,11 @@ export default {
     let config = {
         headers: {'Authorization': "Bearer " + store.getters.getToken}
     }  
-    // data.language = store.getters.getLanguage;
-    console.log(appConfig.api + url)
 
     store.dispatch("CLEAR_MESSAGES");
     store.dispatch("SET_PROCESSING", true);
     axios
-      .get(appConfig.api + url, [], config)
+      .get(appConfig.api + url, config)
       .then(response => {
          store.dispatch("SET_PROCESSING", false);
          // response.status = 200
@@ -62,6 +60,46 @@ export default {
           router.push({path:"/login"});
         }
       });
+  },
+
+  simple_get(url, callback) {
+    let config = {
+        headers: {'Authorization': "Bearer " + store.getters.getToken}
+    }  
+
+    axios
+      .get(appConfig.api + url, config)
+      .then(response => {
+         if (response.error) {
+           throw new Error(response.error);
+         }
+         callback(response);
+      })
+  },
+
+  delete(url, callback) {
+    let config = {
+        headers: {'Authorization': "Bearer " + store.getters.getToken}
+    }  
+
+    store.dispatch("CLEAR_MESSAGES");
+    store.dispatch("SET_PROCESSING", true);
+    axios
+      .delete(appConfig.api + url, config)
+      .then(response => {
+         store.dispatch("SET_PROCESSING", false);
+         if (response.error) {
+           throw new Error(response.error)
+         }
+         callback(response)
+      })
+      .catch(error => {
+        store.dispatch("SET_ERROR", generalRepo.prepareErrorRespond(error));
+        store.dispatch("SET_PROCESSING", false);
+        if (generalRepo.getErrorRespondStatus(error) == 401) {
+          router.push({path:"/login"});
+        }
+      })
   }
 
 }

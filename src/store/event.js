@@ -42,6 +42,7 @@ export default {
           if (response.data.success) {
             commit("SET_EVENT", response.data.success);
             dispatch("SET_SUCCESS_MESSAGE", 'Event has been created');
+            router.push({path:"/event/"+response.data.success.id});
           }
         });
       }

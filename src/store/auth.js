@@ -2,10 +2,13 @@ import router from "../router";
 import Vue from "vue"
 import server from "../repository/server";
 
+const roles = ['guest', 'user', 'moderator', 'admin']
+
 export default {
   state: {
     token: null,
-    user: {}
+    user: {},
+    role: 'guest' // guest, user, moderator, admin
   },
   mutations: {
     SET_AUTH_STATUS(state, payload) {
@@ -13,8 +16,17 @@ export default {
       state.user = {};
       if (payload.user.name) state.user.name = payload.user.name;
       if (payload.user.city) state.user.city = payload.user.city;
-      Vue.$storage.set('auth', state)
+      Vue.$storage.set('auth', {
+        token: state.token,
+        user: state.user
+      })
+    },
+
+
+    SET_ROLE(state, payload) {
+      state.role = roles.indexOf(payload) == -1 ? 'guest' : payload
     }
+
   },
 
   actions: {
@@ -28,6 +40,10 @@ export default {
         }, {}, (response) => {
           if (response.data.success) {
             commit("SET_AUTH_STATUS", response.data.success);
+            console.log(response.data.success)
+            if (response.data.success.user.role) {
+              commit("SET_ROLE", response.data.success.user.role)
+            }
             router.push({path:"/"});
           }
         });
@@ -35,14 +51,19 @@ export default {
 
 /* AUTH_LOGOUT action */
     AUTH_LOGOUT({ commit }) {
-      commit("SET_AUTH_STATUS", { token: null, user: {}});
-      router.push({path:"/"});
+      commit("SET_AUTH_STATUS", { token: null, user: {}})
+      commit("SET_ROLE", 'guest')
+      router.push({path:"/"})
     },
 
 /* AUTH_RESTORE action */
-    AUTH_RESTORE({ commit }) {
+    AUTH_RESTORE({ commit, dispatch }) {
       if (Vue.$storage.has('auth')) {
-        commit("SET_AUTH_STATUS", Vue.$storage.get('auth'));
+        let auth = Vue.$storage.get('auth')
+        commit("SET_AUTH_STATUS", auth);
+        if (auth.token) {
+          dispatch("GET_ROLE", auth.token)
+        }
       }
     },
 
@@ -57,6 +78,7 @@ export default {
         }, {}, (response) => {
           if (response.data.success) {
             commit("SET_AUTH_STATUS", response.data.success);
+            commit("SET_ROLE", 'user')
             router.push({path:"/"});
           }
         });
@@ -86,10 +108,22 @@ export default {
         });
       },
 
+/* GET_ROLE action */
+      GET_ROLE({ commit, getters}) {
+        try {
+          server.simple_get("role", response => {
+            commit('SET_ROLE', response.data.success)
+          })
+        } catch(error) {
+          commit('SET_ROLE', 'guest')
+        }
+      }
+
   },
   getters: {
     getUser: state => state.user,
     getToken: state => state.token,
-    isAuth: state =>  !!state.token
+    isAuth: state =>  !!state.token,
+    getRole: state => state.role
   }
 };

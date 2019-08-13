@@ -68,23 +68,7 @@
                 </v-flex>
               </v-layout>
 
-              <v-textarea
-                name="brief"
-                box
-                label="Brief description"
-                auto-grow
-                v-model="model.brief"
-              ></v-textarea>
 
-              <v-textarea
-                name="description"
-                box
-                label="Full description"
-                auto-grow
-                v-model="model.description"
-              ></v-textarea>
-
-              <!-- wysiwyg v-model="description" / -->
               <v-radio-group v-model="model.category" row :rules="categoryRules">
                 <template v-slot:label>
                   <div>
@@ -154,6 +138,17 @@
               </v-layout>
 
 
+
+              <h3 class="mt-4">Brief Desciption</h3>     
+              <tiptap-vuetify v-model="model.brief" :extensions="extensions" placeholder="Brief description" />
+
+              <v-divider class="my-4"></v-divider>              
+
+              <h3>Full Desciption</h3>     
+              <tiptap-vuetify v-model="model.description" :extensions="extensions" placeholder="Full description" />
+
+
+              <h3 class="mt-4">Main Image</h3>     
               <media-select :media_id="model.media_id" :category="`event`"></media-select>
 
             </v-form>
@@ -176,6 +171,9 @@
 <script>
 import MediaSelect from "../media/MediaSelect"
 import { mapGetters, mapActions } from "vuex"
+import { TiptapVuetify, Heading, Bold, Italic, Strike, Underline, Code, CodeBlock, Paragraph, BulletList, OrderedList,
+  ListItem, Link, Blockquote, HardBreak, HorizontalRule, History
+} from 'tiptap-vuetify'
 
 export default {
   name: "EventForm",
@@ -198,6 +196,28 @@ export default {
       event_date_modal: false,
       valid: false,
 
+      extensions: [
+        // you can specify options for extension
+        new Heading({
+          levels: [1, 2, 3]
+        }),
+        new Bold(),
+        new Italic(),
+        new Strike(),
+        new Underline(),
+        new Code(),
+        new CodeBlock(),
+        new Paragraph(),
+        new BulletList(),
+        new OrderedList(),
+        new ListItem(),
+        new Link(),
+        new Blockquote(),
+        new HardBreak(),
+        new HorizontalRule(),
+        new History()
+      ],
+
       titleRules: [
         v => !!v || "Please enter value"
       ],
@@ -215,9 +235,9 @@ export default {
 
     };
   },
-  // mounted(){},
   components: {
-    MediaSelect
+    MediaSelect, 
+    TiptapVuetify 
   },
   computed: {
     ...mapGetters(["getProcessing", "getSelectedMediaID"]),
@@ -232,6 +252,8 @@ export default {
       this.CREATE_EVENT(this.model)
     },
   }, // methods
+
+
 };
 </script>
 

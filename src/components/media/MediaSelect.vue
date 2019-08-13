@@ -58,7 +58,7 @@
                 @click.prevent="SELECT_MEDIA(media.id)"
                 >Select</v-btn>
               <v-spacer></v-spacer>
-              <v-btn icon @click.prevent="deleteMedia(media.id)"><v-icon>delete</v-icon></v-btn>
+              <v-btn icon @click.prevent="deleteMedia(media.id)" v-if="getRole == 'admin'"><v-icon>delete</v-icon></v-btn>
             </v-card-actions>
             </v-card>
 
@@ -105,7 +105,7 @@ export default {
 
   props: ['media_id', 'category'],
   methods: {
-    ...mapActions(['CREATE_IMAGE_MEDIA', 'LOAD_MEDIA_LIST', 'SELECT_MEDIA', 'SET_PAGE', 'SET_SUCCESS_MESSAGE']),
+    ...mapActions(['CREATE_IMAGE_MEDIA', 'LOAD_MEDIA_LIST', 'SELECT_MEDIA', 'SET_PAGE', 'SET_SUCCESS_MESSAGE', 'DELETE_MEDIA']),
   	imageUploaded(file) {
       this.CREATE_IMAGE_MEDIA({
         file: file,
@@ -115,11 +115,11 @@ export default {
 
     deleteMedia(media_id) {
       this.$dialog.confirm({
-        text: 'Do you really want to delete this butify image?',
+        text: 'Do you really want to delete this butifull image?',
         title: 'Please confirm'
       }).then((v) => {
         if (v) {
-          this.SET_SUCCESS_MESSAGE('This is Sparta! Media will be deleted, anywhere !')
+          this.DELETE_MEDIA(media_id)
         }
       })
     }
@@ -128,7 +128,7 @@ export default {
   	'upload-btn': UploadButton
   },
   computed: {
-    ...mapGetters(['getSelectedMedia', 'getSelectedMediaID', 'getMediaList', 'getPageCount']),            
+    ...mapGetters(['getSelectedMedia', 'getSelectedMediaID', 'getMediaList', 'getPageCount', 'getRole']),            
   },
   mounted() {
     this.LOAD_MEDIA_LIST();
