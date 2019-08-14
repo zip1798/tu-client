@@ -2,24 +2,22 @@
   <v-container id="events" tag="section" grid-list-xl>
     <base-subheading>Tensegrity Events</base-subheading>
 
-    <v-layout row wrap>
+    <v-layout row wrap v-if="getEvent.title">
       <v-flex xs12 sm12>
         <v-hover>
           <v-card slot-scope="{ hover }" :class="`elevation-${hover ? 12 : 2}`">
             <v-img
               class="white--text"
               height="200px"
-              src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
-            ></v-img>
+              :src="getEvent.media_url"
+            >{{ getEvent.title }}</v-img>
 
             <v-card-title>
               <div>
-                <h3 class="headline mb-0">Kangaroo Valley Safari</h3>
-                <span class="grey--text">Number 10</span>
+                <h3 class="headline mb-0">{{ getEvent.title }}</h3>
+                <span class="grey--text">{{ getEvent.show_date }}</span>
                 <br>
-                <span>Whitehaven Beach</span>
-                <br>
-                <span>Whitsunday Island, Whitsunday Islands</span>
+                <span>{{ getEvent.place }}</span>
               </div>
             </v-card-title>
             <v-card-actions>
@@ -28,6 +26,14 @@
               </v-btn>
               <v-btn icon>
                 <v-icon>share</v-icon>
+              </v-btn>
+              <v-btn flat>
+                <v-icon>edit</v-icon>
+                Edit
+              </v-btn>
+              <v-btn flat>
+                <v-icon>delete</v-icon>
+                Delete
               </v-btn>
               <v-spacer></v-spacer>
               <v-btn flat color="blue-grey" class="white--text" :to="`/event/feedback/1`">Feedback
@@ -41,12 +47,9 @@
             </v-card-actions>
             <v-card-text
               class="body-2"
-            >Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.</v-card-text>
-            <v-card-text class="body-1">
-              <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.</p>
-              <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.</p>
-              <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.</p>
-            </v-card-text>
+              v-html="getEvent.brief"
+            ></v-card-text>
+            <v-card-text class="body-1" v-html="getEvent.description"></v-card-text>
           </v-card>
         </v-hover>
       </v-flex>
@@ -55,8 +58,22 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex"
+
 export default {
-  data: () => ({})
+  props: ['id'],
+  data: () => ({
+
+  }),
+  computed: {
+    ...mapGetters(["getEvent"]),
+  },
+  methods: {
+    ...mapActions(['LOAD_EVENT_ITEM']),
+  }, // methods
+  mounted() {
+    this.LOAD_EVENT_ITEM(this.id)
+  }
 };
 </script>
 

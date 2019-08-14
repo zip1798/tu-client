@@ -69,74 +69,75 @@
               </v-layout>
 
 
-              <v-radio-group v-model="model.category" row :rules="categoryRules">
-                <template v-slot:label>
-                  <div>
-                    <strong>Category</strong>
-                  </div>
-                </template>
-                <v-radio value="regular">
-                  <template v-slot:label>
-                    <div>Regular practice</div>
-                  </template>
-                </v-radio>
-                <v-radio value="unregular">
-                  <template v-slot:label>
-                    <div>Unregular practice</div>
-                  </template>
-                </v-radio>
-                <v-radio value="seminar">
-                  <template v-slot:label>
-                    <div>Seminar</div>
-                  </template>
-                </v-radio>
-                <v-radio value="other">
-                  <template v-slot:label>
-                    <div>Other</div>
-                  </template>
-                </v-radio>
-              </v-radio-group>
-
-              <v-radio-group v-model="model.status" row :rules="statusRules">
-                <template v-slot:label>
-                  <div>
-                    <strong>Status</strong>
-                  </div>
-                </template>
-                <v-radio value="pending">
-                  <template v-slot:label>
-                    <div>Pending</div>
-                  </template>
-                </v-radio>
-                <v-radio value="public">
-                  <template v-slot:label>
-                    <div>Public</div>
-                  </template>
-                </v-radio>
-                <v-radio value="hidden">
-                  <template v-slot:label>
-                    <div>Hidden</div>
-                  </template>
-                </v-radio>
-                <v-radio value="deleted">
-                  <template v-slot:label>
-                    <div>Deleted</div>
-                  </template>
-                </v-radio>
-              </v-radio-group>
-
-
               <v-layout row wrap>
-                <v-flex xs12 sm4 md3>
+                <v-flex xs12 sm4>
+                  <v-radio-group v-model="model.category" :rules="categoryRules">
+                    <template v-slot:label>
+                      <div>
+                        <strong>Category</strong>
+                      </div>
+                    </template>
+                    <v-radio value="regular">
+                      <template v-slot:label>
+                        <div>Regular practice</div>
+                      </template>
+                    </v-radio>
+                    <v-radio value="unregular">
+                      <template v-slot:label>
+                        <div>Unregular practice</div>
+                      </template>
+                    </v-radio>
+                    <v-radio value="seminar">
+                      <template v-slot:label>
+                        <div>Seminar</div>
+                      </template>
+                    </v-radio>
+                    <v-radio value="other">
+                      <template v-slot:label>
+                        <div>Other</div>
+                      </template>
+                    </v-radio>
+                  </v-radio-group>
+                </v-flex>  
+                <v-flex xs12 sm4>
+                  <v-radio-group v-model="model.status" :rules="statusRules">
+                    <template v-slot:label>
+                      <div>
+                        <strong>Status</strong>
+                      </div>
+                    </template>
+                    <v-radio value="draft">
+                      <template v-slot:label><div>Draft</div></template>
+                    </v-radio>
+                    <v-radio value="pending">
+                      <template v-slot:label><div>Pending</div></template>
+                    </v-radio>
+                    <v-radio value="public">
+                      <template v-slot:label>
+                        <div>Public</div>
+                      </template>
+                    </v-radio>
+                    <v-radio value="hidden">
+                      <template v-slot:label>
+                        <div>Hidden</div>
+                      </template>
+                    </v-radio>
+                    <v-radio value="deleted">
+                      <template v-slot:label>
+                        <div>Deleted</div>
+                      </template>
+                    </v-radio>
+                  </v-radio-group>
+                </v-flex>  
+                <v-flex xs12 sm4>
                   <v-switch
-                    v-model="model.is_allow_online"
-                    label="Allow online"
-                    color="indigo darken-3"
-                    hide-details
-                  ></v-switch>
-                </v-flex>
+                        v-model="model.is_allow_online"
+                        label="Allow online"
+                        color="indigo darken-3"
+                        hide-details
+                      ></v-switch>
+                </v-flex>  
               </v-layout>
-
 
 
               <h3 class="mt-4">Brief Desciption</h3>     
@@ -184,13 +185,13 @@ export default {
         user_id: null,
         title: null,
         place: null,
-        category: null,
-        status: null,
+        category: 'unregular',
+        status: 'draft',
         event_date: null,
         show_event_date: null,
         brief: null,
         description: null,
-        is_allow_online: true,
+        is_allow_online: false,
         media_id: null
       },
       event_date_modal: false,

@@ -90,11 +90,13 @@ export default new Router({
     {
       path: "/event/edit/:id",
       name: "event_edit",
+      props: true,
       component: EventEdit
     },
     {
       path: "/event/info/:id",
       name: "event_info",
+      props: true,
       component: EventInfo
     },
     {

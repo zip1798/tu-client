@@ -7,27 +7,38 @@ export default {
   state: {
     event: {
       id: 0,
-      name: '',
-      email: '',
-      city: '',
-      phone: '',
-      icon: '',
-    }
+      user_id: null,
+      title: '',
+      place: '',
+      category: '',
+      status: '',
+      event_date: '',
+      show_date: '',
+      brief: '',
+      description: '',
+      is_allow_online: '',
+      media_id: '',
+      media_url: '',
+    }, 
+    list: [],
+    filter: {},
+    pagination: {current_page: 1, elements_on_page: 10}
   },
   mutations: {
     SET_EVENT(state, payload) {
       state.event.id = payload.id
-      state.user_id = payload.user_id
-      state.title = payload.title
-      state.place = payload.place
-      state.category = payload.category
-      state.status = payload.status
-      state.event_date = payload.event_date
-      state.show_event_date = payload.show_event_date
-      state.brief = payload. brief
-      state.description = payload.description
-      state.is_allow_online = payload.is_allow_online
-      state.media_id = payload.media_id
+      state.event.user_id = payload.user_id
+      state.event.title = payload.title
+      state.event.place = payload.place
+      state.event.category = payload.category
+      state.event.status = payload.status
+      state.event.event_date = payload.event_date
+      state.event.show_date = payload.show_date
+      state.event.brief = payload. brief
+      state.event.description = payload.description
+      state.event.is_allow_online = payload.is_allow_online
+      state.event.media_id = payload.media_id
+      state.event.media_url = payload.media.full_url
 
       // EventBus.notify("loaded_event", state.event);
     }
@@ -48,9 +59,34 @@ export default {
       }
     },
 
+    LOAD_EVENT_ITEM({ commit, state }, payload) {
+      if (payload != state.event.id) {
+        server.get('events/'+payload, (response) => {
+          commit("SET_EVENT", response.data.success);
+        });
+      }
+    },
+
+    LOAD_EVENT_LIST({ commit }) {
+      // todo
+    },
+
+    SET_EVENTS_FILTER({ commit }, payload) {
+      // todo
+    },
+
+    SET_EVENTS_CURRENT_PAGE({ commit }, payload) {
+      // todo
+    }
 
   },
   getters: {
     getEvent: state => state.event,
+    getEventList: (state) => {
+      return state.list // todo depends on filter
+    },
+    getPageCountOfEvents: (state) => {
+      return state.list.length // todo depends on filter
+    }
   }
 };

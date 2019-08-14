@@ -8,7 +8,8 @@ export default {
   state: {
     token: null,
     user: {},
-    role: 'guest' // guest, user, moderator, admin
+    role: 'guest', // guest, user, moderator, admin
+    user_id: null
   },
   mutations: {
     SET_AUTH_STATUS(state, payload) {
@@ -24,7 +25,8 @@ export default {
 
 
     SET_ROLE(state, payload) {
-      state.role = roles.indexOf(payload) == -1 ? 'guest' : payload
+      state.role = roles.indexOf(payload.role) == -1 ? 'guest' : payload.role
+      state.user_id = payload.user_id
     }
 
   },
@@ -42,7 +44,7 @@ export default {
             commit("SET_AUTH_STATUS", response.data.success);
             console.log(response.data.success)
             if (response.data.success.user.role) {
-              commit("SET_ROLE", response.data.success.user.role)
+              commit("SET_ROLE", {role: response.data.success.user.role, user_id: response.data.success.user.id})
             }
             router.push({path:"/"});
           }
@@ -52,7 +54,7 @@ export default {
 /* AUTH_LOGOUT action */
     AUTH_LOGOUT({ commit }) {
       commit("SET_AUTH_STATUS", { token: null, user: {}})
-      commit("SET_ROLE", 'guest')
+      commit("SET_ROLE", {role: 'guest', user_id: null})
       router.push({path:"/"})
     },
 
@@ -78,7 +80,7 @@ export default {
         }, {}, (response) => {
           if (response.data.success) {
             commit("SET_AUTH_STATUS", response.data.success);
-            commit("SET_ROLE", 'user')
+            commit("SET_ROLE", {role: 'user', user_id: response.data.success.id})
             router.push({path:"/"});
           }
         });
@@ -115,7 +117,7 @@ export default {
             commit('SET_ROLE', response.data.success)
           })
         } catch(error) {
-          commit('SET_ROLE', 'guest')
+          commit('SET_ROLE', {role: 'guest', user_id: null})
         }
       }
 
@@ -124,6 +126,7 @@ export default {
     getUser: state => state.user,
     getToken: state => state.token,
     isAuth: state =>  !!state.token,
-    getRole: state => state.role
+    getRole: state => state.role,
+    getUserId: state => state.user_id
   }
 };
