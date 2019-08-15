@@ -63,7 +63,7 @@ export default {
       if (payload != state.event.id) {
         server.get('events/'+payload, (response) => {
           commit("SET_EVENT", response.data.success);
-        });
+        }, {processing_value: 'LOAD_EVENT_ITEM'});
       }
     },
 

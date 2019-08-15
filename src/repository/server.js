@@ -36,13 +36,18 @@ export default {
       });
 	},
 
-  get(url, callback) {
+  get(url, callback, options) {
     let config = {
         headers: {'Authorization': "Bearer " + store.getters.getToken}
     }  
 
+    let processing_value = true
+    if (options.processing_value) {
+      processing_value = options.processing_value
+    }
+
     store.dispatch("CLEAR_MESSAGES");
-    store.dispatch("SET_PROCESSING", true);
+    store.dispatch("SET_PROCESSING", processing_value);
     axios
       .get(appConfig.api + url, config)
       .then(response => {
@@ -77,7 +82,7 @@ export default {
       })
   },
 
-  delete(url, callback) {
+  delete(url, callback, options) {
     let config = {
         headers: {'Authorization': "Bearer " + store.getters.getToken}
     }  

@@ -2,6 +2,24 @@
   <v-container id="events" tag="section" grid-list-xl>
     <base-subheading>Tensegrity Events</base-subheading>
 
+    <div style="height: 350px;" v-if="getProcessing == 'LOAD_EVENT_ITEM'">
+     <v-layout
+      align-center
+      column
+      justify-center
+      row fill-height
+    >
+      <v-progress-circular
+        :size="70"
+        :width="7"
+        color="purple"
+        indeterminate
+      ></v-progress-circular>
+    </v-layout>
+    </div>
+
+
+
     <v-layout row wrap v-if="getEvent.title">
       <v-flex xs12 sm12>
         <v-hover>
@@ -10,7 +28,19 @@
               class="white--text"
               height="200px"
               :src="getEvent.media_url"
-            >{{ getEvent.title }}</v-img>
+            >
+
+             <v-layout
+              align-start
+              column
+              justify-end
+              fill-height
+            >
+              <h1 class="display-2 font-weight-thin mb-3 ml-5">{{ getEvent.title }}</h1>
+              <h4 class="subheading  ml-5">{{ getEvent.place }}</h4>
+            </v-layout>
+          
+          </v-img>
 
             <v-card-title>
               <div>
@@ -25,7 +55,8 @@
                 <v-icon color="red">favorite</v-icon>
               </v-btn>
               <v-btn icon>
-                <v-icon>share</v-icon>
+                <v-icon>share</v-icon> 
+                <!-- https://github.com/nicolasbeauvais/vue-social-sharing -->
               </v-btn>
               <v-btn flat>
                 <v-icon>edit</v-icon>
@@ -66,7 +97,7 @@ export default {
 
   }),
   computed: {
-    ...mapGetters(["getEvent"]),
+    ...mapGetters(["getEvent", "getProcessing"]),
   },
   methods: {
     ...mapActions(['LOAD_EVENT_ITEM']),

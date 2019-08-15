@@ -5,7 +5,7 @@
       :height="2"
       color="blue"
       class="ma-0"
-      :active="getProcessing"
+      :active="!!getProcessing"
     ></v-progress-linear>
     <router-view/>
   </v-content>
