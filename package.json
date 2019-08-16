@@ -13,6 +13,7 @@
     "tiptap-vuetify": "^1.5.0",
     "vue": "^2.5.22",
     "vue-router": "3.0.6",
+    "vue-social-sharing": "^2.4.6",
     "vue2-storage": "^4.0.5",
     "vuetify": "1.5.16",
     "vuetify-dialog": "^0.4.0-beta.2",

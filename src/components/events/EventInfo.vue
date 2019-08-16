@@ -37,7 +37,7 @@
               fill-height
             >
               <h1 class="display-2 font-weight-thin mb-3 ml-5">{{ getEvent.title }}</h1>
-              <h4 class="subheading  ml-5">{{ getEvent.place }}</h4>
+              <h4 class="subheading  ml-5">{{ getEvent.place }} - <span class="font-weight-thin">{{ getEvent.event_date }}</span></h4>
             </v-layout>
           
           </v-img>
@@ -45,19 +45,18 @@
             <v-card-title>
               <div>
                 <h3 class="headline mb-0">{{ getEvent.title }}</h3>
-                <span class="grey--text">{{ getEvent.show_date }}</span>
+                <span class="grey--text">{{ getEvent.event_date }}</span>
                 <br>
                 <span>{{ getEvent.place }}</span>
               </div>
             </v-card-title>
             <v-card-actions>
               <v-btn icon>
-                <v-icon color="red">favorite</v-icon>
+                <v-icon color="red" >favorite</v-icon>
               </v-btn>
-              <v-btn icon>
-                <v-icon>share</v-icon> 
-                <!-- https://github.com/nicolasbeauvais/vue-social-sharing -->
-              </v-btn>
+              
+              <social-btn :url="'event/info/${getEvent.id}'" :title="getEvent.title" :description="getEvent.place"></social-btn>
+
               <v-btn flat>
                 <v-icon>edit</v-icon>
                 Edit
@@ -90,12 +89,17 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex"
+import SocialBtn from "@/components/base/SocialBtn"
+
 
 export default {
   props: ['id'],
   data: () => ({
 
   }),
+  components: {
+    SocialBtn
+  },
   computed: {
     ...mapGetters(["getEvent", "getProcessing"]),
   },

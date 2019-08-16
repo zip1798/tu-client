@@ -10,13 +10,18 @@ export default {
     let config = {
         headers: {'Authorization': "Bearer " + store.getters.getToken}
     }  
-    if (options.is_upload) {
+    if (options && options.is_upload) {
       config.headers['Content-Type'] = 'multipart/form-data';
     }
+    let processing_value = true
+    if (options && options.processing_value) {
+      processing_value = options.processing_value
+    }
+
     config.headers['Language'] = store.getters.getLanguage;
 
     store.dispatch("CLEAR_MESSAGES");
-    store.dispatch("SET_PROCESSING", true);
+    store.dispatch("SET_PROCESSING", processing_value);
     axios
       .post(appConfig.api + url, data, config)
       .then(response => {
@@ -42,7 +47,7 @@ export default {
     }  
 
     let processing_value = true
-    if (options.processing_value) {
+    if (options && options.processing_value) {
       processing_value = options.processing_value
     }
 

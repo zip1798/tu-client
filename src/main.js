@@ -7,6 +7,7 @@ import store from "./store";
 import {Vue2Storage} from 'vue2-storage'
 import { setupBus }  from "./repository/eventBus"
 
+
 setupBus();
 
 Vue.config.productionTip = false;
