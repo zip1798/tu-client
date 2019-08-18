@@ -55,7 +55,7 @@
                 <v-icon color="red" >favorite</v-icon>
               </v-btn>
               
-              <social-btn :url="'event/info/${getEvent.id}'" :title="getEvent.title" :description="getEvent.place"></social-btn>
+              <social-btn :url="'event/info/${getEvent.id}'" :title="getEvent.title" :description="getEvent.title"></social-btn>
 
               <v-btn flat>
                 <v-icon>edit</v-icon>

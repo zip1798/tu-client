@@ -52,10 +52,11 @@ import SocialSharing from "vue-social-sharing"
 export default {
 
   name: 'SocialBtn',
-  props: ['url', 'title', 'description', 'quote'],
+  props: ['url', 'title', 'description', ],
   computed: {
   	full_url() {
-  		appConfig.client + this.url
+        console.log(appConfig.client + this.url)
+  		return appConfig.client + this.url
   	}
   },
   components: {
