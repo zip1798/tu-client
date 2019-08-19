@@ -51,8 +51,8 @@
               </div>
             </v-card-title>
             <v-card-actions>
-              <v-btn icon>
-                <v-icon color="red" >favorite</v-icon>
+              <v-btn icon @click.prevent="TOOGLE_INTERESTED()" v-if="isAuth">
+                <v-icon :color="getEvent.is_interested ? 'red' : 'grey'" >favorite</v-icon>
               </v-btn>
               
               <social-btn :url="'event/info/${getEvent.id}'" :title="getEvent.title" :description="getEvent.title"></social-btn>
@@ -101,10 +101,10 @@ export default {
     SocialBtn
   },
   computed: {
-    ...mapGetters(["getEvent", "getProcessing"]),
+    ...mapGetters(["getEvent", "getProcessing", "isAuth"]),
   },
   methods: {
-    ...mapActions(['LOAD_EVENT_ITEM']),
+    ...mapActions(['LOAD_EVENT_ITEM', 'TOOGLE_INTERESTED']),
   }, // methods
   mounted() {
     this.LOAD_EVENT_ITEM(this.id)

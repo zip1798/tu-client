@@ -19,6 +19,7 @@ export default {
       is_allow_online: '',
       media_id: '',
       media_url: '',
+      is_interested: false,
     }, 
     list: [],
     filter: {},
@@ -39,9 +40,14 @@ export default {
       state.event.is_allow_online = payload.is_allow_online
       state.event.media_id = payload.media_id
       state.event.media_url = payload.media.full_url
-
+      state.event.is_interested = payload.media.is_interested
       // EventBus.notify("loaded_event", state.event);
+    },
+
+    SET_INTERESTED(state, payload) {
+      state.event.is_interested = !!payload
     }
+
   },
 
   actions: {
@@ -77,6 +83,14 @@ export default {
 
     SET_EVENTS_CURRENT_PAGE({ commit }, payload) {
       // todo
+    },
+
+    TOOGLE_INTERESTED({ commit, state}, payload) {
+      console.log('TOOGLE_INTERESTED')
+        server.get('events/'+state.event.id + '/interested', (response) => {
+          console.log(response)
+          commit("SET_INTERESTED", response.data.success);
+        });
     }
 
   },
