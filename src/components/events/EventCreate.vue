@@ -77,24 +77,9 @@
                         <strong>Category</strong>
                       </div>
                     </template>
-                    <v-radio value="regular">
+                    <v-radio v-for="category_item in eventConfig.categories" :value="category_item.name">
                       <template v-slot:label>
-                        <div>Regular practice</div>
-                      </template>
-                    </v-radio>
-                    <v-radio value="unregular">
-                      <template v-slot:label>
-                        <div>Unregular practice</div>
-                      </template>
-                    </v-radio>
-                    <v-radio value="seminar">
-                      <template v-slot:label>
-                        <div>Seminar</div>
-                      </template>
-                    </v-radio>
-                    <v-radio value="other">
-                      <template v-slot:label>
-                        <div>Other</div>
+                        <div>{{ category_item.title }}</div>
                       </template>
                     </v-radio>
                   </v-radio-group>
@@ -106,26 +91,8 @@
                         <strong>Status</strong>
                       </div>
                     </template>
-                    <v-radio value="draft">
-                      <template v-slot:label><div>Draft</div></template>
-                    </v-radio>
-                    <v-radio value="pending">
-                      <template v-slot:label><div>Pending</div></template>
-                    </v-radio>
-                    <v-radio value="public">
-                      <template v-slot:label>
-                        <div>Public</div>
-                      </template>
-                    </v-radio>
-                    <v-radio value="hidden">
-                      <template v-slot:label>
-                        <div>Hidden</div>
-                      </template>
-                    </v-radio>
-                    <v-radio value="deleted">
-                      <template v-slot:label>
-                        <div>Deleted</div>
-                      </template>
+                    <v-radio  v-for="status_item in eventConfig.statuses" :value="status_item.name">
+                      <template v-slot:label><div>{{ status_item.title }}</div></template>
                     </v-radio>
                   </v-radio-group>
                 </v-flex>  
@@ -170,6 +137,7 @@
 </template>
 
 <script>
+import eventConfig from "@/config/events";
 import MediaSelect from "../media/MediaSelect"
 import { mapGetters, mapActions } from "vuex"
 import { TiptapVuetify, Heading, Bold, Italic, Strike, Underline, Code, CodeBlock, Paragraph, BulletList, OrderedList,
@@ -244,6 +212,9 @@ export default {
     ...mapGetters(["getProcessing", "getSelectedMediaID"]),
     event_date() {
       return this.model.event_date;
+    },
+    eventConfig() {
+      return eventConfig;
     }
   },
   methods: {

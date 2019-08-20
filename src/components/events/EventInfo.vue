@@ -57,7 +57,7 @@
               
               <social-btn :url="'event/info/${getEvent.id}'" :title="getEvent.title" :description="getEvent.title"></social-btn>
 
-              <v-btn flat>
+              <v-btn flat @click.prevent="goToEdit">
                 <v-icon>edit</v-icon>
                 Edit
               </v-btn>
@@ -90,6 +90,7 @@
 <script>
 import { mapGetters, mapActions } from "vuex"
 import SocialBtn from "@/components/base/SocialBtn"
+import router from "@/router";
 
 
 export default {
@@ -105,6 +106,9 @@ export default {
   },
   methods: {
     ...mapActions(['LOAD_EVENT_ITEM', 'TOOGLE_INTERESTED']),
+    goToEdit() {
+      router.push('/event/edit/'+this.getEvent.id)
+    }
   }, // methods
   mounted() {
     this.LOAD_EVENT_ITEM(this.id)

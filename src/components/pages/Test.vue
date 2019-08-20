@@ -5,6 +5,7 @@
     <v-btn color="blue" flat @click.prevent="showMessage">Rise Message</v-btn>
     <v-btn color="red" flat @click.prevent="showError">Rise Error</v-btn>
     <v-btn color="green" flat @click.prevent="showConfirm">Rise Confirm Window</v-btn>
+    <v-btn flat @click.prevent="sendTest">Send Test get request</v-btn>
 
     <v-checkbox v-model="processing" label="Processing"></v-checkbox>
 
@@ -14,6 +15,8 @@
 
 <script>
 import {mapGetters} from 'vuex'
+import server from "@/repository/server";
+
 
 export default {
   name: "Test",
@@ -44,6 +47,13 @@ export default {
         text: 'Do you really want to exit?',
         title: 'Warning'
       }).then((v) => alert('This is Sparta ' + v))
+    },
+
+    sendTest() {
+        server.get('test', (respond) => {
+          console.log('Respond test')
+          console.log(respond)
+        })
     }
   }
 };

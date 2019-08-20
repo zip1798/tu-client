@@ -54,12 +54,26 @@ export default {
 
 /*  CREATE_EVENT action */
     CREATE_EVENT({ commit, dispatch, state }, payload) {
-      if (!!payload || state.profile.id == 0) {
+      if (!!payload || state.event.id == 0) {
         server.post("events", payload, {}, (response) => {
           if (response.data.success) {
             commit("SET_EVENT", response.data.success);
+            EventBus.notify("loaded_event", state.event);
             dispatch("SET_SUCCESS_MESSAGE", 'Event has been created');
             router.push({path:"/event/"+response.data.success.id});
+          }
+        });
+      }
+    },
+
+/*  UPDATE_EVENT action */
+    UPDATE_EVENT({ commit, dispatch, state }, payload) {
+      if (!!payload) {
+        server.patch("events/" + state.event.id, payload, {}, (response) => {
+          if (response.data.success) {
+            commit("SET_EVENT", response.data.success);
+            EventBus.notify("loaded_event", state.event);
+            dispatch("SET_SUCCESS_MESSAGE", 'Event has been updated');
           }
         });
       }
@@ -69,6 +83,7 @@ export default {
       if (payload != state.event.id) {
         server.get('events/'+payload, (response) => {
           commit("SET_EVENT", response.data.success);
+          EventBus.notify("loaded_event", state.event);
         }, {processing_value: 'LOAD_EVENT_ITEM'});
       }
     },

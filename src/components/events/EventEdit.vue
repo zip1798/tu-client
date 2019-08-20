@@ -20,7 +20,7 @@
                 label="Title"
                 type="text"
                 v-model="model.title"
-                :rules="requireRules"
+                :rules="titleRules"
                 required
               ></v-text-field>
 
@@ -30,7 +30,7 @@
                 label="Place"
                 type="text"
                 v-model="model.place"
-                :rules="requireRules"
+                :rules="placeRules"
                 required
               ></v-text-field>
 
@@ -64,187 +64,62 @@
                 <v-flex xs12 sm8 md8>
                   <v-text-field
                     prepend-icon="event"
-                    name="event_time_title"
+                    name="show_event_date"
                     label="Event Date"
                     type="text"
-                    v-model="model.event_time_title"
+                    v-model="model.show_event_date"
                   ></v-text-field>
                 </v-flex>
               </v-layout>
 
-              <v-textarea
-                name="brief"
-                box
-                label="Brief description"
-                auto-grow
-                v-model="model.brief"
-              ></v-textarea>
+              <h3 class="mt-4">Brief Desciption</h3>     
+              <tiptap-vuetify v-model="model.brief" :extensions="extensions" placeholder="Brief description" />
 
-              <v-textarea
-                name="description"
-                box
-                label="Full description"
-                auto-grow
-                v-model="model.description"
-              ></v-textarea>
+              <v-divider class="my-4"></v-divider>              
 
-              <!-- wysiwyg v-model="description" / -->
-              <v-radio-group v-model="category" row>
-                <template v-slot:label>
-                  <div>
-                    <strong>Category</strong>
-                  </div>
-                </template>
-                <v-radio value="Google">
-                  <template v-slot:label>
-                    <div>Regular practice</div>
-                  </template>
-                </v-radio>
-                <v-radio value="Duckduckgo">
-                  <template v-slot:label>
-                    <div>Unregular practice</div>
-                  </template>
-                </v-radio>
-                <v-radio value="seminar">
-                  <template v-slot:label>
-                    <div>Seminar</div>
-                  </template>
-                </v-radio>
-              </v-radio-group>
+              <h3>Full Desciption</h3>     
+              <tiptap-vuetify v-model="model.description" :extensions="extensions" placeholder="Full description" />
 
-              <v-radio-group v-model="status" row>
-                <template v-slot:label>
-                  <div>
-                    <strong>Status</strong>
-                  </div>
-                </template>
-                <v-radio value="Active">
-                  <template v-slot:label>
-                    <div>Active</div>
-                  </template>
-                </v-radio>
-                <v-radio value="Hiden">
-                  <template v-slot:label>
-                    <div>Hiden</div>
-                  </template>
-                </v-radio>
-                <v-radio value="Deleted">
-                  <template v-slot:label>
-                    <div>Deleted</div>
-                  </template>
-                </v-radio>
-              </v-radio-group>
-
-              <!-- <v-radio-group v-model="prority" row>
-                <template v-slot:label>
-                  <div>
-                    <strong>Priority</strong>
-                  </div>
-                </template>
-                <v-radio value="low">
-                  <template v-slot:label>
-                    <div>Low</div>
-                  </template>
-                </v-radio>
-                <v-radio value="normal">
-                  <template v-slot:label>
-                    <div>Normal</div>
-                  </template>
-                </v-radio>
-                <v-radio value="high">
-                  <template v-slot:label>
-                    <div>High</div>
-                  </template>
-                </v-radio>
-              </v-radio-group>-->
               <v-layout row wrap>
-                <v-flex xs12 sm4 md3>
+                <v-flex xs12 sm4>
+                  <v-radio-group v-model="model.category" :rules="categoryRules">
+                    <template v-slot:label>
+                      <div>
+                        <strong>Category</strong>
+                      </div>
+                    </template>
+                    <v-radio v-for="category_item in eventConfig.categories" :value="category_item.name">
+                      <template v-slot:label>
+                        <div>{{ category_item.title }}</div>
+                      </template>
+                    </v-radio>
+                  </v-radio-group>
+                </v-flex>  
+                <v-flex xs12 sm4>
+                  <v-radio-group v-model="model.status" :rules="statusRules">
+                    <template v-slot:label>
+                      <div>
+                        <strong>Status</strong>
+                      </div>
+                    </template>
+                    <v-radio  v-for="status_item in eventConfig.statuses" :value="status_item.name">
+                      <template v-slot:label><div>{{ status_item.title }}</div></template>
+                    </v-radio>
+                  </v-radio-group>
+                </v-flex>  
+                <v-flex xs12 sm4>
                   <v-switch
-                    v-model="model.is_allow_online"
-                    label="Allow online"
-                    color="indigo darken-3"
-                    hide-details
-                  ></v-switch>
-                </v-flex>
+                        v-model="model.is_allow_online"
+                        label="Allow online"
+                        color="indigo darken-3"
+                        hide-details
+                      ></v-switch>
+                </v-flex>  
               </v-layout>
 
-              <v-layout row wrap mt-4>
-                <v-flex xs12>
-                  <v-card v-if="model.image">
-                    <v-img :src="model.image" max-height="200" class="grey darken-4" contain></v-img>
-                    <v-card-title class="title">{{ model.image_name }}</v-card-title>
-                  </v-card>
-                </v-flex>
-              </v-layout>
+              <h3 class="mt-4">Main Image</h3>     
+              <media-select :media_id="model.media_id" :category="`event`"></media-select>
 
-              <v-card>
-                <v-container grid-list-sm fluid>
-                  <v-layout row wrap>
-                    <v-flex xs4 d-flex>
-                      <v-card flat tile class="d-flex" align-center justify-center fill-height>
-                        <v-img aspect-ratio="1" class="grey lighten-2">
-                          <v-layout align-center justify-center row fill-height>
-                            <upload-btn
-                              title
-                              accept="image/*"
-                              large
-                              flat
-                              dark
-                              color="indigo"
-                              :fileChangedCallback="imageChanged"
-                            >
-                              <template slot="icon">
-                                <v-icon>add</v-icon>
-                              </template>
-                            </upload-btn>
-                          </v-layout>
-                        </v-img>
-                      </v-card>
-                    </v-flex>
-
-                    <v-flex v-for="n in 8" :key="n" xs4 d-flex>
-                      <v-hover>
-                        <v-card
-                          flat
-                          tile
-                          class="d-flex"
-                          slot-scope="{ hover }"
-                          :class="`elevation-${hover ? 12 : 2}`"
-                        >
-                          <v-img
-                            :src="`https://picsum.photos/500/300?image=${n * 5 + 10}`"
-                            :lazy-src="`https://picsum.photos/10/6?image=${n * 5 + 10}`"
-                            aspect-ratio="1"
-                            class="grey lighten-2"
-                          >
-                            <template v-slot:placeholder>
-                              <v-layout fill-height align-center justify-center ma-0>
-                                <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
-                              </v-layout>
-                            </template>
-
-                            <v-expand-transition>
-                              <div
-                                v-if="hover"
-                                class="d-flex transition-fast-in-fast-out black darken-1 v-card--reveal white--text pa-3"
-                                style="height: 30%;"
-                              >
-                                <v-radio-group v-model="model.media_id" row dark>
-                                  <v-radio label="Select Image" :value="`radio-${n}`"></v-radio>
-                                </v-radio-group>
-                              </div>
-                            </v-expand-transition>
-                          </v-img>
-                        </v-card>
-                      </v-hover>
-                    </v-flex>
-                  </v-layout>
-                </v-container>
-
-                <div class="text-xs-center">
-                  <v-pagination v-model="page" :length="6"></v-pagination>
-                </div>
-              </v-card>
             </v-form>
           </v-card-text>
           <v-card-actions>
@@ -252,7 +127,7 @@
             <v-btn
               color="primary"
               @click.prevent="submit"
-              :disabled="getProcessing || !valid"
+              :disabled="!!getProcessing || !valid"
             >Submit</v-btn>
           </v-card-actions>
         </v-card>
@@ -262,10 +137,14 @@
 </template>
 
 <script>
-import UploadButton from "vuetify-upload-button";
-import { mapGetters, mapActions } from "vuex";
-import EventEditToolbar from "./EventEditToolbar.vue";
-// import * as eventHelper from '../helpers/event'
+import EventEditToolbar from "./EventEditToolbar.vue"
+import eventConfig from "@/config/events"
+import MediaSelect from "../media/MediaSelect"
+import { mapGetters, mapActions } from "vuex"
+import { TiptapVuetify, Heading, Bold, Italic, Strike, Underline, Code, CodeBlock, Paragraph, BulletList, OrderedList,
+  ListItem, Link, Blockquote, HardBreak, HorizontalRule, History
+} from 'tiptap-vuetify'
+
 
 export default {
   name: "EventForm",
@@ -289,126 +168,109 @@ export default {
       event_date_modal: false,
       valid: false,
 
-      requireRules: [v => !!v || "Please enter value"]
+      extensions: [
+        // you can specify options for extension
+        new Heading({
+          levels: [1, 2, 3]
+        }),
+        new Bold(),
+        new Italic(),
+        new Strike(),
+        new Underline(),
+        new Code(),
+        new CodeBlock(),
+        new Paragraph(),
+        new BulletList(),
+        new OrderedList(),
+        new ListItem(),
+        new Link(),
+        new Blockquote(),
+        new HardBreak(),
+        new HorizontalRule(),
+        new History()
+      ],
+
+      titleRules: [
+        v => !!v || "Please enter value"
+      ],
+      placeRules: [
+        v => !!v || "Please enter value"
+      ],
+      categoryRules: [
+        v => !!v || "Please enter value",
+        v => ['regular', 'unregular', 'seminar', 'other'].indexOf(v) != -1 || "Unknown category",
+      ],
+      statusRules: [
+        v => !!v || "Please enter value",
+        v => ['pending', 'public', 'hidden', 'deleted'].indexOf(v) != -1 || "Unknown status",
+      ]
+
+
     };
   },
   // mounted(){},
+  props: ['id'],
   components: {
-    "upload-btn": UploadButton,
+    MediaSelect, 
+    TiptapVuetify,
     EventEditToolbar: EventEditToolbar
   },
-  props: {
-    mode: {
-      type: String,
-      required: true
-    },
-    event: {
-      type: Object,
-      required: false
-    }
-  },
   computed: {
-    ...mapGetters(["isUserAuthenticated", "getError", "getProcessing"]),
-    form_title() {
-      // switch(this.mode) {
-      // 	case 'edit' :
-      // 		return 'Update Event';
-      // }
-      return "Update Event";
-    },
+    ...mapGetters(["getProcessing", "getSelectedMediaID", "getEvent"]),
     event_date() {
       return this.model.event_date;
+    },
+    eventConfig() {
+      return eventConfig;
     }
   },
   methods: {
+    ...mapActions(['LOAD_EVENT_ITEM', 'UPDATE_EVENT']),
     submit() {
-      // this.$store.dispatch('SET_EVENT', {data: this.model, mode: this.mode})
-      // if (this.mode == 'create') {
-      // 	this.clearForm()
-      // }
+      this.UPDATE_EVENT(this.model)
     },
-    imageChanged(file) {
-      /*
-		const fr = new FileReader ()
-		fr.readAsDataURL(file)
-		fr.addEventListener('load', () => {
-			this.imageUrl = fr.result
-			this.imageFile = file 
-			this.imageName = file.name
-		})
-		//*/
-      // let storageRef = firebase.storage().ref();
-      // storageRef.child('event_images/' + file.name).put(file).then((snapshot)  => {
-      // 	snapshot.ref.getDownloadURL().then((downloadURL) => {
-      // 		console.log('File available at', downloadURL);
-      // 	this.model.image = downloadURL
-      // 	this.model.image_name = file.name
-      // 	});
-      // });
-    }, // imageChanged
+    initEvent(data) {
+      this.model.id = data.id
+      this.model.user_id = data.user_id
+      this.model.title = data.title
+      this.model.place = data.place
+      this.model.category = data.category
+      this.model.status = data.status
+      this.model.event_date = data.show_date
+      this.model.show_event_date = data.event_date
+      this.model.brief = data.brief
+      this.model.description = data.description
+      this.model.is_allow_online = data.is_allow_online
+      this.model.media_id = data.media_id
+    },
     clearForm() {
       this.model = {
         id: null,
+        user_id: null,
         title: null,
         place: null,
-        event_time_title: null,
+        category: 'unregular',
+        status: 'draft',
+        event_date: null,
+        show_event_date: null,
         brief: null,
         description: null,
-        event_date: null,
-        is_allow_online: true,
-        is_show: true,
-        is_priority: false,
-        image: null,
-        image_name: null,
+        is_allow_online: false,
         media_id: null
       };
     } // clearForm
   }, // methods
-  watch: {
-    event(event) {
-      // if (event && event.id != this.model.id) {
-      // 	this.model = {
-      // 	  id: event.id,
-      // 	  title: event.title,
-      // 	  place: event.place,
-      // 	  event_time_title: event.event_time_title,
-      // 	  brief: event.brief,
-      // 	  description: event.description,
-      // 	  event_date:  eventHelper.formatFirebaseTimestamp(event.event_date),
-      // 	  is_allow_online: event.is_allow_online,
-      // 	  is_show: event.is_show,
-      // 	  is_priority: event.is_priority,
-      // 	  image: event.image,
-      // 	  image_name: event.image_name,
-      // 	  media_id: event.media_id,
-      // 	}
-      // }
-    },
-    event_date(val) {
-      // if (!this.model.event_time_title) {
-      //     this.model.event_time_title = eventHelper.getEventTimeTitleFromDate(val)
-      // }
-    }
-  },
   created() {
-    // if (this.event && this.event.id != this.model.id) {
-    // 	this.model = {
-    // 	  id: this.event.id,
-    // 	  title: this.event.title,
-    // 	  place: this.event.place,
-    // 	  event_time_title: this.event.event_time_title,
-    // 	  brief: this.event.brief,
-    // 	  description: this.event.description,
-    // 	  event_date: eventHelper.formatFirebaseTimestamp(this.event.event_date),
-    // 	  is_allow_online: this.event.is_allow_online,
-    // 	  is_show: this.event.is_show,
-    // 	  is_priority: this.event.is_priority,
-    // 	  image: this.event.image,
-    // 	  image_name: this.event.image_name,
-    // 	  media_id: this.event.media_id,
-    // 	}
-    // }
-  }
+    this.LOAD_EVENT_ITEM(this.id);
+    this.$bus.$on('loaded_event', data => this.initEvent(data));
+  },
+  mounted() {
+    this.initEvent(this.getEvent);
+  },
+  beforeDestroy() {
+    this.$bus.$off('loaded_event');
+  },
+
 };
 </script>
 
