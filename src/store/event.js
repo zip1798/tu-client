@@ -40,7 +40,7 @@ export default {
       state.event.is_allow_online = payload.is_allow_online
       state.event.media_id = payload.media_id
       state.event.media_url = payload.media.full_url
-      state.event.is_interested = payload.media.is_interested
+      state.event.is_interested = payload.is_interested
       // EventBus.notify("loaded_event", state.event);
     },
 
@@ -79,6 +79,17 @@ export default {
       }
     },
 
+/*  DELETE_EVENT action */
+    DELETE_EVENT({ commit, dispatch }, payload) {
+      server.delete("events/"+payload, (response) => {
+          commit("DELETE_EVENT_FROM_LIST", payload)
+          dispatch("SET_SUCCESS_MESSAGE", 'Event has been deleted')
+          // router.push({path:"/"});
+      })
+    },
+
+
+/*  LOAD_EVENT_ITEM action */
     LOAD_EVENT_ITEM({ commit, state }, payload) {
       if (payload != state.event.id) {
         server.get('events/'+payload, (response) => {
@@ -101,9 +112,7 @@ export default {
     },
 
     TOOGLE_INTERESTED({ commit, state}, payload) {
-      console.log('TOOGLE_INTERESTED')
         server.get('events/'+state.event.id + '/interested', (response) => {
-          console.log(response)
           commit("SET_INTERESTED", response.data.success);
         });
     }

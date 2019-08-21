@@ -61,7 +61,7 @@
                 <v-icon>edit</v-icon>
                 Edit
               </v-btn>
-              <v-btn flat>
+              <v-btn flat @click.prevent="deleteEvent()" v-if="getRole == 'admin'">
                 <v-icon>delete</v-icon>
                 Delete
               </v-btn>
@@ -102,13 +102,26 @@ export default {
     SocialBtn
   },
   computed: {
-    ...mapGetters(["getEvent", "getProcessing", "isAuth"]),
+    ...mapGetters(["getEvent", "getProcessing", "isAuth", "getRole"]),
   },
   methods: {
-    ...mapActions(['LOAD_EVENT_ITEM', 'TOOGLE_INTERESTED']),
+    ...mapActions(['LOAD_EVENT_ITEM', 'TOOGLE_INTERESTED', 'DELETE_EVENT']),
+
     goToEdit() {
       router.push('/event/edit/'+this.getEvent.id)
+    },
+
+    deleteEvent() {
+      this.$dialog.confirm({
+        text: 'Do you really want to delete this event?',
+        title: 'Please confirm'
+      }).then((v) => {
+        if (v) {
+          this.DELETE_EVENT(this.id)
+        }
+      })
     }
+
   }, // methods
   mounted() {
     this.LOAD_EVENT_ITEM(this.id)

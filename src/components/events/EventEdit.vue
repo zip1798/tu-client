@@ -38,8 +38,8 @@
                 <v-flex xs12 sm4 md4>
                   <v-dialog
                     ref="dialog"
-                    v-model="event_date_modal"
-                    :return-value.sync="model.event_date"
+                    v-model="show_date_modal"
+                    :return-value.sync="model.show_date"
                     persistent
                     lazy
                     full-width
@@ -47,27 +47,27 @@
                   >
                     <template v-slot:activator="{ on }">
                       <v-text-field
-                        v-model="model.event_date"
+                        v-model="model.show_date"
                         label="Date end of showing on site"
                         prepend-icon="event"
                         readonly
                         v-on="on"
                       ></v-text-field>
                     </template>
-                    <v-date-picker v-model="model.event_date" scrollable>
+                    <v-date-picker v-model="model.show_date" scrollable>
                       <v-spacer></v-spacer>
-                      <v-btn flat color="primary" @click="event_date_modal = false">Cancel</v-btn>
-                      <v-btn flat color="primary" @click="$refs.dialog.save(model.event_date)">OK</v-btn>
+                      <v-btn flat color="primary" @click="show_date_modal = false">Cancel</v-btn>
+                      <v-btn flat color="primary" @click="$refs.dialog.save(model.show_date)">OK</v-btn>
                     </v-date-picker>
                   </v-dialog>
                 </v-flex>
                 <v-flex xs12 sm8 md8>
                   <v-text-field
                     prepend-icon="event"
-                    name="show_event_date"
+                    name="event_date"
                     label="Event Date"
                     type="text"
-                    v-model="model.show_event_date"
+                    v-model="model.event_date"
                   ></v-text-field>
                 </v-flex>
               </v-layout>
@@ -154,10 +154,10 @@ export default {
         id: null,
         title: null,
         place: null,
-        event_time_title: null,
         brief: null,
         description: null,
         event_date: null,
+        show_date: null,
         is_allow_online: true,
         is_show: true,
         is_priority: false,
@@ -165,7 +165,7 @@ export default {
         image_name: null,
         media_id: null
       },
-      event_date_modal: false,
+      show_date_modal: false,
       valid: false,
 
       extensions: [
@@ -217,8 +217,8 @@ export default {
   },
   computed: {
     ...mapGetters(["getProcessing", "getSelectedMediaID", "getEvent"]),
-    event_date() {
-      return this.model.event_date;
+    show_date() {
+      return this.model.show_date;
     },
     eventConfig() {
       return eventConfig;
@@ -236,8 +236,8 @@ export default {
       this.model.place = data.place
       this.model.category = data.category
       this.model.status = data.status
-      this.model.event_date = data.show_date
-      this.model.show_event_date = data.event_date
+      this.model.event_date = data.event_date
+      this.model.show_date = data.show_date
       this.model.brief = data.brief
       this.model.description = data.description
       this.model.is_allow_online = data.is_allow_online
@@ -252,7 +252,7 @@ export default {
         category: 'unregular',
         status: 'draft',
         event_date: null,
-        show_event_date: null,
+        show_date: null,
         brief: null,
         description: null,
         is_allow_online: false,
