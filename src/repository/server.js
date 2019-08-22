@@ -13,7 +13,7 @@ let axios_request = (method, url, data, callback, options) => {
       headers['Content-Type'] = 'multipart/form-data'
     }
 
-    let processing_value = true
+    let processing_value = url
     if (options && options.processing_value) {
       processing_value = options.processing_value
     }
@@ -26,7 +26,7 @@ let axios_request = (method, url, data, callback, options) => {
       data: data,
       headers: headers
     }).then(response => {
-         store.dispatch("SET_PROCESSING", false);
+         store.dispatch("UNSET_PROCESSING", processing_value);
          // response.status = 200
          if (response.error) {
            throw new Error(response.error);
@@ -35,7 +35,7 @@ let axios_request = (method, url, data, callback, options) => {
       })
       .catch(error => {
         store.dispatch("SET_ERROR", generalRepo.prepareErrorRespond(error));
-        store.dispatch("SET_PROCESSING", false);
+        store.dispatch("UNSET_PROCESSING", processing_value);
         if (generalRepo.getErrorRespondStatus(error) == 401) {
           router.push({path:"/login"});
         }

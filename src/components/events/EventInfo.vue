@@ -2,7 +2,7 @@
   <v-container id="events" tag="section" grid-list-xl>
     <base-subheading>Tensegrity Events</base-subheading>
 
-    <div style="height: 350px;" v-if="getProcessing == 'LOAD_EVENT_ITEM'">
+    <div style="height: 350px;" v-if="getItemProcessing('LOAD_EVENT_ITEM')">
      <v-layout
       align-center
       column
@@ -102,7 +102,7 @@ export default {
     SocialBtn
   },
   computed: {
-    ...mapGetters(["getEvent", "getProcessing", "isAuth", "getRole"]),
+    ...mapGetters(["getEvent", "getProcessing", "getItemProcessing", "isAuth", "getRole"]),
   },
   methods: {
     ...mapActions(['LOAD_EVENT_ITEM', 'TOOGLE_INTERESTED', 'DELETE_EVENT']),

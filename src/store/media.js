@@ -46,7 +46,7 @@ export default {
       state.pagination.current_page = payload
     },
 
-    SET_FILTER(stae, payload) {
+    SET_FILTER(state, payload) {
       if (payload.category) {
         state.media_filter.category = payload.category
       }
@@ -129,12 +129,7 @@ export default {
     },
 
     getPageCount: (state) => {
-      let result = Math.ceil(state.media_list.length / state.pagination.elements_on_page)
-      if (result == 0) {
-        result = 1
-      }
-
-      return result
+      return Math.ceil(state.media_list.length / state.pagination.elements_on_page) || 1
     }
   }
 };

@@ -21,9 +21,13 @@ export default {
       media_url: '',
       is_interested: false,
     }, 
-    list: [],
-    filter: {},
-    pagination: {current_page: 1, elements_on_page: 10}
+    general_list: [],
+    general_filter: {category: 'all'},
+    general_pagination: {current_page: 1, elements_on_page: 10},
+
+    user_list: [],
+    user_filter: {category: 'all', status: 'all', text: ''},
+    user_pagination: {current_page: 1, elements_on_page: 10},
   },
   mutations: {
     SET_EVENT(state, payload) {
@@ -46,7 +50,65 @@ export default {
 
     SET_INTERESTED(state, payload) {
       state.event.is_interested = !!payload
-    }
+    },
+
+
+    APPEND_GENERAL_EVENT_TO_LIST(state, payload) {
+      state.general_list.push(payload)
+    },
+
+    DELETE_GENERAL_EVENT_FROM_LIST(state, payload) {
+      state.general_list = state.general_list.filter(event => event.id != payload)
+    },
+
+    CLEAR_GENERAL_EVENT_LIST(state) {
+      state.general_list = []
+      state.general_filter = {category: 'all'}
+      state.general_pagination = {current_page: 1, elements_on_page: 10}
+    },
+
+    SET_CURRENT_PAGE_GENERAL_LIST(state, payload) {
+      state.general_pagination.current_page = payload
+    },
+
+    SET_FILTER_GENERAL_LIST(state, payload) {
+      if (payload.category) {
+        state.general_filter.category = payload.category
+      }
+    },
+
+
+
+    APPEND_USER_EVENT_TO_LIST(state, payload) {
+      state.user_list.push(payload)
+    },
+
+    DELETE_USER_EVENT_FROM_LIST(state, payload) {
+      state.user_list = state.user_list.filter(event => event.id != payload)
+    },
+
+    CLEAR_USER_EVENT_LIST(state) {
+      state.user_list = []
+      state.user_filter = {category: 'all', status: 'all', text: ''}
+      state.user_pagination = {current_page: 1, elements_on_page: 10}
+    },
+
+    SET_CURRENT_PAGE_USER_LIST(state, payload) {
+      state.user_pagination.current_page = payload
+    },
+
+    SET_FILTER_USER_LIST(state, payload) {
+      if (payload.category) {
+        state.user_filter.category = payload.category
+      }
+      if (payload.type) {
+        state.user_filter.type = payload.type
+      }
+      if (payload.text) {
+        state.user_filter.text = payload.text
+      }
+    },
+
 
   },
 
@@ -99,17 +161,45 @@ export default {
       }
     },
 
-    LOAD_EVENT_LIST({ commit }) {
-      // todo
+    // ----------------------------------------------------------------------
+
+    LOAD_GENERAL_EVENT_LIST({ commit }) {
+      server.get("events", (response) => {
+          commit('CLEAR_GENERAL_EVENT_LIST')
+          if (Array.isArray(response.data.success)) {
+            response.data.success.forEach(element => commit('APPEND_GENERAL_EVENT_TO_LIST', element))
+          }
+      });
     },
 
-    SET_EVENTS_FILTER({ commit }, payload) {
-      // todo
+    SET_GENERAL_EVENTS_FILTER({ commit }, payload) {
+      commit('SET_FILTER_GENERAL_LIST', payload)
     },
 
-    SET_EVENTS_CURRENT_PAGE({ commit }, payload) {
-      // todo
+    SET_GENERAL_EVENTS_CURRENT_PAGE({ commit }, payload) {
+      commit('SET_CURRENT_PAGE_GENERAL_LIST', payload)
     },
+
+    // ----------------------------------------------------------------------
+
+    LOAD_USER_EVENT_LIST({ commit }) {
+      server.get("user_events", (response) => {
+          commit('CLEAR_USER_EVENT_LIST')
+          if (Array.isArray(response.data.success)) {
+            response.data.success.forEach(element => commit('APPEND_USER_EVENT_TO_LIST', element))
+          }
+      });
+    },
+
+    SET_USER_EVENTS_FILTER({ commit }, payload) {
+      commit('SET_FILTER_USER_LIST', payload)
+    },
+
+    SET_USER_EVENTS_CURRENT_PAGE({ commit }, payload) {
+      commit('SET_CURRENT_PAGE_USER_LIST', payload)
+    },
+
+    // ----------------------------------------------------------------------
 
     TOOGLE_INTERESTED({ commit, state}, payload) {
         server.get('events/'+state.event.id + '/interested', (response) => {
@@ -120,11 +210,47 @@ export default {
   },
   getters: {
     getEvent: state => state.event,
-    getEventList: (state) => {
-      return state.list // todo depends on filter
+    getGeneralEventList: (state) => {
+      return state.general_list.filter((event) => {
+        return state.general_filter.category == 'all' || state.general_filter.category == event.category
+      })
     },
-    getPageCountOfEvents: (state) => {
-      return state.list.length // todo depends on filter
-    }
+    getPageOfGeneralEventList: (state, getters) => {
+      let list = getters.getGeneralEventList
+      let begin_element = (state.general_pagination.current_page - 1) * state.general_pagination.elements_on_page
+        , end_element = begin_element + state.general_pagination.elements_on_page
+      return list.slice(begin_element, end_element)
+    },
+    getPageCountOfGeneralEvents: (state, getters) => {
+      let count = getters.getGeneralEventList.length
+      return Math.ceil(count / state.general_pagination.elements_on_page) || 1
+    },
+
+    getUserEventList: (state) => {
+      return state.user_list.filter((event) => {
+        let result =  state.user_filter.category == 'all' || state.user_filter.category == event.category
+        result = result && state.user_filter.status == 'all' || state.user_filter.status == event.status
+        result = result &&
+          (
+          state.user_filter.text == ''
+          || state.user_filter.title.indexOf(state.user_filter.text) != -1
+          || state.user_filter.brief.indexOf(state.user_filter.text) != -1
+          || state.user_filter.description.indexOf(state.user_filter.text) != -1
+          )
+        return result
+      })
+
+    },
+    getPageOfUserEventList: (state, getters) => {
+      let list = getters.getUserEventList
+      let begin_element = (state.user_pagination.current_page - 1) * state.user_pagination.elements_on_page
+        , end_element = begin_element + state.user_pagination.elements_on_page
+      return list.slice(begin_element, end_element)
+    },
+    getPageCountOfUserEvents: (state, getters) => {
+      let count = getters.getUserEventList.length
+      return Math.ceil(count / state.user_pagination.elements_on_page) || 1
+    },
+
   }
 };

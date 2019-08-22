@@ -1,13 +1,21 @@
 export default {
     state: {
         language: 'en',
-        processing: false,
+        processing: [],
         error: null,
         success_message: null
     },
     mutations: {
         SET_PROCESSING(state, payload) {
-            state.processing = payload;
+            if (state.processing.indexOf(payload) == -1) {
+                state.processing.push(payload)
+            }
+        },
+        UNSET_PROCESSING(state, payload) {
+            let idx = state.processing.indexOf(payload)
+            if (idx != -1) {
+                state.processing.splice(idx, 1)
+            }
         },
         SET_ERROR(state, payload) {
             state.error = payload;
@@ -26,6 +34,9 @@ export default {
         SET_PROCESSING({ commit }, payload) {
             commit("SET_PROCESSING", payload);
         },
+        UNSET_PROCESSING({ commit }, payload) {
+            commit("UNSET_PROCESSING", payload);
+        },
         SET_ERROR({ commit }, payload) {
             commit("SET_ERROR", payload);
         },
@@ -38,7 +49,8 @@ export default {
         }
     },
     getters: {
-        getProcessing: state => state.processing,
+        getProcessing: state => state.processing.length > 0,
+        getItemProcessing: state => item => state.processing.indexOf(item) != -1,
         getLanguage: state => state.language,
         getError: state => state.error,
         getSuccessMessage: state => state.success_message

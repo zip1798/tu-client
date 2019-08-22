@@ -47,7 +47,7 @@ export default {
     TestNavigation
   },
   computed: {
-    ...mapGetters(["links", "isAuth"])
+    ...mapGetters(["links", "isAuth", "getProcessing"])
   },
 
   methods: {
