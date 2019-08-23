@@ -55,7 +55,7 @@
                 <v-icon :color="getEvent.is_interested ? 'red' : 'grey'" >favorite</v-icon>
               </v-btn>
               
-              <social-btn :url="'event/info/${getEvent.id}'" :title="getEvent.title" :description="getEvent.title"></social-btn>
+              <social-btn :url="`event/info/${getEvent.id}`" :title="getEvent.title" :description="getEvent.title"></social-btn>
 
               <v-btn flat @click.prevent="goToEdit">
                 <v-icon>edit</v-icon>

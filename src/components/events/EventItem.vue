@@ -37,7 +37,7 @@
             :src="event.full_url"
             v-if="event.full_url"
           >
-            <v-expand-transition>
+<!--             <v-expand-transition>
               <div
                 v-if="hover"
                 class="d-flex transition-fast-in-fast-out black darken-1 v-card--reveal white--text pa-3"
@@ -45,35 +45,30 @@
                 v-html="event.brief"
               ></div>
             </v-expand-transition>
-
+ -->
           </v-img>
 
           <v-card-title>
             <div>
-              <h3 class="headline mb-0">{{ event.title }}</h3>
+              <h3 class="headline mb-0"><router-link :to="`/event/info/${event.id}`">{{ event.title }}</router-link></h3>
               <span class="grey--text">{{ event.event_date}}</span>
               <br>
               <span>{{ event.place }}</span>
             </div>
           </v-card-title>
           <v-card-actions>
-            <v-btn icon @click.prevent="TOOGLE_INTERESTED()" v-if="isAuth">
+            <v-btn icon @click.prevent="TOOGLE_INTERESTED(event.id)" v-if="isAuth">
               <v-icon :color="event.is_interested ? 'red' : 'grey'">favorite</v-icon>
             </v-btn>
-            <v-btn icon>
-              <v-icon>share</v-icon>
-            </v-btn>
+
+            <social-btn :url="`event/info/${event.id}`" :title="event.title" :description="event.title"></social-btn>
+
             <v-spacer></v-spacer>
             <v-btn flat :to="`/event/info/${event.id}`">More details</v-btn>
-            <v-btn flat :to="`/event/feedback/${event.id}`">Feedback
-              <v-badge right color="red">
-                <template v-slot:badge>
-                  <span>6</span>
-                </template>
-                <v-icon right dark>feedback</v-icon>
-              </v-badge>
-            </v-btn>
           </v-card-actions>
+          <v-card-text>
+            <div v-html="event.brief"></div>
+          </v-card-text>
         </v-card>
       </v-hover>
     </v-flex>
@@ -82,14 +77,18 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex"
+import SocialBtn from "@/components/base/SocialBtn"
 
 export default {
   data: () => ({}),
   props: ['event'],
   computed: {
       ...mapGetters(["isAuth"]),
-    },
-    methods: {
+  },
+  components: {
+    SocialBtn
+  },
+  methods: {
       ...mapActions(['TOOGLE_INTERESTED']),
   }, // methods
 

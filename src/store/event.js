@@ -49,7 +49,21 @@ export default {
     },
 
     SET_INTERESTED(state, payload) {
-      state.event.is_interested = !!payload
+      if (state.event.id == payload.id) {
+        state.event.is_interested = !!payload.value
+      }
+      state.general_list = state.general_list.map( event => {
+        if (event.id == payload.id) {
+          event.is_interested = !!payload.value 
+        }
+        return event
+      })
+      state.user_list = state.user_list.map( event => {
+        if (event.id == payload.id) {
+          event.is_interested = !!payload.value 
+        }
+        return event
+      })
     },
 
 
@@ -203,8 +217,9 @@ export default {
     // ----------------------------------------------------------------------
 
     TOOGLE_INTERESTED({ commit, state}, payload) {
-        server.get('events/'+state.event.id + '/interested', (response) => {
-          commit("SET_INTERESTED", response.data.success);
+        let event_id = payload || state.event.id
+        server.get('events/'+ event_id + '/interested', (response) => {
+          commit("SET_INTERESTED", { id: event_id, value: response.data.success});
         });
     }
 
