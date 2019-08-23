@@ -54,6 +54,7 @@ export default {
 
 
     APPEND_GENERAL_EVENT_TO_LIST(state, payload) {
+      payload.full_url = payload.media.full_url || ''
       state.general_list.push(payload)
     },
 

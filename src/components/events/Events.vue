@@ -2,23 +2,28 @@
   <v-container id="events" tag="section" grid-list-xl>
     <base-subheading>Tensegrity Events</base-subheading>
 
-    <event-item></event-item>
-    <event-item></event-item>
-    <event-item></event-item>
-    <event-item></event-item>
-    <event-item></event-item>
-    <event-item></event-item>
+    <event-item  v-for="event in getGeneralEventList" :key="`event-${event.id}`" :event="event" ></event-item>
   </v-container>
 </template>
 
 
 <script>
 import EventItem from "./EventItem.vue";
+import { mapGetters, mapActions } from "vuex"
 
 export default {
   data: () => ({}),
   components: {
     EventItem: EventItem
+  },
+  computed: {
+    ...mapGetters(["getProcessing", "getGeneralEventList"]),
+  },
+  methods: {
+    ...mapActions(["LOAD_GENERAL_EVENT_LIST"]),
+  },
+  mounted() {
+    this.LOAD_GENERAL_EVENT_LIST();
   }
 };
 </script>

@@ -34,37 +34,38 @@
           <v-img
             class="white--text"
             height="200px"
-            src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+            :src="event.full_url"
+            v-if="event.full_url"
           >
             <v-expand-transition>
               <div
                 v-if="hover"
                 class="d-flex transition-fast-in-fast-out black darken-1 v-card--reveal white--text pa-3"
                 style="height: 50%;"
-              >Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.</div>
+                v-html="event.brief"
+              ></div>
             </v-expand-transition>
+
           </v-img>
 
           <v-card-title>
             <div>
-              <h3 class="headline mb-0">Kangaroo Valley Safari</h3>
-              <span class="grey--text">Number 10</span>
+              <h3 class="headline mb-0">{{ event.title }}</h3>
+              <span class="grey--text">{{ event.event_date}}</span>
               <br>
-              <span>Whitehaven Beach</span>
-              <br>
-              <span>Whitsunday Island, Whitsunday Islands</span>
+              <span>{{ event.place }}</span>
             </div>
           </v-card-title>
           <v-card-actions>
-            <v-btn icon>
-              <v-icon color="red">favorite</v-icon>
+            <v-btn icon @click.prevent="TOOGLE_INTERESTED()" v-if="isAuth">
+              <v-icon :color="event.is_interested ? 'red' : 'grey'">favorite</v-icon>
             </v-btn>
             <v-btn icon>
               <v-icon>share</v-icon>
             </v-btn>
             <v-spacer></v-spacer>
-            <v-btn flat :to="`/event/info/:id`">More details</v-btn>
-            <v-btn flat :to="`/event/feedback/1`">Feedback
+            <v-btn flat :to="`/event/info/${event.id}`">More details</v-btn>
+            <v-btn flat :to="`/event/feedback/${event.id}`">Feedback
               <v-badge right color="red">
                 <template v-slot:badge>
                   <span>6</span>
@@ -80,8 +81,18 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex"
+
 export default {
-  data: () => ({})
+  data: () => ({}),
+  props: ['event'],
+  computed: {
+      ...mapGetters(["isAuth"]),
+    },
+    methods: {
+      ...mapActions(['TOOGLE_INTERESTED']),
+  }, // methods
+
 };
 </script>
 
