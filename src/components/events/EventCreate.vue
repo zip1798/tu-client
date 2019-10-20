@@ -103,9 +103,21 @@
                         color="indigo darken-3"
                         hide-details
                       ></v-switch>
+                  <v-switch
+                        v-model="model.is_open_registration"
+                        label="Allow registration on site"
+                        color="indigo darken-3"
+                        hide-details
+                      ></v-switch>
                 </v-flex>  
               </v-layout>
 
+              <v-flex xs12  v-if="model.is_open_registration">
+                <h3 class="mt-4">Message and mail after registraion</h3>     
+                <tiptap-vuetify v-model="model.html_after_registration" :extensions="extensions" placeholder="Message and mail after registraion" />
+
+                <v-divider class="my-4"></v-divider>
+              </v-flex>
 
               <h3 class="mt-4">Brief Desciption</h3>     
               <tiptap-vuetify v-model="model.brief" :extensions="extensions" placeholder="Brief description" />
@@ -160,6 +172,8 @@ export default {
         brief: null,
         description: null,
         is_allow_online: false,
+        is_open_registration: false,
+        html_after_registration: '',
         media_id: null
       },
       show_date_modal: false,
