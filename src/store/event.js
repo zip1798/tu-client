@@ -17,6 +17,8 @@ export default {
       brief: '',
       description: '',
       is_allow_online: '',
+      is_open_registration: false,
+      html_after_registration: '',
       media_id: '',
       media_url: '',
       is_interested: false,
@@ -42,6 +44,8 @@ export default {
       state.event.brief = payload. brief
       state.event.description = payload.description
       state.event.is_allow_online = payload.is_allow_online
+      state.event.is_open_registration = payload.is_open_registration
+      state.event.html_after_registration = payload.html_after_registration
       state.event.media_id = payload.media_id
       state.event.media_url = payload.media.full_url
       state.event.is_interested = payload.is_interested

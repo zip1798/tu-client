@@ -114,8 +114,21 @@
                         color="indigo darken-3"
                         hide-details
                       ></v-switch>
+                  <v-switch
+                        v-model="model.is_open_registration"
+                        label="Allow registration on site"
+                        color="indigo darken-3"
+                        hide-details
+                      ></v-switch>
                 </v-flex>  
               </v-layout>
+
+              <v-flex xs12  v-if="model.is_open_registration">
+                <h3 class="mt-4">Message and mail after registraion</h3>     
+                <tiptap-vuetify v-model="model.html_after_registration" :extensions="extensions" placeholder="Message and mail after registraion" />
+
+                <v-divider class="my-4"></v-divider>
+              </v-flex>
 
               <h3 class="mt-4">Main Image</h3>     
               <media-select :media_id="model.media_id" :category="`event`"></media-select>
@@ -159,6 +172,8 @@ export default {
         event_date: null,
         show_date: null,
         is_allow_online: true,
+        is_open_registration: false,
+        html_after_registration: '',
         is_show: true,
         is_priority: false,
         image: null,
@@ -241,6 +256,8 @@ export default {
       this.model.brief = data.brief
       this.model.description = data.description
       this.model.is_allow_online = data.is_allow_online
+      this.model.is_open_registration = data.is_open_registration
+      this.model.html_after_registration = data.html_after_registration
       this.model.media_id = data.media_id
     },
     clearForm() {
@@ -256,6 +273,8 @@ export default {
         brief: null,
         description: null,
         is_allow_online: false,
+        is_open_registration: false,
+        html_after_registration: '',
         media_id: null
       };
     } // clearForm
