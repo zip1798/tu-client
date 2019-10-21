@@ -14,6 +14,7 @@ import MyEvents from "./components/events/MyEvents.vue";
 import EventCreate from "./components/events/EventCreate.vue";
 import EventEdit from "./components/events/EventEdit.vue";
 import EventInfo from "./components/events/EventInfo.vue";
+import EventRegister from "./components/events/EventRegister.vue";
 import EventSendmail from "./components/events/EventSendmail.vue";
 import EventFeedback from "./components/events/EventFeedback.vue";
 import EventMembers from "./components/events/EventMembers.vue";
@@ -98,6 +99,12 @@ export default new Router({
       name: "event_info",
       props: true,
       component: EventInfo
+    },
+    {
+      path: "/event/register/:id",
+      name: "event_register",
+      props: true,
+      component: EventRegister
     },
     {
       path: "/event/sendmail/:id",

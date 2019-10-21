@@ -225,7 +225,20 @@ export default {
         server.get('events/'+ event_id + '/interested', (response) => {
           commit("SET_INTERESTED", { id: event_id, value: response.data.success});
         });
-    }
+    },
+
+/*  REGISTER_EVENT action */
+    REGISTER_EVENT({ commit, state}, payload) {
+      if (!!payload) {
+        server.post("events/" + state.event.id + '/register', payload, {}, (response) => {
+          if (response.data.success) {
+            EventBus.notify("event_registration_created");
+            dispatch("SET_SUCCESS_MESSAGE", 'Event Registration has been created');
+          }
+        });
+      }
+    },
+
 
   },
   getters: {
