@@ -40,6 +40,16 @@ export default {
       }
     },
 
+    SILENT_LOAD_PROFILE({ commit, dispatch, state }, payload) {
+      if (!!payload || state.profile.id == 0) {
+        server.simple_get("silent_profile", (response) => {
+          if (response.data.success) {
+            commit("SET_PROFILE", response.data.success);
+          }
+        });
+      }
+    },
+
 /*  CLEAR_PROFILE action */
     CLEAR_PROFILE({ state }) {
       EventBus.notify("loaded_profile", state.profile);

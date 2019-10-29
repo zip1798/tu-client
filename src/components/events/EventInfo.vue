@@ -82,7 +82,7 @@
             <v-card-text class="body-1" v-html="getEvent.description"></v-card-text>
 
             <v-card-actions>
-              <v-btn flat block large v-if="getEvent.is_open_registration" :to="`/event/register/${event.id}`">Register on Event</v-btn>
+              <v-btn flat block large v-if="getEvent.is_open_registration" :to="`/event/register/${getEvent.id}`">Register on Event</v-btn>
             </v-card-actions>
 
 

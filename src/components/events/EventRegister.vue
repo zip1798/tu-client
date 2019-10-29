@@ -143,7 +143,7 @@ export default {
     ...mapGetters(["getEvent", "getProcessing", "getItemProcessing", "getProfile"]),
   },
   methods: {
-    ...mapActions(['LOAD_PROFILE', 'REGISTER_EVENT']),
+    ...mapActions(['SILENT_LOAD_PROFILE', 'REGISTER_EVENT', 'LOAD_EVENT_ITEM']),
 
     goToInfo() {
       router.push('/event/info/'+this.getEvent.id)
@@ -161,20 +161,22 @@ export default {
     }, // clearForm
     submit() {
         this.REGISTER_EVENT({
-		name: this.name,
-		email: this.email,
-		city: this.city,
-		commetns: this.commetns
+          event_id: this.id,
+		      name: this.name,
+		      email: this.email,
+		      city: this.city,
+		      commetns: this.commetns
         })
     }
   }, // methods
 
   created() {
-    this.LOAD_PROFILE();
+    this.SILENT_LOAD_PROFILE();
     this.$bus.$on('loaded_profile', data => this.initProfile(data));
   },
   mounted() {
     this.initProfile(this.getProfile);
+    this.LOAD_EVENT_ITEM(this.id)
   },
   beforeDestroy() {
     this.$bus.$off('loaded_event');
