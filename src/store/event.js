@@ -228,7 +228,7 @@ export default {
     },
 
 /*  REGISTER_EVENT action */
-    REGISTER_EVENT({ commit, state}, payload) {
+    REGISTER_EVENT({ commit, dispatch, state}, payload) {
       if (!!payload) {
         server.post("events/" + state.event.id + '/register', payload, {}, (response) => {
           if (response.data.success) {

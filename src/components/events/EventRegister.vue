@@ -164,8 +164,9 @@ export default {
           event_id: this.id,
 		      name: this.name,
 		      email: this.email,
+          phone: this.phone,
 		      city: this.city,
-		      commetns: this.commetns
+		      comments: this.comments
         })
     }
   }, // methods
@@ -179,7 +180,7 @@ export default {
     this.LOAD_EVENT_ITEM(this.id)
   },
   beforeDestroy() {
-    this.$bus.$off('loaded_event');
+    this.$bus.$off('loaded_profile');
   },
 
 };
