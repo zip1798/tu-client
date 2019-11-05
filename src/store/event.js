@@ -233,7 +233,8 @@ export default {
         server.post("events/" + state.event.id + '/register', payload, {}, (response) => {
           if (response.data.success) {
             EventBus.notify("event_registration_created");
-            dispatch("SET_SUCCESS_MESSAGE", 'Event Registration has been created');
+            router.push({path:"/event/registered/"+response.data.success.id}); 
+            // dispatch("SET_SUCCESS_MESSAGE", 'Event Registration has been created');
           }
         });
       }
