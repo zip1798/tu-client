@@ -7,19 +7,19 @@
 
           </template>
           <v-list>
-            <v-list-tile
+            <v-list-item 
                     v-for="(link, i) in testLinks"
-                    :key="i"
+                    :key="`tets-${i}`"
                     :to="link.to"
             >
-              <v-list-tile-title>{{ link.text }}</v-list-tile-title>
-            </v-list-tile>
+              <v-list-item-title>{{ link.text }}</v-list-item-title>
+            </v-list-item>
           </v-list>
           <v-divider></v-divider>
           <v-list>
-            <v-list-tile @click.prevent="AUTH_LOGOUT">
+            <v-list-item @click.prevent="AUTH_LOGOUT">
               <v-list-tile-title>Logout</v-list-tile-title>
-            </v-list-tile>
+            </v-list-item>
           </v-list>
 
         </v-menu>

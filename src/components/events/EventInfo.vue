@@ -95,7 +95,7 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex"
-import SocialBtn from "@/components/base/SocialBtn"
+import SocialBtn from "@/components/app/SocialBtn"
 import router from "@/router";
 
 

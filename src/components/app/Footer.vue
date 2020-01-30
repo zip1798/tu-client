@@ -1,0 +1,40 @@
+<template>
+  <div>
+    <v-footer
+      absolute
+      class="font-weight-medium"
+    >
+      <v-col
+        class="text-center"
+        cols="12"
+      >
+        {{ new Date().getFullYear() }} — <strong>Vuetify</strong>
+      </v-col>
+    </v-footer>
+
+    <v-snackbar :value="getSuccessMessage" :bottom="true" :timeout="0" color="success">
+      {{ getSuccessMessage }}
+      <v-btn color="white" flat @click="clearMessages">Close</v-btn>
+    </v-snackbar>
+
+    <v-snackbar :value="getError" :bottom="true" :timeout="0" color="error">
+      {{ getError }}
+      <v-btn color="white" flat @click="clearMessages">Close</v-btn>
+    </v-snackbar>
+
+  </div>
+</template>
+
+<script>
+
+export default {
+  components: {
+  },
+
+  computed: {
+  },
+
+  methods: {
+  }
+};
+</script>

@@ -10,7 +10,7 @@
           <v-list>
             <v-list-tile
                     v-for="(user_link, i) in userLinks"
-                    :key="i"
+                    :key="`nav-${i}`"
                     :to="user_link.to"
             >
               <v-list-tile-title>{{ user_link.text }}</v-list-tile-title>

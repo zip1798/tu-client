@@ -149,7 +149,7 @@ export default {
 
 /*  UPDATE_EVENT action */
     UPDATE_EVENT({ commit, dispatch, state }, payload) {
-      if (!!payload) {
+      if (payload) {
         server.patch("events/" + state.event.id, payload, {}, (response) => {
           if (response.data.success) {
             commit("SET_EVENT", response.data.success);
@@ -229,7 +229,7 @@ export default {
 
 /*  REGISTER_EVENT action */
     REGISTER_EVENT({ commit, dispatch, state}, payload) {
-      if (!!payload) {
+      if (payload) {
         server.post("events/" + state.event.id + '/register', payload, {}, (response) => {
           if (response.data.success) {
             EventBus.notify("event_registration_created");

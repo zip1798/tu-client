@@ -1,6 +1,5 @@
 import Vue from "vue";
-import "./plugins/vuetify";
-import "./plugins/base";
+import vuetify from "./plugins/vuetify";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
@@ -20,6 +19,7 @@ Vue.use(Vue2Storage, {
 
 
 new Vue({
+  vuetify,
   router,
   store,
   created() {

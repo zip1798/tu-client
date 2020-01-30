@@ -7,6 +7,7 @@ import "vuetify-dialog/dist/vuetify-dialog.min.css"
 import { TiptapVuetifyPlugin } from 'tiptap-vuetify'
 import 'tiptap-vuetify/dist/main.css'
 
+
 Vue.use(Vuetify, {
   theme: {
     primary: "#CBAA5C",
@@ -15,10 +16,18 @@ Vue.use(Vuetify, {
   iconfont: "mdi"
 });
 
+const vuetify = new Vuetify();
+
 Vue.use(TiptapVuetifyPlugin, {
+  vuetify,  
   // optional, default to 'md' (default vuetify icons before v2.0.0)
   iconsGroup: 'md'
 })
 
-Vue.use(VuetifyDialog)
+Vue.use(VuetifyDialog, {
+  context: {
+    vuetify
+  }
+})
 
+export default vuetify
