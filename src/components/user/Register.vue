@@ -58,9 +58,9 @@
             </v-form>
           </v-card-text>
           <v-card-actions>
-            <v-btn small flat :to="'/login'">Login</v-btn>
+            <v-btn text small flat :to="'/login'">Login</v-btn>
             <v-spacer></v-spacer>
-            <v-btn color="primary" @click.prevent="register" :disabled="processing || !valid">Register</v-btn>
+            <v-btn outlined color="primary" @click.prevent="register" :disabled="processing || !valid">Register</v-btn>
           </v-card-actions>
         </v-card>
 

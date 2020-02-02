@@ -19,61 +19,31 @@ export default new Vuex.Store({
   state: {
     articles: [], // require('@/data/articles.json'),
     drawer: false,
-    items: [
-      {
-        text: "Home",
-        to: "/"
-      },
-      {
-        text: "About",
-        to: "/about"
-        // href: "#about"
-      },
-      {
-        to: "/contacts",
-        text: "Contacts"
-      }
+    
+    main_links: [
+      { title: "Home", to: "/" },
+      { title: "About", to: "/about" },
+      { title: "Contacts", to: "/contacts" }
     ],
-    user_items: [
-      {
-        to: "/profile/info",
-        text: "Profile Info",
-        is_auth: true
-      },
-      {
-        to: "/myevents/:page",
-        text: "My Events"
-      },
+    
+    nav_items: [
+      { title: "Login", to: "/login",icon: '', only_for_auth: false },
+      { title: "Register", to: "/register", icon: '', only_for_auth: false },
+      { title: "Profile Info", to: "/profile/info", icon: '', only_for_auth: true },
+      { title: "My Events", to: "/myevents/:page", icon: '', only_for_auth: true },
+      { title: 'Home', icon: 'mdi-home-city', to: ''},
+      { title: 'My Account', icon: 'mdi-account', to: '' },
+      { title: 'Users', icon: 'mdi-account-group-outline', to: '' },
+
     ], 
     test_items: [
-      {
-        to: "/event/create",
-        text: "Create Event"
-      },
-      {
-        to: "/event/edit/:id",
-        text: "Edit Event"
-      },
-      {
-        to: "/event/info/:id",
-        text: "Event Info"
-      },
-      {
-        to: "/event/sendmail/:id",
-        text: "Event Sendmail"
-      },
-      {
-        to: "/event/feedback/:id",
-        text: "Event Feedback"
-      },
-      {
-        to: "/event/members/:id",
-        text: "Event Partisipants"
-      },
-      {
-        to: "/test",
-        text: "Test"
-      }
+      { to: "/event/create", text: "Create Event" },
+      { to: "/event/edit/:id", text: "Edit Event" },
+      { to: "/event/info/:id", text: "Event Info" },
+      { to: "/event/sendmail/:id", text: "Event Sendmail" },
+      { to: "/event/feedback/:id", text: "Event Feedback" },
+      { to: "/event/members/:id", text: "Event Partisipants" },
+      { to: "/test", text: "Test" }
     ]
   },
   getters: {
@@ -97,11 +67,11 @@ export default new Vuex.Store({
 
       return categories.sort().slice(0, 4);
     },
-    links: (state, getters) => {
-      return state.items.concat(getters.categories);
+    mainLinks: (state, getters) => {
+      return state.main_links;
     },
-    userLinks: (state, getters) => {
-      return state.user_items;
+    navLinks: (state, getters) => {
+      return state.nav_items.filter( item => getters.isAuth || !item.only_for_auth );
     },
     testLinks: state => state.test_items
 },

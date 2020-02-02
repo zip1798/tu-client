@@ -2,10 +2,12 @@
  <div>
     <v-app-bar
       color="blue-grey  accent-4"
-      dense
+      flat
       dark
+      app
+      clipped-left
     >
-      <v-app-bar-nav-icon></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon @click="toogleNav"></v-app-bar-nav-icon>
 
       <v-toolbar-title>Page title</v-toolbar-title>
 
@@ -19,55 +21,57 @@
         <v-icon>mdi-magnify</v-icon>
       </v-btn>
 
-      <v-menu
-        left
-        bottom
-      >
-        <template v-slot:activator="{ on }">
-          <v-btn icon v-on="on">
-            <v-icon>mdi-dots-vertical</v-icon>
-          </v-btn>
-        </template>
-
-        <v-list>
-          <v-list-item
-            v-for="n in 5"
-            :key="n"
-            @click="() => {}"
-          >
-            <v-list-item-title>Option {{ n }}</v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-menu>
-
       <template v-slot:extension>
-        <v-tabs align-with-title>
-          <v-tab>Tab 1</v-tab>
-          <v-tab>Tab 2</v-tab>
-          <v-tab>Tab 3</v-tab>
+        <v-tabs>
+          <v-tab 
+          v-for="(link, i) in mainLinks" 
+          :key="`tab-${i}`"
+          :to="link.to"
+          >{{ link.title }}</v-tab>
+          <test-navigation></test-navigation>
         </v-tabs>
       </template>      
     </v-app-bar>
 
-        <v-btn
-          v-for="(link, i) in links"
-          :key="i"
-          :to="link.to"
-          class="ml-0 hidden-sm-and-down"
-          flat
-          @click="onClick($event, item)"
-        >{{ link.text }}</v-btn>
-        <test-navigation></test-navigation>
-        <v-spacer/>
-        <v-btn v-if="!isAuth" to="/login" flat outline>
-          Log in
-        </v-btn>
-        <v-btn v-if="!isAuth" to="/register" flat >
-          Register
-        </v-btn>
-        
-        <auth-navigation v-if="isAuth"></auth-navigation>
+    <v-navigation-drawer 
+    app 
+    clipped
+    :expand-on-hover="openned_nav"
+    permanent
+    >
+      <template v-slot:prepend>
+        <v-list-item two-line>
+          <v-list-item-avatar>
+            <img src="https://randomuser.me/api/portraits/women/81.jpg">
+          </v-list-item-avatar>
 
+          <v-list-item-content>
+            <v-list-item-title>Jane Smith</v-list-item-title>
+            <v-list-item-subtitle>Logged In</v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+        
+        <v-spacer/>
+      </template>
+
+      <v-divider></v-divider>
+
+      <v-list dense>
+        <v-list-item
+          v-for="item in navLinks"
+          :key="item.title"
+          :to="item.to"
+        >
+          <v-list-item-icon>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
   </div>
 
 </template>
@@ -75,16 +79,19 @@
 <script>
 // Utilities
 import { mapGetters, mapMutations } from "vuex";
-import AuthNavigation from "../user/AuthNavigation";
 import TestNavigation from "../user/TestNavigation";
 
 export default {
+   data () {
+      return {
+        openned_nav: false,
+      }
+  },
   components: {
-    AuthNavigation,
     TestNavigation
   },
   computed: {
-    ...mapGetters(["links", "isAuth", "getProcessing"])
+    ...mapGetters(["navLinks", "mainLinks", "getProcessing"])
   },
 
   methods: {
@@ -95,6 +102,9 @@ export default {
       if (item.to || !item.href) return;
 
       this.$vuetify.goTo(item.href);
+    },
+    toogleNav() {
+      this.openned_nav = !this.openned_nav
     }
   }
 };

@@ -3,6 +3,7 @@
     <v-footer
       absolute
       class="font-weight-medium"
+      app
     >
       <v-col
         class="text-center"

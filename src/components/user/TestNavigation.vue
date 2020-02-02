@@ -1,9 +1,9 @@
 <template>
 <v-menu offset-y  open-on-hover>
           <template v-slot:activator="{ on }">
-            <v-btn v-on="on" flat outline>
+            <v-tab v-on="on" flat outline>
               Test Navigation
-            </v-btn>
+            </v-tab>
 
           </template>
           <v-list>
