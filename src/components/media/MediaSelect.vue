@@ -1,14 +1,150 @@
 <template>
 
-	  <v-card>
+	  <div>
 
-		<v-layout row wrap mt-4>
+		<v-layout row wrap ma-4>
 		<v-flex xs12>
-      <v-card class="my-5" v-if="getSelectedMedia">
-         <v-img :src="getSelectedMedia.full_url"></v-img>
+        
+        <v-card class="mx-lg-auto my-lg-auto">
+          <v-card-text style="height: 300px;" class="grey lighten-5 ">
+            <v-card class="my-5" v-if="getSelectedMedia">
+              <v-img :src="getSelectedMedia.full_url"></v-img>
+            </v-card>
+            <p
+            class="text-xs-center title font-weight-light pa-md-4" 
+            v-if="getSelectedMedia == null"
+            >No image</p>
+          </v-card-text>
+
+          <v-card-text style="height: 50px; position: relative">
+
+
+            <v-dialog v-model="dialog" persistent width="600" height="400">
+      <template v-slot:activator="{ on }">
+            <v-btn
+              absolute
+              dark
+              fab
+              top
+              right
+              color="pink"
+              v-on="on"
+            >
+              <v-icon>mdi-plus</v-icon>
+            </v-btn>
+      </template>
+
+      <v-card>
+        <v-card-title class="headline">Select uploaded image</v-card-title>
+        <v-card-text>
+        <v-row  key="0">
+        <v-col cols="4">
+          <v-card>
+            <v-img
+              src="https://picsum.photos/350/165?random"
+              height="125"
+              class="grey darken-4"
+            >
+              <v-btn
+              small
+              absolute
+              class="mb-7"
+              dark
+              fab
+              bottom
+              right
+              color="red lighten-1"
+            >
+              <v-icon>mdi-plus</v-icon>
+            </v-btn>
+            </v-img>
+          </v-card>
+        </v-col>
+
+        <v-col cols="4">
+          <v-card>
+            <v-img
+              src="https://picsum.photos/350/165?random"
+              height="125"
+              class="grey darken-4"
+            ></v-img>
+          </v-card>
+        </v-col>
+
+        <v-col cols="4">
+          <v-card>
+            <v-img
+              src="https://picsum.photos/350/165?random"
+              height="125"
+              class="grey darken-4"
+            ></v-img>
+          </v-card>
+        </v-col>
+
+        <v-col cols="4">
+          <v-card>
+            <v-img
+              src="https://picsum.photos/350/165?random"
+              height="125"
+              class="grey darken-4"
+            ></v-img>
+          </v-card>
+        </v-col>
+
+        <v-col cols="4">
+          <v-card>
+            <v-img
+              src="https://picsum.photos/350/165?random"
+              height="125"
+              class="grey darken-4"
+            ></v-img>
+          </v-card>
+        </v-col>
+
+        <v-col cols="4">
+          <v-card>
+            <v-img
+              src="https://picsum.photos/350/165?random"
+              height="125"
+              class="grey darken-4"
+            ></v-img>
+          </v-card>
+        </v-col>
+      </v-row>
+
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+    <v-pagination
+      v-model="page"
+      :length="6"
+    ></v-pagination>
+          <v-btn color="green darken-1" text @click="dialog = false">Close</v-btn>
+        </v-card-actions>
       </v-card>
-      
-      <p class="text-xs-center title font-weight-light my-5" v-if="getSelectedMedia == null">No image</p>
+    </v-dialog>
+          </v-card-text>
+
+            <v-card-actions>
+
+            </v-btn>
+              <v-spacer></v-spacer>
+
+              <v-btn icon>
+                <v-icon>mdi-heart</v-icon>
+              </v-btn>
+
+              <v-btn icon>
+                <v-icon>mdi-bookmark</v-icon>
+              </v-btn>
+
+              <v-btn icon>
+                <v-icon>mdi-share-variant</v-icon>
+              </v-btn>
+            </v-card-actions>
+        </v-card>
+
+
 
 		</v-flex>
 		</v-layout>
@@ -83,7 +219,7 @@
       </template>
     </upload-btn>
     
-  </v-card>
+  </div>
 
 </template>
 
@@ -97,6 +233,7 @@ export default {
 
   data () {
     return {
+      dialog: false,
     	image: null,
     	image_name: null,
     	page: 1

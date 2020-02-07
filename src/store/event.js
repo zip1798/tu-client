@@ -12,6 +12,8 @@ export default {
       place: '',
       category: '',
       status: '',
+      expire_from: new Date().toISOString().substr(0, 10),
+      date: '',
       event_date: '',
       show_date: '',
       brief: '',
@@ -39,6 +41,8 @@ export default {
       state.event.place = payload.place
       state.event.category = payload.category
       state.event.status = payload.status
+      state.event.expire_from = payload.expire_from
+      state.event.date = payload.date
       state.event.event_date = payload.event_date
       state.event.show_date = payload.show_date
       state.event.brief = payload. brief
@@ -50,6 +54,10 @@ export default {
       state.event.media_url = payload.media.full_url
       state.event.is_interested = payload.is_interested
       // EventBus.notify("loaded_event", state.event);
+    },
+
+    SET_EVENT_FIELD(state, payload) {
+      state.event[payload.fld] = payload.val
     },
 
     SET_INTERESTED(state, payload) {

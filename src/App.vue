@@ -27,11 +27,6 @@ export default {
   },
   computed: {
     ...mapGetters(["getError", "getSuccessMessage"])
-  },
-  methods: {
-    clearMessages() {
-      this.$store.dispatch("CLEAR_MESSAGES");
-    }
   }
 };
 </script>

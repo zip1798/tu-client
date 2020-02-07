@@ -28,14 +28,16 @@
 
 <script>
 
+import { mapGetters } from "vuex";
+
 export default {
-  components: {
-  },
-
   computed: {
+    ...mapGetters(["getSuccessMessage", "getError"])
   },
-
   methods: {
+    clearMessages() {
+      this.$store.dispatch("CLEAR_MESSAGES");
+    }
   }
 };
 </script>
