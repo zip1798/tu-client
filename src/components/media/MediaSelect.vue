@@ -6,113 +6,81 @@
 		<v-flex xs12>
         
         <v-card class="mx-lg-auto my-lg-auto">
-          <v-card-text style="height: 300px;" class="grey lighten-5 ">
-            <v-card class="my-5" v-if="getSelectedMedia">
-              <v-img :src="getSelectedMedia.full_url"></v-img>
-            </v-card>
-            <p
-            class="text-xs-center title font-weight-light pa-md-4" 
-            v-if="getSelectedMedia == null"
-            >No image</p>
-          </v-card-text>
+          <v-card
+              class="d-flex align-center justify-center"
+              color="grey lighten-5"
+              flat
+              tile
+              min-height="300"
+              >
+              <v-icon size=128 v-if="getSelectedMedia == null">image</v-icon>
+              <v-img :src="getSelectedMedia.full_url" v-if="getSelectedMedia"></v-img>
+          </v-card>
+
 
           <v-card-text style="height: 50px; position: relative">
-
-
             <v-dialog v-model="dialog" persistent width="600" height="400">
-      <template v-slot:activator="{ on }">
-            <v-btn
-              absolute
-              dark
-              fab
-              top
-              right
-              color="pink"
-              v-on="on"
-            >
-              <v-icon>mdi-plus</v-icon>
-            </v-btn>
-      </template>
+              <template v-slot:activator="{ on }">
+                <v-btn
+                  absolute
+                  dark
+                  fab
+                  top
+                  right
+                  color="pink"
+                  v-on="on"
+                >
+                  <v-icon>mdi-plus</v-icon>
+                </v-btn>
+              </template>
 
       <v-card>
         <v-card-title class="headline">Select uploaded image</v-card-title>
-        <v-card-text>
-        <v-row  key="0">
-        <v-col cols="4">
-          <v-card>
-            <v-img
-              src="https://picsum.photos/350/165?random"
-              height="125"
-              class="grey darken-4"
-            >
-              <v-btn
-              small
-              absolute
-              class="mb-7"
-              dark
-              fab
-              bottom
-              right
-              color="red lighten-1"
-            >
-              <v-icon>mdi-plus</v-icon>
-            </v-btn>
-            </v-img>
-          </v-card>
-        </v-col>
+          <v-card-text>
+            <v-row  key="0">
 
-        <v-col cols="4">
-          <v-card>
-            <v-img
-              src="https://picsum.photos/350/165?random"
-              height="125"
-              class="grey darken-4"
-            ></v-img>
-          </v-card>
-        </v-col>
+            <v-col cols="4">
+              <v-card
+                  class="d-flex align-center justify-center"
+                  color="grey lighten-4" flat tile min-height="125">
 
-        <v-col cols="4">
-          <v-card>
-            <v-img
-              src="https://picsum.photos/350/165?random"
-              height="125"
-              class="grey darken-4"
-            ></v-img>
-          </v-card>
-        </v-col>
+                <upload-btn
+                  accept="image/*"
+                  large flat icon maxWidth="200"
+                  @file-update="imageUploaded"
+                >
+                  <template slot="icon">
+                    <v-icon>cloud_upload</v-icon>
+                  </template>
+                </upload-btn>
+              </v-card>
+            </v-col>
 
-        <v-col cols="4">
-          <v-card>
-            <v-img
-              src="https://picsum.photos/350/165?random"
-              height="125"
-              class="grey darken-4"
-            ></v-img>
-          </v-card>
-        </v-col>
+            <v-col cols="4">
+              <v-hover v-slot:default="{ hover }">
+                <v-card
+                  :elevation="hover ? 6 : 0"
+                >
+                  <v-img
+                    src="https://picsum.photos/350/165?random"
+                    height="125"
+                    class="grey darken-4"
+                  >
+                    <v-btn small absolute class="mb-7 mr-0" dark fab bottom right color="red lighten-1"
+                      v-if="hover">
+                      <v-icon>delete</v-icon>
+                    </v-btn>
+                    <v-btn small absolute class="mb-7 mr-12" dark fab bottom right color="red lighten-1"
+                      v-if="hover">
+                      <v-icon>done</v-icon>
+                     </v-btn>
+                  </v-img>
+                </v-card>
+              </v-hover>
+            </v-col>
+          </v-row>
 
-        <v-col cols="4">
-          <v-card>
-            <v-img
-              src="https://picsum.photos/350/165?random"
-              height="125"
-              class="grey darken-4"
-            ></v-img>
-          </v-card>
-        </v-col>
-
-        <v-col cols="4">
-          <v-card>
-            <v-img
-              src="https://picsum.photos/350/165?random"
-              height="125"
-              class="grey darken-4"
-            ></v-img>
-          </v-card>
-        </v-col>
-      </v-row>
-
-        </v-card-text>
+          </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
     <v-pagination
@@ -125,23 +93,6 @@
     </v-dialog>
           </v-card-text>
 
-            <v-card-actions>
-
-            </v-btn>
-              <v-spacer></v-spacer>
-
-              <v-btn icon>
-                <v-icon>mdi-heart</v-icon>
-              </v-btn>
-
-              <v-btn icon>
-                <v-icon>mdi-bookmark</v-icon>
-              </v-btn>
-
-              <v-btn icon>
-                <v-icon>mdi-share-variant</v-icon>
-              </v-btn>
-            </v-card-actions>
         </v-card>
 
 
@@ -150,7 +101,6 @@
 		</v-layout>
 
     <v-container grid-list-sm fluid>
-      <div class="title font-weight-light mb-3">Choose image for event from library</div>
       <v-layout row wrap>
         <v-flex v-for="(media, mediaIdx) in getMediaList" :key="`media-${media.id}`" xs4 d-flex>
           <v-hover>
@@ -189,7 +139,7 @@
             </v-card-text>
             <v-card-actions>
               <v-btn 
-                flat 
+                text
                 :color="getSelectedMediaID == media.id ? 'red' : 'blue'"
                 @click.prevent="SELECT_MEDIA(media.id)"
                 >Select</v-btn>
@@ -206,18 +156,6 @@
     <div class="text-xs-center" v-if="getPageCount > 1">
       <v-pagination v-model="page" :length="getPageCount"></v-pagination>
     </div>
-    
-    <v-divider></v-divider>
-    <upload-btn
-      title="Upload new Image to library "
-      accept="image/*"
-      large
-      @file-update="imageUploaded"
-    >
-      <template slot="icon">
-        <v-icon>add</v-icon>
-      </template>
-    </upload-btn>
     
   </div>
 

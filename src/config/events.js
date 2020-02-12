@@ -8,10 +8,8 @@ export default {
 
 	statuses: [
 		{name: 'draft', title: 'Draft'},
-		{name: 'pending', title: 'Pending'},
 		{name: 'public', title: 'Public'},
-		{name: 'hidden', title: 'Hidden'},
-		{name: 'deleted', title: 'Deleted'},
+		{name: 'archive', title: 'Archive'},
 	]
 
 }

@@ -22,6 +22,11 @@
       </v-stepper-step>
 
       <v-stepper-content step="1">
+        <media-select
+          :media_id="getEvent.media_id"
+          :category="`event`"
+        />
+
         <event-form-main />
         <div>
           <v-btn color="primary" tile @click="e6 = 2">Next</v-btn>
