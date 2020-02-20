@@ -5,6 +5,7 @@
         :toolbar-attributes="{ color: 'grey' }"
         :value="getEvent[name]" 
         @change="setField(name)"
+        :rules="requiredRules"
         :extensions="extensions" 
         :placeholder="placeholder" />
 
@@ -25,6 +26,10 @@ export default {
   props: ["name", "label", "placeholder"],
   data () {
     return {
+      requiredRules: [
+        v => !!v || "Please enter value"
+      ],
+
       extensions: [
         // you can specify options for extension
         new Heading({

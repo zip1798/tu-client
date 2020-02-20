@@ -6,6 +6,7 @@ import { EventBus } from "../repository/eventBus";
 export default {
   state: {
     media_id: 0,
+    media_set: [],
     media_list: [],
     media_filter: {
       category: 'all',
@@ -53,7 +54,22 @@ export default {
       if (payload.type) {
         state.media_filter.type = payload.type
       }
-    }
+    },
+
+    PUSH_TO_MEDIA_SET(state, payload) {
+      state.media_set.push(payload)
+    },
+
+    CLEAR_MEDIA_SET(state) {
+      state.media_set = []
+    },
+
+    DELETE_FROM_MEDIA_SET(state, payload) {
+      let idx = state.media_set.indexOf(payload)
+      if (idx != -1) {
+        state.media_set.splice(idx, 1)
+      }
+    },
 
   },
 
