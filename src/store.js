@@ -29,14 +29,10 @@ export default new Vuex.Store({
     ],
     
     nav_items: [
-      { title: "Login", to: "/login",icon: '', only_for_auth: false },
+      { title: "Login", to: "/login",icon: 'mdi-login-variant', only_for_auth: false },
       { title: "Register", to: "/register", icon: '', only_for_auth: false },
-      { title: "Profile Info", to: "/profile/info", icon: '', only_for_auth: true },
+      { title: "Profile Info", to: "/profile/info", icon: 'mdi-account',  only_for_auth: true },
       { title: "My Events", to: "/myevents/:page", icon: '', only_for_auth: true },
-      { title: 'Home', icon: 'mdi-home-city', to: ''},
-      { title: 'My Account', icon: 'mdi-account', to: '' },
-      { title: 'Users', icon: 'mdi-account-group-outline', to: '' },
-
     ], 
     test_items: [
       { to: "/event/create", text: "Create Event" },

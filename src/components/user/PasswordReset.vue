@@ -2,7 +2,6 @@
   <v-container fluid fill-height>
     <v-layout align-center justify-center>
       <v-flex xs12 sm8 md6>
-        
         <!-- Send reset mail -->
         <v-card class="elevation-12" v-if="!token">
           <v-toolbar dark color="primary">
@@ -22,8 +21,8 @@
             </v-form>
           </v-card-text>
           <v-card-actions>
-            <v-btn small flat :to="'/register'">Register</v-btn>
-            <v-btn small flat :to="'/login'">Login</v-btn>
+            <v-btn small text :to="'/register'">Register</v-btn>
+            <v-btn small text :to="'/login'">Login</v-btn>
             <v-spacer></v-spacer>
             <v-btn
               color="primary"
@@ -50,7 +49,7 @@
                 :rules="passwordRules"
                 required
               ></v-text-field>
-              
+
               <v-text-field
                 prepend-icon="lock"
                 name="password_confirm"
@@ -61,12 +60,11 @@
                 :rules="passwordConfirmRules"
                 required
               ></v-text-field>
-
             </v-form>
           </v-card-text>
           <v-card-actions>
-            <v-btn small flat :to="'/register'">Register</v-btn>
-            <v-btn small flat :to="'/login'">Login</v-btn>
+            <v-btn small text :to="'/register'">Register</v-btn>
+            <v-btn small text :to="'/login'">Login</v-btn>
             <v-spacer></v-spacer>
             <v-btn
               color="primary"
@@ -75,7 +73,6 @@
             >Set New Password</v-btn>
           </v-card-actions>
         </v-card>
-
       </v-flex>
     </v-layout>
   </v-container>
@@ -83,11 +80,11 @@
 
 
 <script>
-import {mapGetters, mapActions} from 'vuex'
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "ResetPassword",
-  props:['token'],
+  props: ["token"],
   data() {
     return {
       email: null,
@@ -109,19 +106,22 @@ export default {
         v => !!v || "Please enter password confirmation",
         v => (v && v == this.password) || "Wrong confirmation of password"
       ]
-
     };
   },
   computed: {
-    ...mapGetters(['isAuth', 'getUser', 'getProcessing', 'getError']),            
+    ...mapGetters(["isAuth", "getUser", "getProcessing", "getError"])
   },
   methods: {
-    ...mapActions(['AUTH_LOGOUT', 'RESET_PASSWORD', 'SET_NEW_PASSWORD']),
+    ...mapActions(["AUTH_LOGOUT", "RESET_PASSWORD", "SET_NEW_PASSWORD"]),
     resetPassword() {
-      this.RESET_PASSWORD({email: this.email});
+      this.RESET_PASSWORD({ email: this.email });
     },
     setNewPassword() {
-      this.SET_NEW_PASSWORD({token: this.token, password: this.password, password_confirm: this.password_confirm});
+      this.SET_NEW_PASSWORD({
+        token: this.token,
+        password: this.password,
+        password_confirm: this.password_confirm
+      });
     }
   }
 };

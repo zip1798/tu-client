@@ -57,8 +57,8 @@
             </v-form>
           </v-card-text>
           <v-card-actions>
-            <v-btn small flat :to="'/profile/info'">Profile Info</v-btn>
-            <v-btn small flat :to="'/password/change'">Chang password</v-btn>
+            <v-btn small text :to="'/profile/info'">Profile Info</v-btn>
+            <v-btn small text :to="'/password/change'">Chang password</v-btn>
             <v-spacer></v-spacer>
             <v-btn color="primary" @click.prevent="editProfile" :disabled="getProcessing || !valid">Submit</v-btn>
           </v-card-actions>

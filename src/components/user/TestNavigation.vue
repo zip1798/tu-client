@@ -18,7 +18,7 @@
           <v-divider></v-divider>
           <v-list>
             <v-list-item @click.prevent="AUTH_LOGOUT">
-              <v-list-tile-title>Logout</v-list-tile-title>
+              Logout
             </v-list-item>
           </v-list>
 

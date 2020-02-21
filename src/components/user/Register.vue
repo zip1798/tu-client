@@ -7,7 +7,6 @@
             <v-toolbar-title>Registration form</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
-            <v-alert :value="error" type="warning">{{ error }}</v-alert>
             <v-form v-model="valid">
               <v-text-field
                 prepend-icon="person"
@@ -58,9 +57,9 @@
             </v-form>
           </v-card-text>
           <v-card-actions>
-            <v-btn text small flat :to="'/login'">Login</v-btn>
+            <v-btn text small :to="'/login'">Login</v-btn>
             <v-spacer></v-spacer>
-            <v-btn outlined color="primary" @click.prevent="register" :disabled="processing || !valid">Register</v-btn>
+            <v-btn outlined color="primary" @click.prevent="register" :disabled="getProcessing || !valid">Register</v-btn>
           </v-card-actions>
         </v-card>
 
@@ -104,7 +103,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['isAuth', 'getUser'])
+    ...mapGetters(['isAuth', 'getUser', 'getProcessing', 'getError'])
   },
   watch: {
   },

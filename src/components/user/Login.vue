@@ -30,8 +30,8 @@
             </v-form>
           </v-card-text>
           <v-card-actions>
-            <v-btn small flat text :to="'/register'">Register</v-btn>
-            <v-btn small flat text :to="'/password/reset'">Reset password</v-btn>
+            <v-btn small text :to="'/register'">Register</v-btn>
+            <v-btn small text :to="'/password/reset'">Reset password</v-btn>
             <v-spacer></v-spacer>
             <v-btn outlined color="primary" @click.prevent="signup" :disabled="getProcessing || !valid">Login</v-btn>
           </v-card-actions>
