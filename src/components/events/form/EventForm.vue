@@ -1,5 +1,6 @@
 <template>
   <v-container>
+    
     <v-divider></v-divider>
 
     <v-form>
@@ -94,6 +95,8 @@ import MediaSelect from "@/components/media/MediaSelect";
 export default {
   name: "EventForm",
   
+  props: ['form_title'],
+
   components: {
     EventFormMain,
     EventFormOptions,
@@ -103,6 +106,7 @@ export default {
 
   data() {
     return {
+            tt: {a: 1, b:2},
       current_step: 1,
       valid_main_form: false,
       valid_option_form: true,
@@ -136,7 +140,7 @@ export default {
           break;
         case 4: 
           if(this.$refs.eventDescription.validate()) {
-            this.current_step = 5;
+            this.current_step = 5
           }
           break;
         default:
@@ -145,7 +149,9 @@ export default {
     },
 
     prevStep() {
-
+      if (this.current_step != 1) {
+        this.current_step--
+      }
     },
   }
 

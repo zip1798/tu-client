@@ -2,7 +2,7 @@
   <v-container id="events" tag="section" grid-list-xl>
     <base-subheading>Tensegrity Events</base-subheading>
 
-    <event-item  v-for="event in getGeneralEventList" :key="`event-${event.id}`" :event="event" ></event-item>
+    <event-item  v-for="event in getEventList" :key="`event-${event.id}`" :event="event" ></event-item>
   </v-container>
 </template>
 
@@ -17,13 +17,13 @@ export default {
     EventItem: EventItem
   },
   computed: {
-    ...mapGetters(["getProcessing", "getGeneralEventList"]),
+    ...mapGetters(["getProcessing", "getEventList"]),
   },
   methods: {
-    ...mapActions(["LOAD_GENERAL_EVENT_LIST"]),
+    ...mapActions(["LOAD_EVENT_LIST"]),
   },
   mounted() {
-    this.LOAD_GENERAL_EVENT_LIST();
+    this.LOAD_EVENT_LIST();
   }
 };
 </script>

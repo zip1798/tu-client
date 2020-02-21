@@ -10,7 +10,15 @@
     {{ getUser.name }}
     <v-divider></v-divider>
 
-    <event-form></event-form>
+    <v-skeleton-loader
+            v-if="loading"
+            class="mb-6"
+            type="card-avatar, article, actions"
+    ></v-skeleton-loader>
+
+    <event-form>
+      
+    </event-form>
 
   </v-container>
 </template>
@@ -27,6 +35,7 @@ export default {
   },
   data() {
     return {
+      loading: false,
       msg: "Hello World",
       processing: false,
     };
