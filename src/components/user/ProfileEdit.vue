@@ -1,70 +1,84 @@
 <template>
-  <v-container fluid fill-height>
-    <v-layout align-center justify-center>
-      <v-flex xs12 sm8>
-        <v-card class="elevation-12">
-          <v-toolbar dark color="primary">
-            <v-toolbar-title>Profile Edit Form</v-toolbar-title>
-          </v-toolbar>
-          <v-card-text>
-            <v-form v-model="valid">
-              <v-flex xs12 align-center justify-center layout text-xs-center>
-                <v-avatar size="180" color="grey lighten-4" class="my-3">
-                  <img v-if="getProfile.icon" :src="getProfile.icon" alt="avatar">
-                  <v-icon v-if="!getProfile.icon" size="150">account_circle</v-icon>
-                </v-avatar>
-              </v-flex>
+  <v-container>
 
-              <v-flex xs12 align-center justify-center layout text-xs-center>
-                  <upload-btn  @file-update="updateAvatar" title="Upload Avatar" accept="image/*"></upload-btn>
-              </v-flex>
+    <v-row >
+          <base-subheading>Edit Profile</base-subheading>
+    </v-row >
 
-              <v-text-field
-                prepend-icon="person"
-                name="name"
-                label="Name"
-                type="text"
-                required
-                v-model="name"
-                :rules="nameRules"
-              ></v-text-field>
+    <v-row >
+      <v-col cols="12" md="3" >
+        <v-row justify="center" align="start">
+          <img
+            v-if="getProfile.icon"
+            :src="getProfile.icon"
+            height="200px"
+            dark
+            class="ma-5"
+          />
+          <v-icon
+            v-if="!getProfile.icon"
+            class="ma-5"
+            size="200">account_circle</v-icon>
+        </v-row>
+        <v-row justify="center" align="start">
+          <upload-btn accept="image/*" large flat maxWidth="200" @file-update="updateAvatar">
+            <template slot="icon">
+              <v-icon>cloud_upload</v-icon>
+            </template>
+            Upload Avatar
+          </upload-btn>
+        </v-row>
+      </v-col>
 
-              <v-text-field
-                prepend-icon="mail"
-                name="email"
-                label="Email"
-                type="email"
-                v-model="email"
-                :rules="emailRules"
-                required
-              ></v-text-field>
+      <v-col cols="12" md="9">
+        <v-card class="mx-auto pa-5">
+          <v-form v-model="valid">
+            <v-text-field
+              prepend-icon="person"
+              name="name"
+              label="Name"
+              type="text"
+              required
+              v-model="name"
+              :rules="nameRules"
+            ></v-text-field>
 
-              <v-text-field
-                prepend-icon="phone"
-                name="phone"
-                label="Phone"
-                type="text"
-                v-model="phone"
-              ></v-text-field>
+            <v-text-field
+              prepend-icon="mail"
+              name="email"
+              label="Email"
+              type="email"
+              v-model="email"
+              :rules="emailRules"
+              required
+            ></v-text-field>
 
-              <v-text-field
-                prepend-icon="place"
-                name="city"
-                label="City"
-                type="text"
-                v-model="city"
-              ></v-text-field>
-            </v-form>
-          </v-card-text>
+            <v-text-field
+              prepend-icon="phone"
+              name="phone"
+              label="Phone"
+              type="text"
+              v-model="phone"
+            ></v-text-field>
+
+            <v-text-field
+              prepend-icon="place"
+              name="city"
+              label="City"
+              type="text"
+              v-model="city"
+            ></v-text-field>
+          </v-form>
+
           <v-card-actions>
-            <v-btn small text :to="'/profile/info'">Profile Info</v-btn>
-            <v-btn small text :to="'/password/change'">Chang password</v-btn>
+            <v-btn text :to="'/profile/info'">Profile Info</v-btn>
+            <v-btn text :to="'/password/change'">Chang password</v-btn>
             <v-spacer></v-spacer>
             <v-btn color="primary" @click.prevent="editProfile" :disabled="getProcessing || !valid">Submit</v-btn>
           </v-card-actions>
         </v-card>
-      </v-flex>
-    </v-layout>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
