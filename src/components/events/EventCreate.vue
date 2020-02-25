@@ -1,5 +1,8 @@
 <template>
   <v-container>
+    <v-row >
+          <base-subheading>Create Event</base-subheading>
+    </v-row >
     <v-layout row wrap>
       <event-form>
         <template #finish-action>

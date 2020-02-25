@@ -1,11 +1,10 @@
 <template>
-  <v-toolbar dark color="primary">
-    <v-toolbar-title>Update Event</v-toolbar-title>
-    <v-spacer></v-spacer>
-    <v-toolbar-items>
-      <v-btn flat :to="`/event/edit/:id`">General Info</v-btn>
-      <v-btn flat :to="`/event/sendmail/:id`">Send email</v-btn>
-      <v-btn flat :to="`/event/members/:id`">Partisipants</v-btn>
-    </v-toolbar-items>
-  </v-toolbar>
+  <v-tabs>
+    <v-tab :to="`/home`">Comments</v-tab>
+    <v-tab :to="`/home`">For participant</v-tab>
+    <v-tab :to="`/event/edit/:id`">Update Evevent</v-tab>
+    <v-tab :to="`/event/sendmail/:id`">Send email to members</v-tab>
+    <v-tab :to="`/event/members/:id`">Event Memebers</v-tab>
+    <v-tab :to="`/event/invite/:id`">Invite to Event</v-tab>
+  </v-tabs>
 </template>

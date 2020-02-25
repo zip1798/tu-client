@@ -1,52 +1,68 @@
 <template>
   <v-container>
-    <v-layout row wrap>
-      <v-flex xs12 sm12 md12>
-        <v-card class="elevation-12">
-          <event-edit-toolbar></event-edit-toolbar>
+    <v-row >
+          <base-subheading>Event Members</base-subheading>
+    </v-row >
 
-          <v-card-text>
-            <v-layout column justify-center>
-              <v-list subheader>
-                <v-flex xs12>
-                  <v-autocomplete
-                    v-model="select"
-                    :loading="loading"
-                    :items="items"
-                    :search-input.sync="search"
-                    cache-items
-                    class="ma-3"
-                    flat
-                    hide-no-data
-                    hide-details
-                    label="Search member"
-                    solo-inverted
-                  ></v-autocomplete>
-                </v-flex>
-                <v-list-tile v-for="item in items" :key="item.title" avatar @click>
-                  <v-list-tile-avatar>
-                    <img :src="item.avatar">
-                  </v-list-tile-avatar>
+    <event-edit-toolbar></event-edit-toolbar>
 
-                  <v-list-tile-content>
-                    <v-list-tile-title v-html="item.title"></v-list-tile-title>
-                  </v-list-tile-content>
+    <v-row class="mr-2 mb-5">
+      <v-icon large color="grey" @click="next">mdi-bell-outline</v-icon>
+      <v-icon large color="red lighten-1" @click="next">mdi-bell</v-icon>
 
-                  <v-list-tile-action>
-                    <v-icon :color="item.active ? 'red' : 'grey'">favorite</v-icon>
-                  </v-list-tile-action>
-                  <v-list-tile-action>
-                    <v-btn small fab dark color="indigo">
-                      <v-icon dark>add</v-icon>
-                    </v-btn>
-                  </v-list-tile-action>
-                </v-list-tile>
-              </v-list>
-            </v-layout>
-          </v-card-text>
-        </v-card>
-      </v-flex>
-    </v-layout>
+      <v-icon large color="grey">mdi-email-outline</v-icon>
+      <v-icon large color="red lighten-1">mdi-email</v-icon>
+
+      <v-icon large color="grey">mdi-ballot-outline</v-icon>
+      <v-icon large color="red lighten-1">mdi-ballot</v-icon>
+
+      <v-icon large color="grey">mdi-account-plus-outline</v-icon>
+      <v-icon large color="red lighten-1">mdi-account-plus</v-icon>
+
+      <v-spacer></v-spacer>
+      <v-text-field
+        v-model="search"
+        append-icon="mdi-magnify"
+        label="Search"
+        single-line
+        hide-details
+      ></v-text-field>
+    </v-row >
+
+
+
+  <v-simple-table fixed-header>
+    <template v-slot:default>
+      <thead>
+        <tr>
+          <th class="text-left" width="30"><v-checkbox></v-checkbox></th>
+          <th class="text-left" width="40"></th>
+          <th class="text-left">Name</th>
+          <th class="text-left">Calories</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="item in desserts" :key="item.name">
+          <td>
+            <v-checkbox></v-checkbox>
+          </td>
+          <td>
+            <v-avatar size="32">
+              <img
+                src="https://cdn.vuetifyjs.com/images/john.jpg"
+                alt="John"
+              >
+            </v-avatar>
+          </td>
+          <td>{{ item.name }}</td>
+          <td>{{ item.calories }}</td>
+        </tr>
+      </tbody>
+    </template>
+  </v-simple-table>
+
+
+
   </v-container>
 </template>
 
@@ -125,7 +141,95 @@ export default {
       event_date_modal: false,
       valid: false,
 
-      requireRules: [v => !!v || "Please enter value"]
+      requireRules: [v => !!v || "Please enter value"],
+
+
+
+        search: '',
+        desserts: [
+          {
+            name: 'Frozen Yogurt',
+            calories: 159,
+            fat: 6.0,
+            carbs: 24,
+            protein: 4.0,
+            iron: '1%',
+          },
+          {
+            name: 'Ice cream sandwich',
+            calories: 237,
+            fat: 9.0,
+            carbs: 37,
+            protein: 4.3,
+            iron: '1%',
+          },
+          {
+            name: 'Eclair',
+            calories: 262,
+            fat: 16.0,
+            carbs: 23,
+            protein: 6.0,
+            iron: '7%',
+          },
+          {
+            name: 'Cupcake',
+            calories: 305,
+            fat: 3.7,
+            carbs: 67,
+            protein: 4.3,
+            iron: '8%',
+          },
+          {
+            name: 'Gingerbread',
+            calories: 356,
+            fat: 16.0,
+            carbs: 49,
+            protein: 3.9,
+            iron: '16%',
+          },
+          {
+            name: 'Jelly bean',
+            calories: 375,
+            fat: 0.0,
+            carbs: 94,
+            protein: 0.0,
+            iron: '0%',
+          },
+          {
+            name: 'Lollipop',
+            calories: 392,
+            fat: 0.2,
+            carbs: 98,
+            protein: 0,
+            iron: '2%',
+          },
+          {
+            name: 'Honeycomb',
+            calories: 408,
+            fat: 3.2,
+            carbs: 87,
+            protein: 6.5,
+            iron: '45%',
+          },
+          {
+            name: 'Donut',
+            calories: 452,
+            fat: 25.0,
+            carbs: 51,
+            protein: 4.9,
+            iron: '22%',
+          },
+          {
+            name: 'KitKat',
+            calories: 518,
+            fat: 26.0,
+            carbs: 65,
+            protein: 7,
+            iron: '6%',
+          },
+        ],
+
+
     };
   },
 

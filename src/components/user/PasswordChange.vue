@@ -1,11 +1,12 @@
 <template>
   <v-container fluid fill-height>
-    <v-layout align-center justify-center>
-      <v-flex xs12 sm8 md6>
-        <v-card class="elevation-12">
-          <v-toolbar dark color="primary">
-            <v-toolbar-title>Password Change Form</v-toolbar-title>
-          </v-toolbar>
+    <v-row >
+          <base-subheading>Change Password</base-subheading>
+    </v-row >
+
+    <v-layout align-start justify-center>
+      <v-flex xs12 sm12 md12>
+        <v-card>
           <v-card-text>
             <v-form v-model="valid">
               <v-text-field
@@ -43,7 +44,7 @@
             </v-form>
           </v-card-text>
           <v-card-actions>
-            <v-btn small text :to="'/profile/info'">Profile Info</v-btn>
+            <v-btn  text :to="'/profile/info'">Profile Info</v-btn>
             <v-spacer></v-spacer>
             <v-btn color="primary" @click.prevent="passwordChange" :disabled="getProcessing || !valid">Change Password</v-btn>
           </v-card-actions>

@@ -1,8 +1,9 @@
-import Vue from "vue";
-import vuetify from "./plugins/vuetify";
-import App from "./App.vue";
-import router from "./router";
-import store from "./store";
+import Vue from "vue"
+import vuetify from "./plugins/vuetify"
+import "./plugins/general"
+import App from "./App.vue"
+import router from "./router"
+import store from "./store"
 import {Vue2Storage} from 'vue2-storage'
 import { setupBus }  from "./repository/eventBus"
 

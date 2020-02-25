@@ -1,11 +1,12 @@
 <template>
   <v-container fluid fill-height>
-    <v-layout align-center justify-center>
-      <v-flex xs12 sm8 md6>
-        <v-card class="elevation-12" v-if="!isAuth">
-          <v-toolbar dark color="primary">
-            <v-toolbar-title>Registration form</v-toolbar-title>
-          </v-toolbar>
+    <v-row >
+          <base-subheading>Registration form</base-subheading>
+    </v-row >
+
+    <v-layout align-start justify-center>
+      <v-flex xs12 sm12 md12>
+        <v-card v-if="!isAuth">
           <v-card-text>
             <v-form v-model="valid">
               <v-text-field
@@ -63,7 +64,7 @@
           </v-card-actions>
         </v-card>
 
-        <v-card class="elevation-12" v-if="isAuth">
+        <v-card v-if="isAuth">
           <v-card-actions>
             <v-btn color="primary" @click.prevent="AUTH_LOGOUT">Logout</v-btn>
           </v-card-actions>
