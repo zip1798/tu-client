@@ -3,6 +3,8 @@
     
     <v-divider></v-divider>
 
+    <media-item></media-item>
+
     <v-form>
       <v-stepper v-model="current_step" vertical>
 
@@ -60,7 +62,7 @@
 <!-- 5 Image step -->        
         <v-stepper-step step="5">Main image of event</v-stepper-step>
         <v-stepper-content step="5">
-          <media-select :media_id="getEvent.media_id" :category="`event`" />
+          <media-item></media-item>
 
           <div>
             <base-btn @click="prevStep"><v-icon dark>mdi-chevron-left</v-icon> Prev</base-btn>
@@ -85,12 +87,11 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import server from "@/repository/server";
-import EventFormMain from "@/components/events/form/EventFormMain";
-import EventFormOptions from "@/components/events/form/EventFormOptions";
-import EventFormDescription from "@/components/events/form/EventFormDescription";
-import MediaSelect from "@/components/media/MediaSelect";
+import { mapGetters } from "vuex"
+import EventFormMain from "@/components/events/form/EventFormMain"
+import EventFormOptions from "@/components/events/form/EventFormOptions"
+import EventFormDescription from "@/components/events/form/EventFormDescription"
+import MediaItem from "@/components/media/MediaItem"
 
 export default {
   name: "EventForm",
@@ -101,12 +102,11 @@ export default {
     EventFormMain,
     EventFormOptions,
     EventFormDescription,
-    MediaSelect
+    MediaItem
   },
 
   data() {
     return {
-            tt: {a: 1, b:2},
       current_step: 1,
       valid_main_form: false,
       valid_option_form: true,

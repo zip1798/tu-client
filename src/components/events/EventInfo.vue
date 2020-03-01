@@ -57,16 +57,16 @@
               
               <social-btn :url="`event/info/${getEvent.id}`" :title="getEvent.title" :description="getEvent.title"></social-btn>
 
-              <v-btn flat @click.prevent="goToEdit">
+              <v-btn text @click.prevent="goToEdit">
                 <v-icon>edit</v-icon>
                 Edit
               </v-btn>
-              <v-btn flat @click.prevent="deleteEvent()" v-if="getRole == 'admin'">
+              <v-btn text @click.prevent="deleteEvent()" v-if="getRole == 'admin'">
                 <v-icon>delete</v-icon>
                 Delete
               </v-btn>
               <v-spacer></v-spacer>
-              <v-btn flat color="blue-grey" class="white--text" :to="`/event/feedback/1`">Feedback
+              <v-btn text color="blue-grey" class="white--text" :to="`/event/feedback/1`">Feedback
                 <v-badge right color="red">
                   <template v-slot:badge>
                     <span>6</span>
@@ -82,7 +82,7 @@
             <v-card-text class="body-1" v-html="getEvent.description"></v-card-text>
 
             <v-card-actions>
-              <v-btn flat block large v-if="getEvent.is_open_registration" :to="`/event/register/${getEvent.id}`">Register on Event</v-btn>
+              <v-btn text block large v-if="getEvent.is_open_registration" :to="`/event/register/${getEvent.id}`">Register on Event</v-btn>
             </v-card-actions>
 
 

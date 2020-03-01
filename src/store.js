@@ -5,7 +5,7 @@ import authModule from "./store/auth";
 import profileModule from "./store/profile";
 import eventModule from "./store/event";
 import eventListModule from "./store/event_list";
-import mediaModule from "./store/media";
+import mediaItemModule from "./store/media_item";
 
 Vue.use(Vuex);
 
@@ -16,7 +16,7 @@ export default new Vuex.Store({
     profileModule,
     eventModule,
     eventListModule,
-    mediaModule
+    mediaItemModule
   },
   state: {
     articles: [], // require('@/data/articles.json'),

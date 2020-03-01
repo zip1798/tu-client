@@ -1,6 +1,6 @@
-import router from "../router";
-import server from "../repository/server";
-import { EventBus } from "../repository/eventBus";
+import router from "../router"
+import server from "../repository/server"
+import { EventBus } from "../repository/eventBus"
 
 const DEFAULT_EVENT = {
   id: 0,
@@ -94,6 +94,10 @@ export default {
       if (payload != state.event.id) {
         server.get('events/'+payload, (response) => {
           commit("SET_EVENT", response.data.success);
+          
+          if (response.data.success.media) {
+            commit("SET_MEDIA", response.data.success.media)
+          }
           EventBus.notify("loaded_event", state.event);
         }, {processing_value: 'LOAD_EVENT_ITEM'});
       }

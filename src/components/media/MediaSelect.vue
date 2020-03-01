@@ -59,7 +59,7 @@ export default {
     ...mapGetters(['getSelectedMedia', ]),
   },
   watch: {
-    media_id(newValue, oldValue) {
+    media_id(newValue) {
       this.SELECT_MEDIA(newValue)
     }
   }
