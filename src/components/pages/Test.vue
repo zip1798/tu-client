@@ -1,5 +1,15 @@
 <template>
   <v-container id="test" tag="section">
+
+    <media-item>
+        <template #action>
+          <v-spacer></v-spacer>
+          <media-select-btn :category="`event`">ssasdfasdf</media-select-btn>
+        </template>
+    </media-item>
+
+    <event-edit-toolbar></event-edit-toolbar>
+
     <v-divider></v-divider>
     <v-btn color="blue" text  @click.prevent="showMessage">Rise Message</v-btn>
     <v-btn color="red" text  @click.prevent="showError">Rise Error</v-btn>
@@ -41,7 +51,7 @@
     class="mx-auto"
   >
     <v-list two-line>
-      <v-list-item @click="">
+      <v-list-item>
         <v-list-item-icon>
           <v-icon color="indigo">mdi-phone</v-icon>
         </v-list-item-icon>
@@ -56,7 +66,7 @@
         </v-list-item-icon>
       </v-list-item>
 
-      <v-list-item @click="">
+      <v-list-item>
         <v-list-item-action></v-list-item-action>
 
         <v-list-item-content>
@@ -71,7 +81,7 @@
 
       <v-divider inset></v-divider>
 
-      <v-list-item @click="">
+      <v-list-item>
         <v-list-item-icon>
           <v-icon color="indigo">mdi-email</v-icon>
         </v-list-item-icon>
@@ -82,7 +92,7 @@
         </v-list-item-content>
       </v-list-item>
 
-      <v-list-item @click="">
+      <v-list-item>
         <v-list-item-action></v-list-item-action>
 
         <v-list-item-content>
@@ -93,7 +103,7 @@
 
       <v-divider inset></v-divider>
 
-      <v-list-item @click="">
+      <v-list-item>
         <v-list-item-icon>
           <v-icon color="indigo">mdi-map-marker</v-icon>
         </v-list-item-icon>
@@ -135,13 +145,20 @@
 
 <script>
 import {mapGetters} from 'vuex'
-import server from "@/repository/server";
-import EventForm from "@/components/events/form/EventForm";
+import server from "@/repository/server"
+import EventForm from "@/components/events/form/EventForm"
+import EventEditToolbar from "@/components/events/EventEditToolbar.vue"
+import MediaItem from "@/components/media/MediaItem"
+import MediaSelectBtn from "@/components/media/MediaSelectButton"
+
 
 export default {
   name: "Test",
   components: {
     EventForm,
+    EventEditToolbar,
+    MediaItem,
+    MediaSelectBtn
   },
   data() {
     return {
@@ -151,7 +168,7 @@ export default {
     };
   },
   watch: {
-    processing: function(newProcessing, oldProcessing) {
+    processing: function(newProcessing) {
       this.$store.dispatch("SET_PROCESSING", newProcessing);
     }
   },
@@ -174,9 +191,9 @@ export default {
     },
 
     sendTest() {
-        server.get('test', (respond) => {
-          console.log('Respond test')
-          console.log(respond)
+        server.get('test', () => {
+//          console.log('Respond test')
+//          console.log(respond)
         })
     },
 

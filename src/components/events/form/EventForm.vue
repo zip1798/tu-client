@@ -3,8 +3,6 @@
     
     <v-divider></v-divider>
 
-    <media-item></media-item>
-
     <v-form>
       <v-stepper v-model="current_step" vertical>
 
@@ -60,9 +58,14 @@
         </v-stepper-content>
 
 <!-- 5 Image step -->        
-        <v-stepper-step step="5">Main image of event</v-stepper-step>
+        <v-stepper-step :complete="valid_media" step="5">Main image of event</v-stepper-step>
         <v-stepper-content step="5">
-          <media-item></media-item>
+          <media-item>
+              <template #action>
+                <v-spacer></v-spacer>
+                <media-select-btn :cateogry="`event`"></media-select-btn>
+              </template>
+          </media-item>
 
           <div>
             <base-btn @click="prevStep"><v-icon dark>mdi-chevron-left</v-icon> Prev</base-btn>
@@ -92,6 +95,7 @@ import EventFormMain from "@/components/events/form/EventFormMain"
 import EventFormOptions from "@/components/events/form/EventFormOptions"
 import EventFormDescription from "@/components/events/form/EventFormDescription"
 import MediaItem from "@/components/media/MediaItem"
+import MediaSelectBtn from "@/components/media/MediaSelectButton"
 
 export default {
   name: "EventForm",
@@ -102,7 +106,8 @@ export default {
     EventFormMain,
     EventFormOptions,
     EventFormDescription,
-    MediaItem
+    MediaItem,
+    MediaSelectBtn
   },
 
   data() {
@@ -115,12 +120,18 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["getUser", "getEvent"]),
+    ...mapGetters(["getUser", "getEvent", "getMedia"]),
       valid_brief_form() {
         return this.getEvent.brief != ""
       },
       valid_description_form() {
         return this.getEvent.description != ''
+      },
+      valid_media() {
+        if (!this.getMedia) {
+          return false
+        }
+        return this.getMedia.id != ''
       },
   },
 

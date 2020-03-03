@@ -51,7 +51,7 @@
               </div>
             </v-card-title>
             <v-card-text>
-	            <v-form v-model="valid">
+        <v-form v-model="valid">
 					<v-text-field
 						prepend-icon="person"
 						name="name"
@@ -98,7 +98,7 @@
             </v-card-text>
 
             <v-card-actions>
-              <v-btn flat block large
+              <v-btn text block large
               color="primary"
               @click.prevent="submit"
               :disabled="!!getProcessing || !valid"
@@ -120,6 +120,7 @@ import router from "@/router";
 
 export default {
   props: ['id'],
+/*eslint-disable */
   data: () => ({
       name: null,
       email: null,
@@ -127,15 +128,13 @@ export default {
       phone: null,
       city: null,
       comments: null,
-
       nameRules: [v => !!v || "Please enter your Name"],
       emailRules: [
         v => !!v || "Please enter email",
-        v =>
-          /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
-          "Wrong email"
+// eslint-disable-next-line no-use-before-define
+        v => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || "Wrong email"
       ],
-
+/*eslint-enable */
   }),
   components: {
   },
@@ -162,11 +161,11 @@ export default {
     submit() {
         this.REGISTER_EVENT({
           event_id: this.id,
-		      name: this.name,
-		      email: this.email,
+          name: this.name,
+          email: this.email,
           phone: this.phone,
-		      city: this.city,
-		      comments: this.comments
+          city: this.city,
+          comments: this.comments
         })
     }
   }, // methods

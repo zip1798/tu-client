@@ -42,7 +42,7 @@
                 >Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis,</div>
               </v-flex>
               <v-flex xs1>
-                <v-btn flat icon color="red">
+                <v-btn text icon color="red">
                   <v-icon>delete</v-icon>
                 </v-btn>
               </v-flex>
@@ -68,7 +68,7 @@
                 >Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis,</div>
               </v-flex>
               <v-flex xs1>
-                <v-btn flat icon color="red">
+                <v-btn text icon color="red">
                   <v-icon>delete</v-icon>
                 </v-btn>
               </v-flex>

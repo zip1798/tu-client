@@ -23,8 +23,8 @@
             </div>
           </v-card-title>
           <v-card-actions>
-            <v-btn flat color="orange">Share</v-btn>
-            <v-btn flat color="orange">Explore</v-btn>
+            <v-btn text color="orange">Share</v-btn>
+            <v-btn text color="orange">Explore</v-btn>
           </v-card-actions>
         </v-card>
     </v-flex>-->
@@ -64,7 +64,7 @@
             <social-btn :url="`event/info/${event.id}`" :title="event.title" :description="event.title"></social-btn>
 
             <v-spacer></v-spacer>
-            <v-btn flat :to="`/event/info/${event.id}`">More details</v-btn>
+            <v-btn text :to="`/event/info/${event.id}`">More details</v-btn>
           </v-card-actions>
           <v-card-text>
             <div v-html="event.brief"></div>

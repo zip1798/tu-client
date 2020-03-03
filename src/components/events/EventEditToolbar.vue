@@ -1,5 +1,5 @@
 <template>
-  <v-tabs>
+  <v-tabs show-arrows>
     <v-tab :to="`/event/info/:id`">Event page</v-tab>
     <v-tab :to="`/home`">Comments</v-tab>
     <v-tab :to="`/home`">For participant</v-tab>

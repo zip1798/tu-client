@@ -7,7 +7,7 @@
           <v-card
           class="d-flex align-center justify-center"
           color="grey lighten-4" flat tile min-height="125">
-            <upload-btn accept="image/*" large flat icon maxWidth="200" @file-update="imageUploaded">
+            <upload-btn accept="image/*"  large icon maxWidth="200" @file-update="imageUploaded">
               <template slot="icon">
                 <v-icon>cloud_upload</v-icon>
               </template>
@@ -16,7 +16,7 @@
         </v-col>
 
         <v-col cols="4"
-        v-for="(media, mediaIdx) in getMediaList"
+        v-for="(media) in getMediaList"
         :key="`media-${media.id}`"
         >
           <v-hover v-slot:default="{ hover }">
@@ -42,6 +42,15 @@
             </v-card>
           </v-hover>
         </v-col>
+
+        <v-col cols="4" v-if="getItemProcessing('LOAD_MEDIA_LIST')">
+          <v-skeleton-loader class="ma-1" type="image" height="125"></v-skeleton-loader>
+        </v-col>
+
+        <v-col cols="4" v-if="getItemProcessing('LOAD_MEDIA_LIST')">
+          <v-skeleton-loader class="ma-1" type="image" height="125"></v-skeleton-loader>
+        </v-col>
+
       </v-row>
     </v-card-text>
 
@@ -57,7 +66,7 @@
 </template>
 
 <script>
-import {mapGetters, mapActions, mapMutations} from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
 import UploadButton from 'vuetify-upload-button' // https://www.npmjs.com/package/vuetify-upload-button
 
 export default {
@@ -70,12 +79,12 @@ export default {
     }
   },
 
-  props: ['media_id', 'category', 'target'], // target - one | set
+  props: ['media_id', 'category'], // target - one | set
   methods: {
-    ...mapActions(['CREATE_IMAGE_MEDIA', 'LOAD_MEDIA_LIST', 'SELECT_MEDIA', 'SET_PAGE', 'SET_SUCCESS_MESSAGE', 'DELETE_MEDIA']),
-    ...mapMutations(['PUSH_TO_MEDIA_SET']),
+    ...mapActions(['CREATE_MEDIA', 'LOAD_MEDIA_LIST', 'SELECT_MEDIA_BY_ID', 'SET_PAGE', 'SET_SUCCESS_MESSAGE', 'DELETE_MEDIA']),
+    // ...mapMutations(['SELECT_MEDIA_BY_ID']),
     imageUploaded(file) {
-      this.CREATE_IMAGE_MEDIA({
+      this.CREATE_MEDIA({
         file: file,
         category: this.category
       })
@@ -93,30 +102,24 @@ export default {
     },
 
     selectMedia(media_id) {
-        switch(this.target) {
-            case 'set':
-                this.PUSH_TO_MEDIA_SET(media_id)
-            break
-            default:
-                this.SELECT_MEDIA(media_id)
-        }
+      this.SELECT_MEDIA_BY_ID(media_id)
     }
   },
   components: {
     'upload-btn': UploadButton
   },
   computed: {
-    ...mapGetters(['getSelectedMedia', 'getSelectedMediaID', 'getMediaList', 'getPageCount', 'getRole']),
+    ...mapGetters(['getMediaList', 'getPageCount', 'getRole', 'getItemProcessing']),
   },
   mounted() {
     this.LOAD_MEDIA_LIST();
   },
   watch: {
-    page(newValue, oldValue) {
+    page(newValue) {
       this.SET_PAGE(newValue)
     },
-    media_id(newValue, oldValue) {
-      this.SELECT_MEDIA(newValue)
+    media_id(newValue) {
+      this.SELECT_MEDIA_BY_ID(newValue)
     }
   }
 

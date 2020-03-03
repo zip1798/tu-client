@@ -1,7 +1,7 @@
 <template>
 <v-menu offset-y  open-on-hover>
           <template v-slot:activator="{ on }">
-            <v-btn v-on="on" flat outline>
+            <v-btn v-on="on" text outline>
               <v-icon right dark>account_circle</v-icon>
               Profile
             </v-btn>
@@ -38,11 +38,13 @@ export default {
 
     }
   },
+
   computed: {
     ...mapGetters(["userLinks"])
   },
+
   methods: {
-  	...mapActions(["AUTH_LOGOUT"])
+    ...mapActions(["AUTH_LOGOUT"])
   }
 
 }

@@ -59,7 +59,7 @@ export default {
     CREATE_EVENT({ commit, dispatch, state, getters }) {
       let data = state.event
       data.media_id = getters.getSelectedMediaID
-      server.post("events", payload, {}, (response) => {
+      server.post("events", data, {}, (response) => {
         if (response.data.success) {
           commit("SET_EVENT", response.data.success);
           EventBus.notify("loaded_event", state.event);
@@ -82,7 +82,7 @@ export default {
     },
 
     DELETE_EVENT({ commit, dispatch }, payload) {
-      server.delete("events/"+payload, (response) => {
+      server.delete("events/"+payload, () => {
           commit("DELETE_EVENT_FROM_LIST", payload)
           dispatch("SET_SUCCESS_MESSAGE", 'Event has been deleted')
           // router.push({path:"/"});
@@ -103,14 +103,14 @@ export default {
       }
     },
 
-    TOOGLE_INTERESTED({ commit, state}, payload) {
+    TOOGLE_INTERESTED({commit, state}, payload) {
         let event_id = payload || state.event.id
         server.get('events/'+ event_id + '/interested', (response) => {
           commit("SET_INTERESTED", { id: event_id, value: response.data.success});
         });
     },
 
-    REGISTER_EVENT({ commit, dispatch, state}, payload) {
+    REGISTER_EVENT({state}, payload) {
       if (payload) {
         server.post("events/" + state.event.id + '/register', payload, {}, (response) => {
           if (response.data.success) {

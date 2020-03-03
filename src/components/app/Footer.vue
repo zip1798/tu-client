@@ -15,12 +15,12 @@
 
     <v-snackbar :value="getSuccessMessage" :bottom="true" :timeout="0" color="success">
       {{ getSuccessMessage }}
-      <v-btn color="white" flat @click="clearMessages">Close</v-btn>
+      <v-btn color="white" text @click="clearMessages">Close</v-btn>
     </v-snackbar>
 
     <v-snackbar :value="getError" :bottom="true" :timeout="0" color="error">
       {{ getError }}
-      <v-btn color="white" flat @click="clearMessages">Close</v-btn>
+      <v-btn color="white" text @click="clearMessages">Close</v-btn>
     </v-snackbar>
 
   </div>

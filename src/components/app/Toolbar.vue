@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-app-bar color="blue-grey  accent-4" flat dark app clipped-left>
+    <v-app-bar color="blue-grey accent-4" flat dark app clipped-left>
       <v-app-bar-nav-icon @click="toogleNav"></v-app-bar-nav-icon>
 
       <v-toolbar-title>Site title</v-toolbar-title>
@@ -52,6 +52,7 @@
 
       <v-divider></v-divider>
 
+<!-- eslint-disable -->
       <v-list dense>
         <v-list-item 
         v-for="item in navLinks" 
@@ -68,6 +69,7 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
+<!-- eslint-enable -->
 
       <template v-if="isAuth">
         <v-divider></v-divider>

@@ -8,16 +8,16 @@
 
     <v-row class="mr-2 mb-5">
       <v-icon large color="grey" @click="next">mdi-bell-outline</v-icon>
-      <v-icon large color="red lighten-1" @click="next">mdi-bell</v-icon>
+      <v-icon large color="blue-grey accent-4" @click="next">mdi-bell</v-icon>
 
       <v-icon large color="grey">mdi-email-outline</v-icon>
-      <v-icon large color="red lighten-1">mdi-email</v-icon>
+      <v-icon large color="blue-grey accent-4">mdi-email</v-icon>
 
       <v-icon large color="grey">mdi-ballot-outline</v-icon>
-      <v-icon large color="red lighten-1">mdi-ballot</v-icon>
+      <v-icon large color="blue-grey accent-4">mdi-ballot</v-icon>
 
       <v-icon large color="grey">mdi-account-plus-outline</v-icon>
-      <v-icon large color="red lighten-1">mdi-account-plus</v-icon>
+      <v-icon large color="blue-grey accent-4">mdi-account-plus</v-icon>
 
       <v-spacer></v-spacer>
       <v-text-field

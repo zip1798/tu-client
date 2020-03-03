@@ -1,11 +1,12 @@
-import Vue from "vue";
-import Vuex from "vuex";
-import generalModule from "./store/general";
-import authModule from "./store/auth";
-import profileModule from "./store/profile";
-import eventModule from "./store/event";
-import eventListModule from "./store/event_list";
-import mediaItemModule from "./store/media_item";
+import Vue from "vue"
+import Vuex from "vuex"
+import generalModule from "./store/general"
+import authModule from "./store/auth"
+import profileModule from "./store/profile"
+import eventItemModule from "./store/event_item"
+import eventListModule from "./store/event_list"
+import mediaItemModule from "./store/media_item"
+import mediaListModule from "./store/media_list"
 
 Vue.use(Vuex);
 
@@ -14,9 +15,10 @@ export default new Vuex.Store({
     generalModule,
     authModule,
     profileModule,
-    eventModule,
+    eventItemModule,
     eventListModule,
-    mediaItemModule
+    mediaItemModule,
+    mediaListModule
   },
   state: {
     articles: [], // require('@/data/articles.json'),
@@ -45,27 +47,11 @@ export default new Vuex.Store({
     ]
   },
   getters: {
-    categories: state => {
+    categories: () => {
       const categories = [];
-
-      // for (const article of state.articles) {
-      //   if (
-      //     !article.category ||
-      //     categories.find(category => category.text === article.category)
-      //   )
-      //     continue;
-
-      //   const text = article.category;
-
-      //   categories.push({
-      //     text,
-      //     to: `/category/${text}`
-      //   });
-      // }
-
       return categories.sort().slice(0, 4);
     },
-    mainLinks: (state, getters) => {
+    mainLinks: (state) => {
       return state.main_links;
     },
     navLinks: (state, getters) => {
