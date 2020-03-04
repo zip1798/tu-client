@@ -33,17 +33,17 @@ export default {
       extensions: [
         // you can specify options for extension
         new Heading({
-          levels: [1, 2, 3]
+          levels: [1]
         }),
         new Bold(),
         new Italic(),
-        new Strike(),
-        new Underline(),
-        new Code(),
-        new CodeBlock(),
-        new Paragraph(),
+        // new Strike(),
+        // new Underline(),
+        // new Code(),
+        // new CodeBlock(),
+        // new Paragraph(),
         new BulletList(),
-        new OrderedList(),
+        // new OrderedList(),
         new ListItem(),
         new Link(),
         new Blockquote(),
