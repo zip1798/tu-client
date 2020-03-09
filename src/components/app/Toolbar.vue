@@ -55,10 +55,9 @@
 <!-- eslint-disable -->
       <v-list dense>
         <v-list-item 
-        v-for="item in navLinks" 
+        v-for="item in links"
         :key="item.title" 
         :to="item.to"
-        v-if="item.only_for_auth == undefined || item.only_for_auth===true && isAuth || item.only_for_auth===false && !isAuth"
         >
           <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
@@ -109,7 +108,13 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["navLinks", "mainLinks", "getProcessing", 'isAuth', 'getProfile'])
+    ...mapGetters(["navLinks", "mainLinks", "getProcessing", 'isAuth', 'getProfile']),
+    links() {
+      return this.navLinks.filter( item => {
+        return item.only_for_auth == undefined || item.only_for_auth===true && this.isAuth || item.only_for_auth===false && !this.isAuth
+        }
+      )
+    }
   },
 
   created() {
@@ -120,7 +125,6 @@ export default {
 
   methods: {
     ...mapMutations(["toggleDrawer"]),
-    
     ...mapActions(['LOAD_PROFILE', 'AUTH_LOGOUT']),
     
     onClick(e, item) {

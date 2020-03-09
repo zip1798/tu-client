@@ -33,7 +33,7 @@
         <v-stepper-step :complete="valid_brief_form" step="3">Brief Description</v-stepper-step>
         <v-stepper-content step="3">
           <v-form ref="eventBrief">
-            <event-form-description :name="'brief'" :label="'Brief'" :placeholder="'Brief'" />
+            <event-form-description :fld="'brief'" :label="'Brief'" :placeholder="'Brief'" />
           </v-form>
           <div>
             <base-btn @click="prevStep"><v-icon dark>mdi-chevron-left</v-icon> Prev</base-btn>
@@ -46,7 +46,7 @@
         <v-stepper-content step="4">
           <v-form ref="eventDescription">
             <event-form-description
-              :name="'description'"
+              :fld="'description'"
               :label="'Description'"
               :placeholder="'Description'"
             />

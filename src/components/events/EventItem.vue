@@ -51,7 +51,7 @@
           <v-card-title>
             <div>
               <h3 class="headline mb-0"><router-link :to="`/event/info/${event.id}`">{{ event.title }}</router-link></h3>
-              <span class="grey--text">{{ event.event_date}}</span>
+              <span class="grey--text">{{ event.date}}</span>
               <br>
               <span>{{ event.place }}</span>
             </div>

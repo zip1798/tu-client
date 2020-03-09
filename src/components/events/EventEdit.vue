@@ -54,13 +54,13 @@ export default {
   }, // methods
   created() {
     this.LOAD_EVENT_ITEM(this.id);
-    //this.$bus.$on('loaded_event', data => this.initEvent(data));
+    // this.$bus.$on('loaded_event', data => this.initEvent(data));
   },
   mounted() {
-    //this.initEvent(this.getEvent);
+    // this.initEvent(this.getEvent);
   },
   beforeDestroy() {
-    this.$bus.$off('loaded_event');
+    // this.$bus.$off('loaded_event');
   },
 
 };

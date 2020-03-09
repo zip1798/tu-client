@@ -11,8 +11,6 @@ const DEFAULT_EVENT = {
   status: '',
   expire_from: new Date().toISOString().substr(0, 10),
   date: '',
-  event_date: '',
-  show_date: '',
   brief: '',
   description: '',
   is_allow_online: false,
@@ -59,6 +57,7 @@ export default {
     CREATE_EVENT({ commit, dispatch, state, getters }) {
       let data = state.event
       data.media_id = getters.getSelectedMediaID
+      debugger;
       server.post("events", data, {}, (response) => {
         if (response.data.success) {
           commit("SET_EVENT", response.data.success);

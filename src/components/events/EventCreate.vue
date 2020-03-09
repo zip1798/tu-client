@@ -6,7 +6,7 @@
     <v-layout row wrap>
       <event-form>
         <template #finish-action>
-          <v-btn color="primary mx-2" tile @click.prevent="createEvent" :disabled="getProcessing">Create Event</v-btn>
+          <v-btn color="primary mx-2" tile @click.prevent="CREATE_EVENT" :disabled="getProcessing">Create Event</v-btn>
         </template>
       </event-form>
     </v-layout>
@@ -26,15 +26,10 @@ export default {
     EventForm,
   },
   computed: {
-    ...mapGetters(["getProcessing", "getSelectedMediaID"]),
+    ...mapGetters(["getProcessing", "getSelectedMediaID", "getEvent"]),
   },
   methods: {
     ...mapActions(['CREATE_EVENT']),
-    createEvent() {
-      // todo
-      // this.model.media_id = this.getSelectedMediaID
-      this.CREATE_EVENT()
-    },
   }, // methods
 
 

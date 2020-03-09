@@ -37,7 +37,7 @@
               fill-height
             >
               <h1 class="display-2 font-weight-thin mb-3 ml-5">{{ getEvent.title }}</h1>
-              <h4 class="subheading  ml-5">{{ getEvent.place }} - <span class="font-weight-thin">{{ getEvent.event_date }}</span></h4>
+              <h4 class="subheading  ml-5">{{ getEvent.place }} - <span class="font-weight-thin">{{ getEvent.date }}</span></h4>
             </v-layout>
           
           </v-img>
@@ -45,7 +45,7 @@
             <v-card-title>
               <div>
                 <h3 class="headline mb-0">{{ getEvent.title }}</h3>
-                <span class="grey--text">{{ getEvent.event_date }}</span>
+                <span class="grey--text">{{ getEvent.date }}</span>
                 <br>
                 <span>{{ getEvent.place }}</span>
               </div>

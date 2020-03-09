@@ -51,6 +51,7 @@ import { mapGetters, mapMutations } from "vuex"
 import eventConfig from "@/config/events";
 
 export default {
+  props: ["id"],
   data () {
     return {
       statusRules: [
