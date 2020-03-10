@@ -38,7 +38,7 @@ export default {
         }
       })
       state.event.media_url = payload.media.full_url
-      // EventBus.notify("loaded_event", state.event);
+      EventBus.notify("loaded_event", state.event);
     },
 
     SET_EVENT_FIELD(state, payload) {
@@ -57,7 +57,6 @@ export default {
     CREATE_EVENT({ commit, dispatch, state, getters }) {
       let data = state.event
       data.media_id = getters.getSelectedMediaID
-      debugger;
       server.post("events", data, {}, (response) => {
         if (response.data.success) {
           commit("SET_EVENT", response.data.success);
@@ -97,7 +96,6 @@ export default {
           if (response.data.success.media) {
             commit("SET_MEDIA", response.data.success.media)
           }
-          EventBus.notify("loaded_event", state.event);
         }, {processing_value: 'LOAD_EVENT_ITEM'});
       }
     },

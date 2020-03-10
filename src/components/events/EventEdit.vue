@@ -6,11 +6,18 @@
     </v-row >
     <event-edit-toolbar></event-edit-toolbar>
     <v-layout row wrap>
-      <event-form>
+      <event-form v-if="getEvent.id">
         <template #finish-action>
           <v-btn color="primary mx-2" tile @click.prevent="submit" :disabled="getProcessing">Update Event</v-btn>
         </template>
       </event-form>
+
+      <v-row v-if="!getEvent.id">
+        <v-col cols="12">
+          <v-skeleton-loader  class="ma-1" type="article, actions"></v-skeleton-loader>
+        </v-col>
+      </v-row >
+
     </v-layout>
 
 
@@ -54,13 +61,9 @@ export default {
   }, // methods
   created() {
     this.LOAD_EVENT_ITEM(this.id);
-    // this.$bus.$on('loaded_event', data => this.initEvent(data));
   },
   mounted() {
-    // this.initEvent(this.getEvent);
-  },
-  beforeDestroy() {
-    // this.$bus.$off('loaded_event');
+    this.LOAD_EVENT_ITEM(this.id);
   },
 
 };

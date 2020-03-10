@@ -74,8 +74,8 @@ export default {
   created() {
     if (this.id) {
       this.LOAD_EVENT_ITEM(this.id)
-      this.$bus.$on('loaded_event', () => this.initForm())
     }
+    this.$bus.$on('loaded_event', () => this.initForm())
   },
 
   mounted() {

@@ -99,18 +99,19 @@ export default {
         this.SET_EVENT_FIELD({fld: 'expire_from', val: date })
     },
     initForm() {
-      this.title = this.getEvent.title
-      this.place = this.getEvent.place
-      this.date = this.getEvent.date
-      this.exp_date = this.getEvent.exp_date
+
+        this.title = this.getEvent.title
+        this.place = this.getEvent.place
+        this.date = this.getEvent.date
+        this.exp_date = this.getEvent.exp_date
     }
   },
 
   created() {
     if (this.id) {
       this.LOAD_EVENT_ITEM(this.id)
-      this.$bus.$on('loaded_event', () => this.initForm())
     }
+      this.$bus.$on('loaded_event', () => this.initForm())
   },
 
   mounted() {
