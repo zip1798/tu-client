@@ -21,6 +21,7 @@ const DEFAULT_EVENT = {
   media_id: '',
   media_url: '',
   is_interested: false,
+  external_link: '',
 } 
 
 export default {

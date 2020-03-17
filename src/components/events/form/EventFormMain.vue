@@ -59,6 +59,16 @@
             </v-date-picker>
         </v-dialog>
         
+        <v-text-field
+            prepend-icon="link"
+            name="external_link"
+            label="External Link"
+            type="text"
+            :value="getEvent.external_link"
+            v-model="title"
+            @change="SET_EVENT_FIELD({fld: 'external_link', val: external_link })"
+        ></v-text-field>
+
     </v-flex>
 </template>
 
@@ -75,6 +85,7 @@ export default {
       title: '',
       date: '',
       place: '',
+      external_link: '',
       titleRules: [
         v => !!v || "Please enter value"
       ],
@@ -91,19 +102,16 @@ export default {
   },
   methods: {
     ...mapMutations(["SET_EVENT_FIELD"]),
-    setTitleField(value) {
-        this.SET_EVENT_FIELD({fld: 'title', val: value })
-    },
     setExpireFromField(date) {
         this.is_show_menu_expire_date = false
         this.SET_EVENT_FIELD({fld: 'expire_from', val: date })
     },
     initForm() {
-
         this.title = this.getEvent.title
         this.place = this.getEvent.place
         this.date = this.getEvent.date
         this.exp_date = this.getEvent.exp_date
+        this.external_link = this.getEvent.external_link
     }
   },
 
