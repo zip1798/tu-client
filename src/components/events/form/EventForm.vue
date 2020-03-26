@@ -4,10 +4,22 @@
     <v-divider></v-divider>
 
     <v-form>
-      <v-stepper v-model="current_step" vertical>
+      <v-stepper v-model="current_step" >
+        <v-stepper-header>
+          <v-stepper-step :complete="valid_main_form" step="1">Main data</v-stepper-step>
+          <v-divider></v-divider>
+          <v-stepper-step :complete="valid_option_form" step="2">Event Options</v-stepper-step>
+          <v-divider></v-divider>
+          <v-stepper-step :complete="valid_brief_form" step="3">Brief Description</v-stepper-step>
+          <v-divider></v-divider>
+          <v-stepper-step :complete="valid_description_form" step="4">Event description</v-stepper-step>
+          <v-divider></v-divider>
+          <v-stepper-step :complete="valid_media" step="5">Main image of event</v-stepper-step>
+          <v-divider></v-divider>
+          <v-stepper-step step="6">Preview</v-stepper-step>
+        </v-stepper-header>
 
 <!-- 1 Main step -->        
-        <v-stepper-step :complete="valid_main_form" step="1">Main data</v-stepper-step>
         <v-stepper-content step="1">
           <v-form v-model="valid_main_form" ref="eventFormMain">
             <event-form-main />
@@ -18,7 +30,6 @@
         </v-stepper-content>
 
 <!-- 2 Options step -->        
-        <v-stepper-step :complete="valid_option_form" step="2">Event Options</v-stepper-step>
         <v-stepper-content step="2">
           <v-form v-model="valid_option_form" ref="eventFormOptions">
             <event-form-options />
@@ -30,7 +41,6 @@
         </v-stepper-content>
 
 <!-- 3 Brief step -->        
-        <v-stepper-step :complete="valid_brief_form" step="3">Brief Description</v-stepper-step>
         <v-stepper-content step="3">
           <v-form ref="eventBrief">
             <event-form-description :fld="'brief'" :label="'Brief'" :placeholder="'Brief'" />
@@ -42,7 +52,6 @@
         </v-stepper-content>
 
 <!-- 4 Descriptin step -->        
-        <v-stepper-step :complete="valid_description_form" step="4">Event description</v-stepper-step>
         <v-stepper-content step="4">
           <v-form ref="eventDescription">
             <event-form-description
@@ -58,7 +67,6 @@
         </v-stepper-content>
 
 <!-- 5 Image step -->        
-        <v-stepper-step :complete="valid_media" step="5">Main image of event</v-stepper-step>
         <v-stepper-content step="5">
           <media-item>
               <template #action>
@@ -74,7 +82,6 @@
         </v-stepper-content>
 
 <!-- 6 Preview step -->        
-        <v-stepper-step step="6">Preview</v-stepper-step>
         <v-stepper-content step="6">
 
 

@@ -27,6 +27,8 @@ const DEFAULT_EVENT = {
 export default {
   state: {
     event: DEFAULT_EVENT, 
+    user_relations: [],
+    perms: []
   },
   mutations: {
     SET_EVENT(state, payload) {
@@ -39,6 +41,13 @@ export default {
         }
       })
       state.event.media_url = payload.media.full_url
+      if (typeof payload.user_relations != 'undefined') {
+        state.user_relations = payload.user_relations
+      }
+      if (typeof payload.perms != 'undefined') {
+        state.perms = payload.perms
+      }
+
       EventBus.notify("loaded_event", state.event);
     },
 
@@ -124,5 +133,8 @@ export default {
   },
   getters: {
     getEvent: state => state.event,
+    getEventUserRelations: state => state.user_relations,
+    getEventPerms: state => state.perms,
   }
+
 };

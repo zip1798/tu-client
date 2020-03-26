@@ -7,7 +7,6 @@
             label="Title"
             type="text"
             :rules="titleRules"
-            :value="getEvent.title"
             v-model="title"
             @change="SET_EVENT_FIELD({fld: 'title', val: title })"
             required
@@ -18,7 +17,6 @@
             name="place"
             label="Place"
             type="text"
-            :value="getEvent.place"
             v-model="place"
             @change="SET_EVENT_FIELD({fld: 'place', val: place })"
             :rules="placeRules"
@@ -30,7 +28,6 @@
             name="date"
             label="Event Date"
             type="text"
-            :value="getEvent.date"
             v-model="date"
             @change="SET_EVENT_FIELD({fld: 'date', val: date })"
             :rules="titleRules"
@@ -64,8 +61,7 @@
             name="external_link"
             label="External Link"
             type="text"
-            :value="getEvent.external_link"
-            v-model="title"
+            v-model="external_link"
             @change="SET_EVENT_FIELD({fld: 'external_link', val: external_link })"
         ></v-text-field>
 

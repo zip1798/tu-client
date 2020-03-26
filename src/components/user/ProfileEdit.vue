@@ -99,12 +99,14 @@ export default {
       // is_subscribe_news: false,
 
       nameRules: [v => !!v || "Please enter your Name"],
+      /*eslint-disable */
       emailRules: [
         v => !!v || "Please enter email",
         v =>
           /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
           "Wrong email"
       ],
+      /*eslint-enable */
       passwordRules: [
         v => !!v || "Please enter password",
         v => (v && v.length >= 6) || "Password is too short - min 6 simbols"
